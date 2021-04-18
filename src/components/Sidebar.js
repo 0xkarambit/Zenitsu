@@ -14,9 +14,11 @@ export default function Sidebar(props) {
 				new
 			*/}
 			<SearchBar></SearchBar>
-			<button>Top</button>
-			<button>hot</button>
-			<button>New</button>
+			<span>
+				<button>Top</button>
+				<button>hot</button>
+				<button>New</button>
+			</span>
 		</div>
 	);
 }

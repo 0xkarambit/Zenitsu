@@ -1,3 +1,5 @@
+/* todo: should i use grid? */
+
 .sidebar {
 	display: flex;
 	justify-content: space-evenly;
@@ -19,8 +21,7 @@
 
 input,
 button,
-SearchBar,
-SearchBar > input:placeholder-shown {
+SearchBar SearchBar > input:placeholder-shown {
 	display: inline;
 	font-size: 1.3em;
 	width: 25%;
@@ -28,6 +29,6 @@ SearchBar > input:placeholder-shown {
 	text-align: center;
 }
 
-SearchBar > input:placeholder-shown {
+input {
 	width: 100%;
 }
