@@ -1,0 +1,26 @@
+.sidebar {
+	display: flex;
+	justify-content: flex-start;
+
+	/* debugging */
+	background-color: blanchedalmond;
+	border: 2px solid red;
+
+	/* css learnt  */
+	/* FOR the other axis */
+	/* align-items: flex-start; */
+
+	/* EXPERIMENT */
+	/* should be sticky ??? YESSS */
+	/* display:sticky */
+}
+
+form,
+form > input,
+form > button,
+form > input:placeholder-shown {
+	font-size: 1.3em;
+	/* width: 100%; */
+	border: none;
+	text-align: center;
+}
