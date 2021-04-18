@@ -1,6 +1,8 @@
 .sidebar {
 	display: flex;
-	justify-content: flex-start;
+	justify-content: space-evenly;
+
+	padding: 5px;
 
 	/* debugging */
 	background-color: blanchedalmond;
@@ -15,12 +17,17 @@
 	/* display:sticky */
 }
 
-form,
-form > input,
-form > button,
-form > input:placeholder-shown {
+input,
+button,
+SearchBar,
+SearchBar > input:placeholder-shown {
+	display: inline;
 	font-size: 1.3em;
-	/* width: 100%; */
+	width: 25%;
 	border: none;
 	text-align: center;
+}
+
+SearchBar > input:placeholder-shown {
+	width: 100%;
 }
