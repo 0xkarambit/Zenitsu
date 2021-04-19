@@ -5,7 +5,7 @@ import StackGrid from "react-stack-grid";
 
 export default function Thoughts(props) {
 	const [displayMode, setDisplayMode] = React.useState("stack");
-	const [postsData, setPostsData] = React.useState([...Array(1)]);
+	const [postsData, setPostsData] = React.useState([]);
 
 	// fetching the data on mount;
 	React.useEffect(() => {
@@ -24,7 +24,6 @@ export default function Thoughts(props) {
 	// generating POSTS
 	let posts = [];
 	for (let i in postsData) {
-		// let metaData = postsData[i]
 		posts.push(<Post key={i} {...postsData[i].data}></Post>);
 	}
 
