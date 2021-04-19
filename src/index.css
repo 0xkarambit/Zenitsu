@@ -17,13 +17,13 @@ body {
 }
 
 .container {
-	background-color: brown;
+	/* background-color: brown; */
 	margin-top: 20px;
 	border-radius: 10px;
 	padding: 10px;
 
 	/* display for children  */
 	display: grid;
-	grid-template-rows: 2fr 8fr;
+	grid-template-rows: minmax(2fr, 200px) 8fr;
 	grid-gap: 20px;
 }

@@ -3,12 +3,13 @@ import "./header.css";
 
 import constructionSign from "./../assets/icons/construction.svg";
 
+const icon = {
+	width: "32px",
+	height: "32px",
+	color: "white"
+};
+
 export default function Header(props) {
-	const icon = {
-		width: "32px",
-		height: "32px",
-		color: "white"
-	};
 	return (
 		<header>
 			{/*welcome to The Open Source reddit client focused on browsing{" "}*/}
@@ -27,22 +28,24 @@ export default function Header(props) {
 				</a>
 			</span>
 			{/* SITE STILL IN DEVELOPMENT NOTICE */}
-			<span
-				style={{
-					marginLeft: "10px",
-					backgroundColor: "#ffc861",
-					color: "#2f4360",
-					borderRadius: "10px"
-				}}
-			>
-				<img
-					src={constructionSign}
-					alt="construction sign"
-					style={icon}
-				/>
-				this website is still a work in progress check sometime later
-				... thanks!
-			</span>
+			<NOTICE />
 		</header>
+	);
+}
+
+function NOTICE() {
+	return (
+		<span
+			style={{
+				marginLeft: "10px",
+				backgroundColor: "#ffc861",
+				color: "#2f4360",
+				borderRadius: "10px"
+			}}
+		>
+			<img src={constructionSign} alt="construction sign" style={icon} />
+			this website is still a work in progress check sometime later ...
+			thanks!
+		</span>
 	);
 }
