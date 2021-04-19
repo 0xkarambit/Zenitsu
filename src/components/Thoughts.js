@@ -18,19 +18,17 @@ export default function Thoughts(props) {
 				console.log(json.data.children);
 				setPostsData(json.data.children);
 			});
-		return () => {};
 	}, []);
-
-	// generating POSTS
-	let posts = [];
-	for (let i in postsData) {
-		posts.push(<Post key={i} {...postsData[i].data}></Post>);
-	}
 
 	return (
 		<div className="viewarea">
 			{displayMode === "stack" && (
-				<StackGrid columnWidth={300}>{posts}</StackGrid>
+				<StackGrid columnWidth={300}>
+					{postsData &&
+						postsData.map((post, i) => (
+							<Post key={i} {...post.data}></Post>
+						))}
+				</StackGrid>
 			)}
 		</div>
 	);
@@ -50,7 +48,7 @@ function Post({
 			<h2>{title || "title"}</h2>
 			{selftext && <p className="postbody">{selftext.slice(0, 200)}</p>}
 			<span className="details">
-				{author} score: {score} {total_awards_received} {num_comments}{" "}
+				{author} score: {score} {total_awards_received} {num_comments}
 				{created_utc}
 			</span>
 		</div>
