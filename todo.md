@@ -5,6 +5,8 @@
 3. add fullscreen API support, add detail mode view, keyboard shortcuts, OAUTH and transitions, animations and text-to-speech mode !
 4. adding react-form and react-fetch libraries.
 5. show loading screen in Thoughts component until posts load.
+6. add a reading on loop mode.
+7. when we try to load comments of a post in focus mode we get response as [post, comments] so we can update the stats of the post.
 
 # todo
 
@@ -13,3 +15,4 @@
 3. `WORK-IN-PROGRESS` implement focus mode components and navigation (with full keyboard shortcuts).
 4. `DONE` find "distinguished":"moderator" key in posts to filter mod posts.
 5. read https://github.com/AndrewKeig/react-speech#styles.
+6. fix powerbar.
