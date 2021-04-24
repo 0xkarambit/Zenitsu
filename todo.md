@@ -17,3 +17,4 @@
 4. `DONE` find "distinguished":"moderator" key in posts to filter mod posts.
 5. read https://github.com/AndrewKeig/react-speech#styles.
 6. fix powerbar.
+7. cancel the fetch request once the post has changed.

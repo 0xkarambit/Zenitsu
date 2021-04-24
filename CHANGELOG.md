@@ -1,3 +1,3 @@
-## CHANGELOG (4/24/2021)
+## CHANGELOG (4/24/2021 2:59pm)
 
-1. added keyboard shortcuts to move to next and previous posts. (caching not working!)
+1. fixed comments caching !

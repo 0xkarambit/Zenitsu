@@ -13,7 +13,7 @@ export default function Thoughts(props) {
 	const [displayMode, setDisplayMode] = React.useState("");
 	const [postsData, setPostsData] = React.useState([]);
 	// comments will be loaded by children components.
-	const [comments, setComments] = React.useState([{}]);
+	const [comments, setComments] = React.useState([]);
 
 	// fetching the data on mount;
 	React.useEffect(() => {
@@ -32,14 +32,15 @@ export default function Thoughts(props) {
 			.catch(console.log);
 	}, []);
 
-	const findComment = (url) => comments.filter((val) => val.url === url);
+	const findComment = (url) =>
+		comments.filter((val) => `${val.url}.json` === url);
 
 	const getComments = async (postUrl) => {
 		console.log("HEY", postUrl);
 		// todo: FIX: find comment is not working
 		let foundCom = findComment(postUrl);
 		console.log({ foundCom });
-		if (foundCom.length === 1) return foundCom;
+		if (foundCom.length !== 0) return foundCom[0];
 
 		// if comments are not in comments fetch them;
 		const res = await fetch(postUrl);
@@ -47,7 +48,7 @@ export default function Thoughts(props) {
 		let url = c[0].data.children[0].data.url; // | id | subreddit_id | title | permalink | url;
 		// kind: "listing" | "t1" | "t3"
 		let comObj = {
-			url: [url],
+			url: url,
 			comments: c[1].data.children
 		};
 		setComments((coms) => coms.concat([comObj]));
@@ -132,6 +133,7 @@ const Focus = ({ postsData, getComments }) => {
 		// let curl = `${"https://www.reddit.com/r/Showerthoughts/comments/mw2amn/having_to_attend_a_wedding_you_dont_want_to_sucks/"}.json`;
 		let curl = `${currentPostData.url}.json`;
 		getComments(curl).then((comObj) => {
+			console.log(comObj);
 			setCurrentComments(comObj.comments);
 		});
 		// document.addEventListener("keydown", _handleEscKey);
