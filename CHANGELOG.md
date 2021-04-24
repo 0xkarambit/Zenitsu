@@ -1,3 +1,5 @@
-## CHANGELOG (4/24/2021 2:59pm)
+## CHANGELOG (4/25/2021 00:48 am)
 
-1. fixed comments caching !
+1. Added enter to select typed subreddit.
+2. added r/ to show in sub reddit selection input value.
+3. refactored Header.js

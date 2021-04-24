@@ -7,6 +7,8 @@
 }
 
 .post {
+	width: auto;
+	height: auto;
 	border: 2px solid black;
 	font-size: 20px;
 	padding: 5px;
@@ -28,4 +30,9 @@
 
 .toplevel {
 	border-bottom: 4px solid #282d35;
+}
+
+/* to style the speech component */
+.rs-container {
+	width: 10% !important;
 }

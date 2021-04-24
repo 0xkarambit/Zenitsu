@@ -6,7 +6,7 @@ import "./thoughts.css";
 import StackGrid from "react-stack-grid";
 import { useHotkeys } from "react-hotkeys-hook";
 
-export default function Thoughts(props) {
+export default function Thoughts({ subreddit }) {
 	const TESTINGMODE = "focus";
 	let [dataReceived, setDataReceived] = useState(false);
 	const validModes = ["focus", "stack"];
@@ -19,18 +19,23 @@ export default function Thoughts(props) {
 	React.useEffect(() => {
 		// const url = "https://www.reddit.com/r/Showerthoughts/top/?t=month";
 		// by default .json at the end pulls the hot listings
-		const url = "https://www.reddit.com/r/Showerthoughts.json";
-		fetch(url)
-			.then((res) => (res.status !== 200 ? 1 : res.json()))
-			.then((json) => {
-				console.log(json.data.children);
-				setPostsData(json.data.children.slice(1));
-				// if we set the data before we have the data the other components try to render using the data which results in errors.
-				setDisplayMode(TESTINGMODE);
-				setDataReceived(true);
-			})
-			.catch(console.log);
-	}, []);
+		try {
+			const url = `https://www.reddit.com/r/${subreddit}.json`;
+			fetch(url)
+				.then((res) => (res.status !== 200 ? 1 : res.json()))
+				.then((json) => {
+					console.log(json.data.children);
+					setPostsData(json.data.children.slice(1));
+					// if we set the data before we have the data the other components try to render using the data which results in errors.
+					setDisplayMode(TESTINGMODE);
+					setDataReceived(true);
+				})
+				.catch(console.error);
+		} catch (e) {
+			console.log("reached");
+			console.error(e);
+		}
+	}, [subreddit]);
 
 	const findComment = (url) =>
 		comments.filter((val) => `${val.url}.json` === url);
@@ -43,16 +48,37 @@ export default function Thoughts(props) {
 		if (foundCom.length !== 0) return foundCom[0];
 
 		// if comments are not in comments fetch them;
-		const res = await fetch(postUrl);
-		const c = await res.json();
-		let url = c[0].data.children[0].data.url; // | id | subreddit_id | title | permalink | url;
-		// kind: "listing" | "t1" | "t3"
-		let comObj = {
-			url: url,
-			comments: c[1].data.children
-		};
-		setComments((coms) => coms.concat([comObj]));
-		return comObj;
+		try {
+			const res = await fetch(postUrl);
+			const c = await res.json();
+			let url = c[0].data.children[0].data.url; // | id | subreddit_id | title | permalink | url;
+			// kind: "listing" | "t1" | "t3"
+			let comObj = {
+				url: url,
+				comments: c[1].data.children
+			};
+			setComments((coms) => coms.concat([comObj]));
+			return comObj;
+		} catch (e) {
+			// ok try to know why it failed
+			// wait why did this url even appear here .....
+			// todo: inspect the listings obj
+			console.log("got here");
+			if (e.message === "Failed to fetch") {
+				// likely an image
+				const img = await fetch(postUrl.slice(0, postUrl.length - 5));
+				const blob = await img.blob();
+				// blob to base64data;
+				let base64data = "";
+				var reader = new FileReader();
+				reader.readAsDataURL(blob);
+				reader.onloadend = function () {
+					base64data = reader.result;
+					console.log(base64data);
+				};
+			}
+			return 1;
+		}
 	};
 
 	return (
@@ -83,12 +109,9 @@ function Post({
 	total_awards_received,
 	num_comments,
 	created_utc,
-	distinguished,
 	displayMode = "stack"
 }) {
-	// to avoid rendering moderator posts. todo: PUT THIS IN focus mode?
-	// if (distinguished === "moderator") return null;
-
+	// idk what it does. had something to do with me playing around in inspect element and changing the Speech height to 1em;
 	return (
 		<div className="post">
 			<p className="author">{`u/${author}`}</p>
@@ -132,7 +155,13 @@ const Focus = ({ postsData, getComments }) => {
 		// Load Comments
 		// let curl = `${"https://www.reddit.com/r/Showerthoughts/comments/mw2amn/having_to_attend_a_wedding_you_dont_want_to_sucks/"}.json`;
 		let curl = `${currentPostData.url}.json`;
-		getComments(curl).then((comObj) => {
+		const result = getComments(curl);
+		result.then((comObj) => {
+			if (comObj === 1) {
+				// likely fetch request went wrong.
+				alert("likely fetch request went wrong");
+				return null;
+			}
 			console.log(comObj);
 			setCurrentComments(comObj.comments);
 		});

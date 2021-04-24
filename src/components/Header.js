@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useRef, useState } from "react";
 import "./header.css";
 
 import constructionSign from "./../assets/icons/construction.svg";
@@ -9,29 +9,69 @@ const icon = {
 	color: "white"
 };
 
-export default function Header(props) {
+export default function Header({ subreddit, setSubreddit }) {
+	const [selectMenuOpen, setSelectMenuState] = useState(false);
+
+	const toggleSelectMenu = () => setSelectMenuState(!selectMenuOpen);
+	const closeSelectMenu = () => setSelectMenuState(false);
+
+	const sel_subreddit = (sub) => {
+		closeSelectMenu();
+		// sub includes "r/"
+		setSubreddit(sub.slice(2));
+	};
+
 	return (
 		<header>
 			{/*welcome to The Open Source reddit client focused on browsing{" "}*/}
 			<span>
-				<img
-					src="https://styles.redditmedia.com/t5_2szyo/styles/communityIcon_x3ag97t82z251.png?width=256&s=33531dceba6466953aadef3073f36cfc2e267175"
-					alt="showerthoughts subreddit logo"
-					width="50px"
-					height="50px"
-				/>
-				<a
-					href="https://reddit.com/r/showerthoughts"
-					className="banner"
-				>
-					r/showerthoughts
-				</a>
+				<span onClick={toggleSelectMenu}>
+					<img
+						src="https://styles.redditmedia.com/t5_2szyo/styles/communityIcon_x3ag97t82z251.png?width=256&s=33531dceba6466953aadef3073f36cfc2e267175"
+						alt="showerthoughts subreddit logo"
+						width="50px"
+						height="50px"
+					/>
+					<p className="banner">r/{subreddit}</p>
+				</span>
+				{/* yup nice now i just need to know a good way to make forms in react! THIS SHOULD BE ITS OWN COMPONENT TODO: ADD FOCUS ON USEFFECT*/}
+				{selectMenuOpen && (
+					// NICE  better way to pass props
+					<SubredditSelect
+						{...{ sel_subreddit, subreddit }}
+					></SubredditSelect>
+				)}
 			</span>
 			{/* SITE STILL IN DEVELOPMENT NOTICE */}
 			<NOTICE />
 		</header>
 	);
 }
+
+const SubredditSelect = ({ sel_subreddit, subreddit }) => {
+	const subSel = useRef();
+	const [inputSub, setInputSub] = useState("r/");
+
+	useEffect(() => {
+		subSel.current.focus();
+	}, []);
+
+	return (
+		<div className="sub-sel">
+			<input
+				ref={subSel}
+				value={inputSub}
+				onKeyDown={(e) => e.key === "Enter" && sel_subreddit(inputSub)}
+				onChange={(e) => {
+					let val = e.target.value;
+					if (val === "r" || val === "") val = "r/";
+					setInputSub(val);
+				}}
+				placeholder={`r/${subreddit}`}
+			/>
+		</div>
+	);
+};
 
 function NOTICE() {
 	return (

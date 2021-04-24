@@ -8,6 +8,8 @@
 6. add a reading on loop mode.
 7. when we try to load comments of a post in focus mode we get response as [post, comments] so we can update the stats of the post.
 8. use ChakraUI ? idk.
+9. add shift + p command pelet.
+10. add keyboard shortcuts menu with `ctrl + /` and key bindings to go through threads smoothly.
 
 # todo
 
@@ -18,3 +20,9 @@
 5. read https://github.com/AndrewKeig/react-speech#styles.
 6. fix powerbar.
 7. cancel the fetch request once the post has changed.
+8. fix array index out of bounds on pressing p error.
+9. fix comments not updating automatically after subreddit change.
+10. watch out for 403 forbidden {reason: "private"}
+11. inspect https://www.reddit.com/r/MechanicalKeyboards/comments/mxdn24/somehow_i_took_a_photo_that_looks_like_a_render.json/
+12. and deal with the image loading CORS issue.
+13. show URLs in comments as 'a' tag.
