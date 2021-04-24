@@ -20,6 +20,7 @@ https://www.reddit.com/r/Showerthoughts/comments/mw2amn/having_to_attend_a_weddi
 dist = 1 means its the post...
 
 2nd item:
+	kind:"listing",
 	data:
 		children[]: // ok this has all the comments | thread heads |.
 			0:
@@ -44,3 +45,4 @@ dist = 1 means its the post...
 														data
 															body: "Lol wut? Neither of the 2"
 							|// this has the subsequent replies. single thread.
+							// last reply has kind: "more", data: {count: 27, }

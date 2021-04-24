@@ -7,6 +7,7 @@
 5. show loading screen in Thoughts component until posts load.
 6. add a reading on loop mode.
 7. when we try to load comments of a post in focus mode we get response as [post, comments] so we can update the stats of the post.
+8. use ChakraUI ? idk.
 
 # todo
 

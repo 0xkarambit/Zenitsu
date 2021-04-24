@@ -4,6 +4,7 @@ import Speech from "react-speech";
 import "./thoughts.css";
 
 import StackGrid from "react-stack-grid";
+import { useHotkeys } from "react-hotkeys-hook";
 
 export default function Thoughts(props) {
 	const TESTINGMODE = "focus";
@@ -34,15 +35,16 @@ export default function Thoughts(props) {
 	const findComment = (url) => comments.filter((val) => val.url === url);
 
 	const getComments = async (postUrl) => {
+		console.log("HEY", postUrl);
+		// todo: FIX: find comment is not working
 		let foundCom = findComment(postUrl);
-		if (foundCom.length !== 0) return foundCom;
+		console.log({ foundCom });
+		if (foundCom.length === 1) return foundCom;
 
 		// if comments are not in comments fetch them;
 		const res = await fetch(postUrl);
 		const c = await res.json();
-		console.log("HEHEHEHEH");
-		console.log(c);
-		let url = c[0].data.children[0].data.title; // | id | subreddit_id | title | permalink | url;
+		let url = c[0].data.children[0].data.url; // | id | subreddit_id | title | permalink | url;
 		// kind: "listing" | "t1" | "t3"
 		let comObj = {
 			url: [url],
@@ -112,10 +114,18 @@ const Focus = ({ postsData, getComments }) => {
 	// currentComments : {url:[url], comments: obj `children[]]`}
 	const currentPostData = postsData[currentPost].data;
 
-	const nextPost = (e) => {
-		// e.preventDefault()
-		setCurrentPost((currentPost) => ++currentPost);
-	};
+	// https://github.com/jaywcjlove/hotkeys/#defining-shortcuts
+	useHotkeys("n", () => setCurrentPost((currentPost) => ++currentPost));
+	useHotkeys("p", () => setCurrentPost((currentPost) => --currentPost));
+
+	// /////////////////////////////
+	// const _handleEscKey = function (event) {
+	// 	console.log(event);
+	// 	if (event.keyCode === 27) {
+	// 		console.error("lol");
+	// 	}
+	// };
+	// /////////////////////////////
 
 	useEffect(() => {
 		// Load Comments
@@ -124,6 +134,7 @@ const Focus = ({ postsData, getComments }) => {
 		getComments(curl).then((comObj) => {
 			setCurrentComments(comObj.comments);
 		});
+		// document.addEventListener("keydown", _handleEscKey);
 		// chance to delete comments from memory when post changes ?...
 	}, [currentPostData, currentPost]);
 
@@ -135,20 +146,27 @@ const Focus = ({ postsData, getComments }) => {
 				{currentComments &&
 					currentComments.map((commentObj) => {
 						if (commentObj.kind === "more") return null;
-						return <Comment data={commentObj.data} />;
+						return (
+							<Comment
+								data={commentObj.data}
+								topLevel={true}
+								key={commentObj.data.id}
+							/>
+						);
 					})}
 			</div>
 		</>
 	);
 };
 
-const Comment = ({ data, ml = 0 }) => {
+const Comment = ({ data, ml = 0, topLevel = false }) => {
+	// Comment is a recursive component.
 	const styles = { marginLeft: `${ml}px` };
 	const mlinc = 20;
-	// Comment should be a recursive component.
-	console.log(data);
+	let className = topLevel ? "toplevel comment" : "comment";
 	return (
-		<div className="comment">
+		// using key as [commentObj]data.id idk how the id is used in reddit tho.
+		<div className={className}>
 			<p style={styles}> {data.body} </p>
 			{data.replies !== "" &&
 				data.replies.data.children.map((replyData) => {
@@ -159,7 +177,8 @@ const Comment = ({ data, ml = 0 }) => {
 						<Comment
 							data={replyData.data}
 							ml={ml + mlinc}
-						></Comment>
+							key={replyData.data.id}
+						/>
 					);
 					// {data.replies && <Comment data={data.replies.data.children}></Comment>}
 				})}

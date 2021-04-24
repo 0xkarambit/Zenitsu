@@ -1,3 +1,3 @@
-## CHANGELOG
+## CHANGELOG (4/24/2021)
 
-1. I got comments to work ! but the design is just terrible currently oh and the code too.
+1. added keyboard shortcuts to move to next and previous posts. (caching not working!)
