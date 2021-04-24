@@ -46,7 +46,7 @@ export default function Thoughts(props) {
 		// kind: "listing" | "t1" | "t3"
 		let comObj = {
 			url: [url],
-			comments: c[1].data.children.map((obj) => obj.data).slice(0, 2)
+			comments: c[1].data.children
 		};
 		setComments((coms) => coms.concat([comObj]));
 		return comObj;
@@ -123,8 +123,6 @@ const Focus = ({ postsData, getComments }) => {
 		let curl = `${currentPostData.url}.json`;
 		getComments(curl).then((comObj) => {
 			setCurrentComments(comObj.comments);
-			console.log(comObj);
-			debugger;
 		});
 		// chance to delete comments from memory when post changes ?...
 	}, [currentPostData, currentPost]);
@@ -135,9 +133,10 @@ const Focus = ({ postsData, getComments }) => {
 			{/*<Comments/>*/}
 			<div className="comments">
 				{currentComments &&
-					currentComments.map((commentObj) => (
-						<Comment data={commentObj} />
-					))}
+					currentComments.map((commentObj) => {
+						if (commentObj.kind === "more") return null;
+						return <Comment data={commentObj.data} />;
+					})}
 			</div>
 		</>
 	);
@@ -145,16 +144,35 @@ const Focus = ({ postsData, getComments }) => {
 
 const Comment = ({ data, ml = 0 }) => {
 	const styles = { marginLeft: `${ml}px` };
+	const mlinc = 20;
 	// Comment should be a recursive component.
+	console.log(data);
 	return (
 		<div className="comment">
 			<p style={styles}> {data.body} </p>
+			{data.replies !== "" &&
+				data.replies.data.children.map((replyData) => {
+					// replyData is a standard comment Obj
+					if (replyData.kind === "more") return null;
+					// todo: return a <load more/> component;
+					return (
+						<Comment
+							data={replyData.data}
+							ml={ml + mlinc}
+						></Comment>
+					);
+					// {data.replies && <Comment data={data.replies.data.children}></Comment>}
+				})}
 		</div>
 	);
 };
 
-// {data.replies.data.children.map((replyData) => {
-// 	// replyData is a standard comment Obj
-// 	return <Comment data={replyData.data} ml={ml + 2}></Comment>;
-// 	// {data.replies && <Comment data={data.replies.data.children}></Comment>}
-// })}
+// {
+// 	data.replies.data.children.map((replyData) => {
+// 		// replyData is a standard comment Obj
+// 		if (replyData.kind == "more") return null;
+// 		// todo: return a <load more/> component;
+// 		return <Comment data={replyData.data} ml={ml + 2}></Comment>;
+// 		// {data.replies && <Comment data={data.replies.data.children}></Comment>}
+// 	});
+// }

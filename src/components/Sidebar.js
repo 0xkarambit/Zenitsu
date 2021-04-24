@@ -7,12 +7,6 @@ export default function Sidebar(props) {
 
 	return (
 		<div className="sidebar">
-			{/*
-				search
-				top
-				hot
-				new
-			*/}
 			<SearchBar></SearchBar>
 			<span>
 				<button>Top</button>
