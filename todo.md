@@ -27,3 +27,5 @@
 12. and deal with the image loading CORS issue.
 13. show URLs in comments as 'a' tag.
 14. add click outside to unfocus & close the subreddit selection input.
+15. add history to get back in stack from focus mode with react-dom.
+16. do something about the bad rendering of stack mode on r/mechanicalkeyboards

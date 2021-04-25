@@ -11,7 +11,8 @@ export default function Thoughts({
 	setSubreddit,
 	previousSubreddit
 }) {
-	const TESTINGMODE = "focus";
+	// the displayMode gets set to $TESTINGMODE after every subreddit change.
+	const TESTINGMODE = "stack";
 	let [dataReceived, setDataReceived] = useState(false);
 	const validModes = ["focus", "stack"];
 	const [displayMode, setDisplayMode] = React.useState("");
@@ -40,6 +41,7 @@ export default function Thoughts({
 					setDataReceived(true);
 				})
 				.catch((e) => {
+					// todo: add msg for community doesnt exist 404
 					if (e.message === "private") {
 						alert("cannot browse private community");
 						setSubreddit(previousSubreddit.current);
@@ -50,8 +52,8 @@ export default function Thoughts({
 		}
 	}, [subreddit]);
 
-	const findComment = (url) =>
-		comments.filter((val) => `${val.url}.json` === url);
+	const findComment = (link) =>
+		comments.filter((val) => `${val.link}.json` === link);
 
 	const getComments = async (postUrl) => {
 		console.log("HEY", postUrl);
@@ -64,10 +66,10 @@ export default function Thoughts({
 		try {
 			const res = await fetch(postUrl);
 			const c = await res.json();
-			let url = c[0].data.children[0].data.url; // | id | subreddit_id | title | permalink | url;
+			let link = c[0].data.children[0].data.permalink; // | id | subreddit_id | title | permalink | url;
 			// kind: "listing" | "t1" | "t3"
 			let comObj = {
-				url: url,
+				link: link,
 				comments: c[1].data.children
 			};
 			setComments((coms) => coms.concat([comObj]));
@@ -94,6 +96,14 @@ export default function Thoughts({
 		}
 	};
 
+	const initPostNo = useRef(0);
+	const expandView = (postNo) => {
+		console.log(postNo);
+		initPostNo.current = Number(postNo);
+		setDisplayMode("focus");
+	};
+	// hmmm is passing initPostNo instead of setInitPostNo gonna take more memry ?
+
 	return (
 		<div className="viewarea">
 			{/*should we add a powerbar here to control the view styles etc ?? */}
@@ -102,13 +112,22 @@ export default function Thoughts({
 					{postsData &&
 						// this doesnt need any initial no data phase protection coz postsData has 0 elements at that time
 						postsData.map((post, i) => (
-							<Post key={i} {...post.data}></Post>
+							<Post
+								key={i}
+								index={i}
+								{...post.data}
+								expandView={expandView}
+							></Post>
 						))}
 				</StackGrid>
 			)}
 			{/*when i used the useRef hook to store dataReceived it didnt work coz after being set to true it did not cause a re-render */}
 			{displayMode === "focus" && dataReceived && (
-				<Focus postsData={postsData} getComments={getComments} />
+				<Focus
+					postsData={postsData}
+					getComments={getComments}
+					initPostNo={initPostNo.current}
+				/>
 			)}
 		</div>
 	);
@@ -122,11 +141,20 @@ function Post({
 	total_awards_received,
 	num_comments,
 	created_utc,
-	displayMode = "stack"
+	permalink,
+	displayMode = "stack",
+	expandView,
+	index
 }) {
+	const link = `https://www.reddit.com/${permalink}`;
 	// idk what it does. had something to do with me playing around in inspect element and changing the Speech height to 1em;
 	return (
-		<div className="post">
+		<div
+			className="post"
+			onClick={() => {
+				expandView(index);
+			}}
+		>
 			<p className="author">{`u/${author}`}</p>
 			<h2 className="title">{title || "title"}</h2>
 			{selftext && (
@@ -139,14 +167,23 @@ function Post({
 				score: {score} {total_awards_received} {num_comments}
 				{created_utc}
 			</span>
-			<Speech stop={true} pause={true} resume={true} text={title} />
+			<div className="speech">
+				<Speech stop={true} pause={true} resume={true} text={title} />
+			</div>
+			{/*todo: OK so the url here that we consider the link to comments is the image link ends in png
+			 in r/mechanicalkeyboards but in r/showerthoughts $url is a link to the post comments
+			 FIX: instead use permalink [nope didnt work] sometimes it does lol
+			 		--oh ya it did work i had a syntax error url : permalink
+			 idea: hmm check for png / jpg / gif / mp4 etc at end (for video its v.reddit.... no mp4)
+			 idea: can we get image with "thumbnail" ?*/}
+			<a href={link}>{link}</a>
 		</div>
 	);
 	// score, total_awards_received
 }
 
-const Focus = ({ postsData, getComments }) => {
-	const [currentPost, setCurrentPost] = useState(0);
+const Focus = ({ postsData, getComments, initPostNo = 0 }) => {
+	const [currentPost, setCurrentPost] = useState(initPostNo);
 	const [currentComments, setCurrentComments] = useState([]);
 	// currentComments : {url:[url], comments: obj `children[]]`}
 	const currentPostData = postsData[currentPost].data;
@@ -155,19 +192,11 @@ const Focus = ({ postsData, getComments }) => {
 	useHotkeys("n", () => setCurrentPost((currentPost) => ++currentPost));
 	useHotkeys("p", () => setCurrentPost((currentPost) => --currentPost));
 
-	// /////////////////////////////
-	// const _handleEscKey = function (event) {
-	// 	console.log(event);
-	// 	if (event.keyCode === 27) {
-	// 		console.error("lol");
-	// 	}
-	// };
-	// /////////////////////////////
-
 	useEffect(() => {
 		// Load Comments
 		// let curl = `${"https://www.reddit.com/r/Showerthoughts/comments/mw2amn/having_to_attend_a_wedding_you_dont_want_to_sucks/"}.json`;
-		let curl = `${currentPostData.url}.json`;
+		let curl = `https://www.reddit.com/${currentPostData.permalink}.json`;
+		// todo: change url to permalink in above line
 		const result = getComments(curl);
 		result.then((comObj) => {
 			if (comObj === 1) {

@@ -16,6 +16,11 @@ body {
 	font: Ariel;
 }
 
+body ::selection {
+	background-color: #d19c2f23;
+	text-decoration: underline;
+}
+
 .container {
 	/* background-color: brown; */
 	margin-top: 20px;

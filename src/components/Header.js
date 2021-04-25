@@ -39,7 +39,7 @@ export default function Header({ subreddit, setSubreddit, previousSubreddit }) {
 				{selectMenuOpen && (
 					// NICE  better way to pass props
 					<SubredditSelect
-						{...{ sel_subreddit, subreddit }}
+						{...{ sel_subreddit, subreddit, closeSelectMenu }}
 					></SubredditSelect>
 				)}
 			</span>
@@ -49,12 +49,19 @@ export default function Header({ subreddit, setSubreddit, previousSubreddit }) {
 	);
 }
 
-const SubredditSelect = ({ sel_subreddit, subreddit }) => {
+const SubredditSelect = ({ sel_subreddit, subreddit, closeSelectMenu }) => {
 	const subSel = useRef();
-	const [inputSub, setInputSub] = useState("r/");
+	const [inputSub, setInputSub] = useState(`r/${subreddit}`);
 
+	// focus on mount and auto close of out click.
 	useEffect(() => {
 		subSel.current.focus();
+		const watch = (e) => e.target !== subSel.current && closeSelectMenu();
+		document.addEventListener("click", watch);
+
+		return () => {
+			document.removeEventListener("click", watch);
+		};
 	}, []);
 
 	return (

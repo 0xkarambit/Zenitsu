@@ -30,9 +30,22 @@
 
 .toplevel {
 	border-bottom: 4px solid #282d35;
+	margin-bottom: 10px;
+	padding-bottom: 10px;
+}
+
+.toplevel:nth-child(2n) {
+	/* filter: brightness(1.5); */
+	background-color: #17141d;
 }
 
 /* to style the speech component */
-.rs-container {
+/* .rs-container {
+	width: minmax(40px, 10%) !important;
 	width: 10% !important;
+} */
+
+.speech {
+	/* i guess that fixes it todo: not for mobile toh maybe*/
+	width: 20vw;
 }
