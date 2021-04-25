@@ -9,7 +9,7 @@ const icon = {
 	color: "white"
 };
 
-export default function Header({ subreddit, setSubreddit }) {
+export default function Header({ subreddit, setSubreddit, previousSubreddit }) {
 	const [selectMenuOpen, setSelectMenuState] = useState(false);
 
 	const toggleSelectMenu = () => setSelectMenuState(!selectMenuOpen);
@@ -18,6 +18,7 @@ export default function Header({ subreddit, setSubreddit }) {
 	const sel_subreddit = (sub) => {
 		closeSelectMenu();
 		// sub includes "r/"
+		previousSubreddit.current = subreddit;
 		setSubreddit(sub.slice(2));
 	};
 

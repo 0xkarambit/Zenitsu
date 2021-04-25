@@ -6,7 +6,11 @@ import "./thoughts.css";
 import StackGrid from "react-stack-grid";
 import { useHotkeys } from "react-hotkeys-hook";
 
-export default function Thoughts({ subreddit }) {
+export default function Thoughts({
+	subreddit,
+	setSubreddit,
+	previousSubreddit
+}) {
 	const TESTINGMODE = "focus";
 	let [dataReceived, setDataReceived] = useState(false);
 	const validModes = ["focus", "stack"];
@@ -19,10 +23,15 @@ export default function Thoughts({ subreddit }) {
 	React.useEffect(() => {
 		// const url = "https://www.reddit.com/r/Showerthoughts/top/?t=month";
 		// by default .json at the end pulls the hot listings
+		// is this try-catch useless lol.
 		try {
 			const url = `https://www.reddit.com/r/${subreddit}.json`;
 			fetch(url)
-				.then((res) => (res.status !== 200 ? 1 : res.json()))
+				.then((res) => {
+					if (res.status === 200) return res.json();
+					// ok so the try-catch cant catch errors thrown in these callbacks hmmm.
+					else if (res.status === 403) throw Error("private");
+				})
 				.then((json) => {
 					console.log(json.data.children);
 					setPostsData(json.data.children.slice(1));
@@ -30,10 +39,14 @@ export default function Thoughts({ subreddit }) {
 					setDisplayMode(TESTINGMODE);
 					setDataReceived(true);
 				})
-				.catch(console.error);
+				.catch((e) => {
+					if (e.message === "private") {
+						alert("cannot browse private community");
+						setSubreddit(previousSubreddit.current);
+					}
+				});
 		} catch (e) {
-			console.log("reached");
-			console.error(e);
+			console.log(e);
 		}
 	}, [subreddit]);
 

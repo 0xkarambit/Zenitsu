@@ -26,3 +26,4 @@
 11. inspect https://www.reddit.com/r/MechanicalKeyboards/comments/mxdn24/somehow_i_took_a_photo_that_looks_like_a_render.json/
 12. and deal with the image loading CORS issue.
 13. show URLs in comments as 'a' tag.
+14. add click outside to unfocus & close the subreddit selection input.

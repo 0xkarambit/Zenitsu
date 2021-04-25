@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 
 import Header from "./components/Header.js";
 import Sidebar from "./components/Sidebar.js";
@@ -7,12 +7,18 @@ import Thoughts from "./components/Thoughts.js";
 function App() {
 	const [subreddit, setSubreddit] = useState("showerthoughts");
 
+	const previousSubreddit = useRef();
+
 	return (
 		<div className="App">
-			<Header subreddit={subreddit} setSubreddit={setSubreddit} />
+			<Header
+				subreddit={subreddit}
+				setSubreddit={setSubreddit}
+				previousSubreddit={previousSubreddit}
+			/>
 			<div className="container">
 				<Sidebar />
-				<Thoughts subreddit={subreddit} />
+				<Thoughts {...{ subreddit, setSubreddit, previousSubreddit }} />
 			</div>
 		</div>
 	);
