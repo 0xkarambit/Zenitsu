@@ -143,7 +143,7 @@ function Post({
 	created_utc,
 	permalink,
 	displayMode = "stack",
-	expandView,
+	expandView = () => {},
 	index
 }) {
 	const link = `https://www.reddit.com/${permalink}`;
@@ -189,8 +189,19 @@ const Focus = ({ postsData, getComments, initPostNo = 0 }) => {
 	const currentPostData = postsData[currentPost].data;
 
 	// https://github.com/jaywcjlove/hotkeys/#defining-shortcuts
-	useHotkeys("n", () => setCurrentPost((currentPost) => ++currentPost));
-	useHotkeys("p", () => setCurrentPost((currentPost) => --currentPost));
+	useHotkeys("n", () =>
+		setCurrentPost((currentPost) =>
+			currentPost === postsData.length - 1 ? currentPost : ++currentPost
+		)
+	);
+	useHotkeys(
+		"p",
+		() =>
+			setCurrentPost((currentPost) =>
+				currentPost === 0 ? 0 : --currentPost
+			)
+		// practically we should load more posts at this point. or show a msg when the listing has been finished
+	);
 
 	useEffect(() => {
 		// Load Comments
@@ -202,6 +213,7 @@ const Focus = ({ postsData, getComments, initPostNo = 0 }) => {
 			if (comObj === 1) {
 				// likely fetch request went wrong.
 				alert("likely fetch request went wrong");
+				// todo we need better error handling lol.
 				return null;
 			}
 			console.log(comObj);

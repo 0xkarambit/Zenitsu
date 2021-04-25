@@ -29,3 +29,5 @@
 14. add click outside to unfocus & close the subreddit selection input.
 15. add history to get back in stack from focus mode with react-dom.
 16. do something about the bad rendering of stack mode on r/mechanicalkeyboards
+17. found bug by pressing down `p` rapidly until the comments were out of sync with the post.
+18. i think the post are not ordered in the stack mode.
