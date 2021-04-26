@@ -31,3 +31,5 @@
 16. do something about the bad rendering of stack mode on r/mechanicalkeyboards
 17. found bug by pressing down `p` rapidly until the comments were out of sync with the post.
 18. i think the post are not ordered in the stack mode.
+19. full post discription is not being shown check https://www.reddit.com/r/nosleep/comments/mys1be/my_neighbor_has_been_paying_me_to_spend_time_with/.
+20. how are cross posts shown ??

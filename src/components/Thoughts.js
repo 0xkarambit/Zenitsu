@@ -146,8 +146,11 @@ function Post({
 	expandView = () => {},
 	index
 }) {
-	const link = `https://www.reddit.com/${permalink}`;
+	const link = `https://www.reddit.com${permalink}`;
 	// idk what it does. had something to do with me playing around in inspect element and changing the Speech height to 1em;
+	/*{(displayMode === "stack")
+						? selftext.slice(0, 200)
+						: selftext} */
 	return (
 		<div
 			className="post"
@@ -157,12 +160,15 @@ function Post({
 		>
 			<p className="author">{`u/${author}`}</p>
 			<h2 className="title">{title || "title"}</h2>
-			{selftext && (
-				<p className="postbody">
-					{(displayMode === "stack" && selftext.slice(0, 200)) ||
-						selftext}
-				</p>
-			)}
+			<p className="postbody">
+				{(() => {
+					if (selftext) {
+						return displayMode === "stack"
+							? selftext.slice(0, 200)
+							: selftext;
+					}
+				})()}
+			</p>
 			<span className="details">
 				score: {score} {total_awards_received} {num_comments}
 				{created_utc}
@@ -206,7 +212,7 @@ const Focus = ({ postsData, getComments, initPostNo = 0 }) => {
 	useEffect(() => {
 		// Load Comments
 		// let curl = `${"https://www.reddit.com/r/Showerthoughts/comments/mw2amn/having_to_attend_a_wedding_you_dont_want_to_sucks/"}.json`;
-		let curl = `https://www.reddit.com/${currentPostData.permalink}.json`;
+		let curl = `https://www.reddit.com${currentPostData.permalink}.json`;
 		// todo: change url to permalink in above line
 		const result = getComments(curl);
 		result.then((comObj) => {
@@ -225,7 +231,7 @@ const Focus = ({ postsData, getComments, initPostNo = 0 }) => {
 
 	return (
 		<>
-			<Post {...currentPostData} />
+			<Post {...currentPostData} displayMode={"focus"} />
 			{/*<Comments/>*/}
 			<div className="comments">
 				{currentComments &&

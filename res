@@ -46,3 +46,27 @@ dist = 1 means its the post...
 															body: "Lol wut? Neither of the 2"
 							|// this has the subsequent replies. single thread.
 							// last reply has kind: "more", data: {count: 27, }
+
+
+https://www.reddit.com/r/memes/comments/my7u7e/bee_movie_was_weird_times.json/
+what is this "post_hint": "image" in here ?
+preview
+	images
+		source: {
+			url:,
+		}
+		resolutions: [
+			{}
+		]
+
+found "is_video"
+"media"
+
+this doesnt work as expected
+{selftext && (
+				<p className="postbody">
+					{displayMode === "stack"
+						? selftext.slice(0, 200)
+						: selftext}
+				</p>
+			)}

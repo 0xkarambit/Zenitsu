@@ -72,7 +72,7 @@ const SubredditSelect = ({ sel_subreddit, subreddit, closeSelectMenu }) => {
 				onKeyDown={(e) => e.key === "Enter" && sel_subreddit(inputSub)}
 				onChange={(e) => {
 					let val = e.target.value;
-					if (val === "r" || val === "") val = "r/";
+					if (["r", "/", ""].includes(val)) val = "r/";
 					setInputSub(val);
 				}}
 				placeholder={`r/${subreddit}`}
@@ -86,7 +86,7 @@ function NOTICE() {
 		<span
 			style={{
 				marginLeft: "10px",
-				backgroundColor: "#ffc861",
+				// backgroundColor: "#ffc861",
 				color: "#2f4360",
 				borderRadius: "10px"
 			}}
