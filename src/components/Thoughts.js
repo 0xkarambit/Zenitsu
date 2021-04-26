@@ -32,6 +32,7 @@ export default function Thoughts({
 					if (res.status === 200) return res.json();
 					// ok so the try-catch cant catch errors thrown in these callbacks hmmm.
 					else if (res.status === 403) throw Error("private");
+					else if (res.status === 404) throw Error("Not Found");
 				})
 				.then((json) => {
 					console.log(json.data.children);
@@ -44,8 +45,10 @@ export default function Thoughts({
 					// todo: add msg for community doesnt exist 404
 					if (e.message === "private") {
 						alert("cannot browse private community");
-						setSubreddit(previousSubreddit.current);
+					} else if (e.message === "Not Found") {
+						alert("no such community exists");
 					}
+					setSubreddit(previousSubreddit.current);
 				});
 		} catch (e) {
 			console.log(e);
@@ -142,15 +145,18 @@ function Post({
 	num_comments,
 	created_utc,
 	permalink,
+	thumbnail,
+	preview,
+	url,
 	displayMode = "stack",
 	expandView = () => {},
 	index
 }) {
 	const link = `https://www.reddit.com${permalink}`;
-	// idk what it does. had something to do with me playing around in inspect element and changing the Speech height to 1em;
-	/*{(displayMode === "stack")
-						? selftext.slice(0, 200)
-						: selftext} */
+	const badThumbnail = ["", "self"];
+	// const imageUrl = preview.images[0].resolutions[] // these urls dont work restricted BUT url will work here
+	// todo: oh there can be multiple photos
+
 	return (
 		<div
 			className="post"
@@ -169,6 +175,18 @@ function Post({
 					}
 				})()}
 			</p>
+			{displayMode === "stack" && !badThumbnail.includes(thumbnail) && (
+				<img src={thumbnail} alt="thumbnail"></img>
+			)}
+			{displayMode === "focus" && (
+				<img
+					height="400px"
+					width="400px"
+					src={url}
+					alt="thumbnail"
+					style={{ objectFit: "contain" }}
+				></img>
+			)}
 			<span className="details">
 				score: {score} {total_awards_received} {num_comments}
 				{created_utc}

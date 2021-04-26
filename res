@@ -70,3 +70,9 @@ this doesnt work as expected
 						: selftext}
 				</p>
 			)}
+// mod posts
+distinguished: moderator
+
+how do i know what ."url" is ? | post link | video link | image | forwarding link |
+
+the ones withoit images dont have a thumbnail ???

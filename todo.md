@@ -10,6 +10,7 @@
 8. use ChakraUI ? idk.
 9. add shift + p command pelet.
 10. add keyboard shortcuts menu with `ctrl + /` and key bindings to go through threads smoothly.
+11. add controller support.
 
 # todo
 
@@ -29,7 +30,13 @@
 14. add click outside to unfocus & close the subreddit selection input.
 15. add history to get back in stack from focus mode with react-dom.
 16. do something about the bad rendering of stack mode on r/mechanicalkeyboards
-17. found bug by pressing down `p` rapidly until the comments were out of sync with the post.
+17. found bug by pressing down `p` rapidly until the comments were out 5. of sync with the post.
 18. i think the post are not ordered in the stack mode.
 19. full post discription is not being shown check https://www.reddit.com/r/nosleep/comments/mys1be/my_neighbor_has_been_paying_me_to_spend_time_with/.
 20. how are cross posts shown ??
+21. link at body. https://www.reddit.com/r/nosleep/comments/myqgz0/scariest_nosleep_story_of_2020_voting_thread/
+22. notify user if a community has no posts.
+23. not rendered correctly https://www.reddit.com/r/Showerthoughts/comments/myp61j/the_amount_of_batman_sightings_in_a_neighborhood/gvwa74n?utm_source=share&utm_medium=web2x&context=3
+24. Sometimes the stack layout gets jittery when changing subreddits.
+25. sometimes videos get mistaken for photos with current implementation of Post component.
+26. look at network tab while browsing r/mechanicalkeyboards in focus mode.
