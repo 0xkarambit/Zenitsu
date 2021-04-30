@@ -1,43 +1,46 @@
 .viewarea {
-	font-size: 29px;
-	color: white;
-	font-family: Arial, Helvetica, sans-serif;
-	background-color: inherit;
-	overflow: auto;
+  font-size: 29px;
+  color: white;
+  font-family: Arial, Helvetica, sans-serif;
+  background-color: inherit;
+  overflow: auto;
 }
 
 .post {
-	width: auto;
-	height: auto;
-	border: 2px solid black;
-	font-size: 20px;
-	padding: 5px;
-	margin: 5px;
-	overflow: hidden;
+  width: auto;
+  height: auto;
+  /* border: 2px solid black; */
+  font-size: 20px;
+  padding: 5px;
+  margin: 5px;
+  overflow: hidden;
 }
 
 .author {
-	color: blue;
-	font-size: 0.8em;
-	margin-block-start: 0.3em;
-	margin-block-end: 0.3em;
+  color: #303943;
+  font-size: 0.8em;
+  margin-block-start: 0.3em;
+  margin-block-end: 0.3em;
+}
+
+.details {
 }
 
 .title {
-	margin-block-start: 0.1em;
-	margin-block-end: 0.1em;
+  margin-block-start: 0.1em;
+  margin-block-end: 0.1em;
 }
 
 .toplevel {
-	border-bottom: 4px solid #282d35;
-	margin-bottom: 10px;
-	padding-bottom: 10px;
+  border-bottom: 4px solid #282d35;
+  margin-bottom: 10px;
+  padding-bottom: 10px;
 }
 
-.toplevel:nth-child(2n) {
-	/* filter: brightness(1.5); */
-	background-color: #17141d;
-}
+/* alternate comments dff style */
+/* .toplevel:nth-child(2n) {
+  background-color: #17141d;
+} */
 
 /* to style the speech component */
 /* .rs-container {
@@ -46,6 +49,6 @@
 } */
 
 .speech {
-	/* i guess that fixes it todo: not for mobile toh maybe*/
-	width: 20vw;
+  /* i guess that fixes it todo: not for mobile toh maybe*/
+  width: 20vw;
 }

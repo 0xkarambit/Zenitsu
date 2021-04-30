@@ -1,45 +1,46 @@
 header {
-	display: flex;
-	align-items: center;
-	/* justify-content: left; */
-	/* for the site-in-development notice */
-	justify-content: space-between;
-	color: white;
-	font-size: 2em;
-	/* lineHeight: 100px; */
-	margin: none;
-	padding-left: 5px;
-	/* background-color: #222; */
+  display: flex;
+  align-items: center;
+  /* justify-content: left; */
+  /* for the site-in-development notice */
+  justify-content: space-between;
+  background-color: #fcc1a7;
+  color: white;
+  font-size: 2em;
+  /* lineHeight: 100px; */
+  margin: none;
+  padding-left: 5px;
+  /* background-color: #222; */
 }
 
 span {
-	display: flex;
-	align-items: center;
-	justify-content: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .banner {
-	text-decoration: none;
-	color: inherit;
-	margin-left: 7px;
-	font-family: Arial, Helvetica, sans-serif;
+  text-decoration: none;
+  color: inherit;
+  margin-left: 7px;
+  font-family: Arial, Helvetica, sans-serif;
 }
 
 p {
-	margin-block-start: 0em;
-	margin-block-end: 0em;
+  margin-block-start: 0em;
+  margin-block-end: 0em;
 }
 
 .sub-sel {
-	position: absolute;
-	top: 100px;
-	left: 100px;
-	/* float: left; */
-	text-align: center;
-	width: inherit;
+  position: absolute;
+  top: 100px;
+  left: 100px;
+  /* float: left; */
+  text-align: center;
+  width: inherit;
 }
 
 /*fix the input style*/
 input {
-	max-width: inherit;
+  max-width: inherit;
 }

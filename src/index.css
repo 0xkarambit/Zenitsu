@@ -1,35 +1,40 @@
 :root {
-	--primary: #0a0d12;
-	--dark: #030304;
+  --primary: #edf6f9;
+  /* --primary: #0a0d12; */
+  --dark: #edf6f9;
+  /* --dark: #030304; */
 }
 
 *,
 *::after,
 *::before {
-	padding: 0px 0px;
-	margin: none;
-	color: #d7dadc;
+  padding: 0px 0px;
+  margin: none;
+  color: #1c1412;
 }
 
+html,
 body {
-	/* background-color: rgba(10, 13, 18, 0.8); */
-	background-color: var(--primary);
-	font: Ariel;
+  /* background-color: rgba(10, 13, 18, 0.8); */
+  background-color: var(--primary);
+  font: Ariel;
+  margin: none;
+  padding: 0px 0px;
 }
 
 body ::selection {
-	background-color: #d19c2f23;
-	text-decoration: underline;
+  background-color: #d19c2f23;
+  text-decoration: underline;
 }
 
 .container {
-	/* background-color: brown; */
-	margin-top: 20px;
-	border-radius: 10px;
-	padding: 10px;
+  /* background-color: brown; */
+  margin-top: 20px;
+  border-radius: 10px;
+  padding: 10px;
 
-	/* display for children  */
-	display: grid;
-	grid-template-rows: minmax(2fr, 200px) 8fr;
-	grid-gap: 20px;
+  /* display for children  */
+  display: grid;
+  grid-template-rows: minmax(2fr, 200px) 8fr;
+  grid-gap: 20px;
 }
