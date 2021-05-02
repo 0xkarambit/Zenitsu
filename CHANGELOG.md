@@ -1,4 +1,6 @@
-## CHANGELOG (4/30/2021 11:19 pm)
+## CHANGELOG (5/02/2021 3:39 pm)
 
-1. Changed color and background color to light mode.
-2. added feature to load post from url when post's url is entered in pathname(still loads other listings [hot category]).
+1. Added loadMorePosts Button !
+2. tried to implment the videos (CORS error).
+3. tried to add loadMoreComments button (NOT WORKING currently).
+4. focus mode will not render broken img elements now when there is no image in post.

@@ -13,6 +13,7 @@ export default function Thoughts({
 }) {
   // the displayMode gets set to $TESTINGMODE after every subreddit change.
   const TESTINGMODE = "stack";
+  const [afterCode, setAfterCode] = useState("");
   let [dataReceived, setDataReceived] = useState(false);
   const validModes = ["focus", "stack"];
   const [displayMode, setDisplayMode] = React.useState("");
@@ -23,6 +24,7 @@ export default function Thoughts({
   // Code to show post referenced in URL pathname
   useEffect(() => {
     if (window.location.pathname !== "/") {
+      // BUT IF THIS CODE RUNS THEN WE DONT NEED TO GET THE OTHER 'LISTINGS' .
       // isRedditPosturl
       // window.location.pathname doesnt show ?params at end.
       // console.log(window.location.pathname);
@@ -56,6 +58,7 @@ export default function Thoughts({
     // by default .json at the end pulls the hot listings
     // is this try-catch useless lol.
     try {
+      // how do i load the top listings !!??
       const url = `https://www.reddit.com/r/${subreddit}.json`;
       fetch(url)
         .then((res) => {
@@ -70,6 +73,7 @@ export default function Thoughts({
           // if we set the data before we have the data the other components try to render using the data which results in errors.
           setDisplayMode(TESTINGMODE);
           setDataReceived(true);
+          setAfterCode(json.data.after);
         })
         .catch((e) => {
           // todo: add msg for community doesnt exist 404
@@ -129,6 +133,17 @@ export default function Thoughts({
     }
   };
 
+  function loadMorePosts() {
+    if (["", null].includes(afterCode)) return null;
+    const url = `https://www.reddit.com/r/${subreddit}.json?after=${afterCode}`;
+    fetch(url)
+      .then((res) => res.json())
+      .then((body) => {
+        setPostsData((posts) => [...posts, ...body.data.children]);
+        setAfterCode(body.data.after);
+      });
+  }
+
   const initPostNo = useRef(0);
   const expandView = (postNo) => {
     console.log(postNo);
@@ -141,18 +156,21 @@ export default function Thoughts({
     <div className="viewarea">
       {/*should we add a powerbar here to control the view styles etc ?? */}
       {displayMode === "stack" && (
-        <StackGrid columnWidth={300}>
-          {postsData &&
-            // this doesnt need any initial no data phase protection coz postsData has 0 elements at that time
-            postsData.map((post, i) => (
-              <Post
-                key={i}
-                index={i}
-                {...post.data}
-                expandView={expandView}
-              ></Post>
-            ))}
-        </StackGrid>
+        <>
+          <StackGrid columnWidth={300}>
+            {postsData &&
+              // this doesnt need any initial no data phase protection coz postsData has 0 elements at that time
+              postsData.map((post, i) => (
+                <Post
+                  key={i}
+                  index={i}
+                  {...post.data}
+                  expandView={expandView}
+                ></Post>
+              ))}
+          </StackGrid>
+          <Post loadMorePosts={loadMorePosts} postsLoader={true}></Post>
+        </>
       )}
       {/*when i used the useRef hook to store dataReceived it didnt work coz after being set to true it did not cause a re-render */}
       {displayMode === "focus" && dataReceived && (
@@ -178,15 +196,29 @@ function Post({
   thumbnail,
   preview,
   url,
+  post_hint,
+  url_overridden_by_dest,
   displayMode = "stack",
   expandView = () => {},
-  index
+  index,
+  loadMorePosts = false,
+  postsLoader = false
 }) {
+  if (postsLoader) {
+    console.log("endsad");
+    return (
+      <div className="post">
+        <button onClick={loadMorePosts}>loadMorePosts</button>
+      </div>
+    );
+  }
   const link = `https://www.reddit.com${permalink}`;
   const badThumbnail = ["", "self"];
   // const imageUrl = preview.images[0].resolutions[] // these urls dont work restricted BUT url will work here
   // todo: oh there can be multiple photos
   const dateCreated = new Date(created_utc).toString();
+  // const relativeTime = new Intl.relativeTimeFormat("en", {style: "long", numeric: "auto"})
+  // console.log(post_hint);
   return (
     <div
       className="post"
@@ -207,15 +239,34 @@ function Post({
       {displayMode === "stack" && !badThumbnail.includes(thumbnail) && (
         <img src={thumbnail} alt="thumbnail"></img>
       )}
-      {displayMode === "focus" && (
-        <img
-          height="400px"
-          width="400px"
-          src={url}
-          alt="thumbnail"
-          style={{ objectFit: "contain" }}
-        ></img>
-      )}
+      {(() => {
+        if (displayMode === "focus") {
+          if (post_hint === "image") {
+            return (
+              <img
+                height="400px"
+                width="400px"
+                src={url}
+                alt="thumbnail"
+                style={{ objectFit: "contain" }}
+              ></img>
+            );
+          } else if (post_hint === "hosted:video") {
+            return (
+              <video
+                src={url_overridden_by_dest}
+                type="video/mp4"
+                controls="true"
+                loop="true"
+                preload="metadata"
+                poster={thumbnail}
+                height="400px"
+                width="400px"
+              ></video>
+            );
+          }
+        }
+      })()}
       {/* IMAGE implementation regionEnd */}
       {/* score: {score} {total_awards_received} {num_comments}
 				{created_utc} */}
@@ -287,9 +338,12 @@ const Focus = ({ postsData, getComments, initPostNo = 0 }) => {
             if (commentObj.kind === "more") return null;
             return (
               <Comment
+                getComments={getComments}
                 data={commentObj.data}
                 topLevel={true}
                 key={commentObj.data.id}
+                perma_link={currentPostData.perma_link}
+                setCurrentComments={setCurrentComments}
               />
             );
           })}
@@ -298,9 +352,21 @@ const Focus = ({ postsData, getComments, initPostNo = 0 }) => {
   );
 };
 
-const Comment = ({ data, ml = 0, topLevel = false }) => {
+const Comment = ({
+  data,
+  ml = 0,
+  topLevel = false,
+  getComments,
+  perma_link,
+  setCurrentComments
+}) => {
   // Comment is a recursive component.
-  const styles = { marginLeft: `${ml}px` };
+  const styles = {
+    marginLeft: `${ml}px`,
+    marginBottom: `5px`,
+    borderBottom: `dashed #e2e2e2 1px`,
+    width: "auto" // doesnt fix the border extending beyond the text.
+  };
   const mlinc = 20;
   let className = topLevel ? "toplevel comment" : "comment";
   return (
@@ -310,18 +376,59 @@ const Comment = ({ data, ml = 0, topLevel = false }) => {
       {data.replies !== "" &&
         data.replies.data.children.map((replyData) => {
           // replyData is a standard comment Obj
-          if (replyData.kind === "more") return null;
+          if (replyData.kind === "more") {
+            return (
+              <LoadMoreComments
+                {...{
+                  id: replyData.id,
+                  getComments,
+                  perma_link,
+                  setCurrentComments
+                }}
+              />
+            );
+          }
           // todo: return a <load more/> component;
           return (
             <Comment
               data={replyData.data}
               ml={ml + mlinc}
               key={replyData.data.id}
+              getComments={getComments}
+              {...{
+                id: replyData.id,
+                perma_link,
+                setCurrentComments
+              }}
             />
           );
           // {data.replies && <Comment data={data.replies.data.children}></Comment>}
         })}
     </div>
+  );
+};
+
+const LoadMoreComments = ({
+  id,
+  getComments,
+  perma_link,
+  setCurrentComments
+}) => {
+  const load = () => {
+    let url = "https://www.reddit.com" + perma_link + "/" + id + ".json";
+    getComments(url).then((comObj) => {
+      if (comObj === 1) {
+        alert("likely fetch request went wrong");
+        return null;
+      }
+      // console.log(comObj);
+      setCurrentComments(comObj.comments);
+    });
+  };
+  return (
+    <button class="comments-loader" onClick={load}>
+      load more comments id
+    </button>
   );
 };
 

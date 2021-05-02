@@ -11,6 +11,7 @@
 9. add shift + p command pelet.
 10. add keyboard shortcuts menu with `ctrl + /` and key bindings to go through threads smoothly.
 11. add controller support.
+12. [not related to this project but make a lazy JSON parsing website]
 
 # todo
 
@@ -49,3 +50,17 @@
 32) add see post based on url.
     Left image | Right Image
     INF. add OAuth
+
+33. add load more comments button.
+    24 solve the 'design' problem with loading more comments.
+34. use "body_html" in comments to render with markdown.
+35. error image not loading https://www.reddit.com/r/ShittyLifeProTips/comments/n1pmj5/slpt_feeling_lonely_or_unwanted_just_cancel/
+36. error image not loading https://www.reddit.com/r/ShittyLifeProTips/comments/n1p3uf/slpt_if_youre_ever_feeling_scared_home_alone_just/
+37. if you click any post on subreddit stack view when the post is bing loaded from url an error occurs.
+38. https://stackoverflow.com/questions/20295875/how-to-load-more-pages-from-the-reddit-api
+    {
+    after: 't3\_' + lastId
+    }
+39. look into url_overridden_by_dest. https://www.youtube.com/watch?v=b1oKDLoAHaI
+40. paginnation : data.after https://youtu.be/b1oKDLoAHaI?t=488
+41. video imp view -> https://developer.mozilla.org/en-US/docs/Web/HTML/Element/video#usage_notes
