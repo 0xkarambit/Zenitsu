@@ -61,6 +61,15 @@
     {
     after: 't3\_' + lastId
     }
+    maybe kind: "more" object's children.length should be greater than 1 ?
+
+    https://www.reddit.com/r/MechanicalKeyboards/comments/mztkm7/girlfriend_has_been_converted/gw35txq/
+    will get comments objects for just one comment ie the one with id gw35txq !
+
+    last more object returns the next comments in line, not the very next apparently
+
 39. look into url_overridden_by_dest. https://www.youtube.com/watch?v=b1oKDLoAHaI
 40. paginnation : data.after https://youtu.be/b1oKDLoAHaI?t=488
 41. video imp view -> https://developer.mozilla.org/en-US/docs/Web/HTML/Element/video#usage_notes
+
+https://www.reddit.com/r/Showerthoughts/comments/n3hepl/one_day_in_the_future_cancer_will_be_treated_as_a/ in url pathname not working.

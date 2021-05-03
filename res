@@ -76,3 +76,4 @@ distinguished: moderator
 how do i know what ."url" is ? | post link | video link | image | forwarding link |
 
 the ones withoit images dont have a thumbnail ???
+we can use the "thumbnail_height", "thumbnail_width"....
