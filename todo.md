@@ -43,11 +43,11 @@
 26. look at network tab while browsing r/mechanicalkeyboards in focus mode.
 27. shows broken image @ reddit.com/r/todayilearned/comments/n1ed0s/til_all_beaches_in_hawaii_outside_of_military/
 
-28) implement vertical split
-29) comments & post sort by
-30) add search posts/sub reddits
-31) add video player
-32) add see post based on url.
+28. implement vertical split
+29. comments & post sort by
+30. add search posts/sub reddits
+31. add video player
+32. add see post based on url.
     Left image | Right Image
     INF. add OAuth
 

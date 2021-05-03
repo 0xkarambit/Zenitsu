@@ -1,10 +1,14 @@
 import React, { useEffect, useRef, useState } from "react";
 // import Speech from "react-speech";
+import StackGrid from "react-stack-grid";
+// import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 
+// styling
 import "./thoughts.css";
 
-import StackGrid from "react-stack-grid";
-import { useHotkeys } from "react-hotkeys-hook";
+// components
+import Post from "./Post.js";
+import FocusView from "./FocusView.js";
 
 export default function Thoughts({
 	subreddit,
@@ -33,20 +37,17 @@ export default function Thoughts({
 			let postUrl = `${window.location.pathname.slice(1)}.json`;
 			// let postUrl = `https://www.reddit.com/r/${window.location.pathname}.json`
 			fetch(postUrl)
-				.then((res) => {
-					console.log(res);
-					return res.json();
-				})
+				.then((res) => res.json())
 				.then((data) => {
 					let d = data[0].data.children;
 					setPostsData(d);
-
 					// set comments
 					let commOBJ = {
 						// check other declaration for duplicae // in url and search
 						url: data[0].data.children[0].data.permalink,
 						comments: data[1].data.children
 					};
+					setDataReceived(true);
 					setComments([commOBJ]);
 					setDisplayMode("focus");
 				})
@@ -182,7 +183,7 @@ export default function Thoughts({
 			)}
 			{/*when i used the useRef hook to store dataReceived it didnt work coz after being set to true it did not cause a re-render */}
 			{displayMode === "focus" && dataReceived && (
-				<Focus
+				<FocusView
 					postsData={postsData}
 					getComments={getComments}
 					initPostNo={initPostNo.current}
@@ -191,258 +192,6 @@ export default function Thoughts({
 		</div>
 	);
 }
-
-function Post({
-	title,
-	selftext,
-	score,
-	author,
-	total_awards_received,
-	num_comments,
-	created_utc,
-	permalink,
-	thumbnail,
-	preview,
-	url,
-	post_hint,
-	url_overridden_by_dest,
-	displayMode = "stack",
-	expandView = () => {},
-	index,
-	loadMorePosts = false,
-	postsLoader = false
-}) {
-	if (postsLoader) {
-		console.log("endsad");
-		return (
-			<div className="post">
-				<button onClick={loadMorePosts}>loadMorePosts</button>
-			</div>
-		);
-	}
-	const link = `https://www.reddit.com${permalink}`;
-	const badThumbnails = ["", "self"];
-	// const imageUrl = preview.images[0].resolutions[] // these urls dont work restricted BUT url will work here
-	// todo: oh there can be multiple photos
-	const dateCreated = new Date(created_utc).toLocaleDateString();
-	// const relativeTime = new Intl.relativeTimeFormat("en", {style: "long", numeric: "auto"})
-	// console.log(post_hint);
-	return (
-		<div
-			className="post"
-			onClick={() => {
-				expandView(index);
-			}}
-		>
-			<p className="author">{`u/${author}`}</p>
-			<h2 className="title">{title || "title"}</h2>
-			<p className="postbody">
-				{(() => {
-					if (selftext) {
-						return displayMode === "stack"
-							? selftext.slice(0, 200)
-							: selftext;
-					}
-				})()}
-			</p>
-			{/* IMAGE imlementaion region */}
-			{displayMode === "stack" && !badThumbnails.includes(thumbnail) && (
-				<img src={thumbnail} alt="thumbnail"></img>
-			)}
-			{(() => {
-				if (displayMode === "focus") {
-					if (post_hint === "image") {
-						return (
-							<img
-								height="400px"
-								width="400px"
-								src={url}
-								alt="thumbnail"
-								style={{ objectFit: "contain" }}
-							></img>
-						);
-					} else if (post_hint === "hosted:video") {
-						return (
-							<video
-								src={url_overridden_by_dest}
-								type="video/mp4"
-								controls="true"
-								loop="true"
-								preload="metadata"
-								poster={thumbnail}
-								height="400px"
-								width="400px"
-							></video>
-						);
-					}
-				}
-			})()}
-			{/* IMAGE implementation regionEnd */}
-			{/* score: {score} {total_awards_received} {num_comments}
-				{created_utc} */}
-			<span className="details">
-				score: {score} {total_awards_received}
-				{dateCreated}
-			</span>
-			{/* <div className="speech">
-				<Speech stop={true} pause={true} resume={true} text={title} />
-			</div> */}
-			{/*todo: OK so the url here that we consider the link to comments is the image link ends in png
-			 in r/mechanicalkeyboards but in r/showerthoughts $url is a link to the post comments
-			 FIX: instead use permalink [nope didnt work] sometimes it does lol
-			 		--oh ya it did work i had a syntax error url : permalink
-			 idea: hmm check for png / jpg / gif / mp4 etc at end (for video its v.reddit.... no mp4)
-			 idea: can we get image with "thumbnail" ?*/}
-			<a href={link}>{link}</a>
-		</div>
-	);
-	// score, total_awards_received
-}
-
-const Focus = ({ postsData, getComments, initPostNo = 0 }) => {
-	const [currentPost, setCurrentPost] = useState(initPostNo);
-	const [currentComments, setCurrentComments] = useState([]);
-	// currentComments : {url:[url], comments: obj `children[]]`}
-	const currentPostData = postsData[currentPost].data;
-
-	// https://github.com/jaywcjlove/hotkeys/#defining-shortcuts
-	useHotkeys("n", () =>
-		setCurrentPost((currentPost) =>
-			currentPost === postsData.length - 1 ? currentPost : ++currentPost
-		)
-	);
-	useHotkeys(
-		"p",
-		() =>
-			setCurrentPost((currentPost) =>
-				currentPost === 0 ? 0 : --currentPost
-			)
-		// practically we should load more posts at this point. or show a msg when the listing has been finished
-	);
-
-	useEffect(() => {
-		// Load Comments
-		// let curl = `${"https://www.reddit.com/r/Showerthoughts/comments/mw2amn/having_to_attend_a_wedding_you_dont_want_to_sucks/"}.json`;
-		let curl = `https://www.reddit.com${currentPostData.permalink}.json`;
-		// todo: change url to permalink in above line
-		const result = getComments(curl);
-		result.then((comObj) => {
-			if (comObj === 1) {
-				// likely fetch request went wrong.
-				alert("likely fetch request went wrong");
-				// todo we need better error handling lol.
-				return null;
-			}
-			console.log(comObj);
-			setCurrentComments(comObj.comments);
-		});
-		// document.addEventListener("keydown", _handleEscKey);
-		// chance to delete comments from memory when post changes ?...
-	}, [currentPostData, currentPost]);
-
-	return (
-		<>
-			<Post {...currentPostData} displayMode={"focus"} />
-			{/*<Comments/>*/}
-			<div className="comments">
-				{currentComments &&
-					currentComments.map((commentObj) => {
-						if (commentObj.kind === "more") return null;
-						return (
-							<Comment
-								getComments={getComments}
-								data={commentObj.data}
-								topLevel={true}
-								key={commentObj.data.id}
-								perma_link={currentPostData.perma_link}
-								setCurrentComments={setCurrentComments}
-							/>
-						);
-					})}
-			</div>
-		</>
-	);
-};
-
-const Comment = ({
-	data,
-	ml = 0,
-	topLevel = false,
-	getComments,
-	perma_link,
-	setCurrentComments
-}) => {
-	// Comment is a recursive component.
-	const styles = {
-		marginLeft: `${ml}px`,
-		marginBottom: `5px`,
-		borderBottom: `dashed #e2e2e2 1px`,
-		width: "auto" // doesnt fix the border extending beyond the text.
-	};
-	const mlinc = 20;
-	let className = topLevel ? "toplevel comment" : "comment";
-	return (
-		// using key as [commentObj]data.id idk how the id is used in reddit tho.
-		<div className={className}>
-			<p style={styles}> {data.body} </p>
-			{data.replies !== "" &&
-				data.replies.data.children.map((replyData) => {
-					// replyData is a standard comment Obj
-					if (replyData.kind === "more") {
-						return (
-							<LoadMoreComments
-								{...{
-									id: replyData.id,
-									getComments,
-									perma_link,
-									setCurrentComments
-								}}
-							/>
-						);
-					}
-					// todo: return a <load more/> component;
-					return (
-						<Comment
-							data={replyData.data}
-							ml={ml + mlinc}
-							key={replyData.data.id}
-							getComments={getComments}
-							{...{
-								id: replyData.id,
-								perma_link,
-								setCurrentComments
-							}}
-						/>
-					);
-					// {data.replies && <Comment data={data.replies.data.children}></Comment>}
-				})}
-		</div>
-	);
-};
-
-const LoadMoreComments = ({
-	id,
-	getComments,
-	perma_link,
-	setCurrentComments
-}) => {
-	const load = () => {
-		let url = "https://www.reddit.com" + perma_link + "/" + id + ".json";
-		getComments(url).then((comObj) => {
-			if (comObj === 1) {
-				alert("likely fetch request went wrong");
-				return null;
-			}
-			// console.log(comObj);
-			setCurrentComments(comObj.comments);
-		});
-	};
-	return (
-		<button class="comments-loader" onClick={load}>
-			load more comments id
-		</button>
-	);
-};
 
 // {
 // 	data.replies.data.children.map((replyData) => {
