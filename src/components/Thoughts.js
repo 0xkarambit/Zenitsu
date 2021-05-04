@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 // import Speech from "react-speech";
 import StackGrid from "react-stack-grid";
-// import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 
 // styling
 import "./thoughts.css";
@@ -22,44 +22,15 @@ export default function Thoughts({
 	// const validModes = ["focus", "stack"];
 	const [displayMode, setDisplayMode] = React.useState("");
 	const [postsData, setPostsData] = React.useState([]);
+	const [permaLinks, setPermaLinks] = React.useState(new Set());
 	// comments will be loaded by children components.
 	const [comments, setComments] = React.useState([]);
-
-	// Code to show post referenced in URL pathname
-	useEffect(() => {
-		console.log(window.location.pathname);
-		if (window.location.pathname !== "/") {
-			// BUT IF THIS CODE RUNS THEN WE DONT NEED TO GET THE OTHER 'LISTINGS' .
-			// isRedditPosturl
-			// window.location.pathname doesnt show ?params at end.
-			// console.log(window.location.pathname);
-			console.log(window.location.pathname);
-			let postUrl = `${window.location.pathname.slice(1)}.json`;
-			// let postUrl = `https://www.reddit.com/r/${window.location.pathname}.json`
-			fetch(postUrl)
-				.then((res) => res.json())
-				.then((data) => {
-					let d = data[0].data.children;
-					setPostsData(d);
-					// set comments
-					let commOBJ = {
-						// check other declaration for duplicae // in url and search
-						url: data[0].data.children[0].data.permalink,
-						comments: data[1].data.children
-					};
-					setDataReceived(true);
-					setComments([commOBJ]);
-					setDisplayMode("focus");
-				})
-				.catch(console.log);
-		}
-	}, []);
 
 	// fetching the data on mount;
 	React.useEffect(() => {
 		// to avoid repainting/rerending/changing state when post url is specified in pathname.
 		if (window.location.pathname !== "/") return null;
-
+		console.log("status ");
 		// const url = "https://www.reddit.com/r/Showerthoughts/top/?t=month";
 		// by default .json at the end pulls the hot listings
 		// is this try-catch useless lol.
@@ -74,10 +45,14 @@ export default function Thoughts({
 					else if (res.status === 404) throw Error("Not Found");
 				})
 				.then((json) => {
-					console.log(json.data.children);
-					setPostsData(json.data.children.slice(1));
+					let children = json.data.children;
+					setPostsData(children);
+					let newLinks = children.map(
+						(child) => child.data.permalink
+					);
+					setPermaLinks(new Set(newLinks));
 					// if we set the data before we have the data the other components try to render using the data which results in errors.
-					setDisplayMode(TESTINGMODE);
+					setDisplayMode("stack");
 					setDataReceived(true);
 					setAfterCode(json.data.after);
 				})
@@ -96,10 +71,15 @@ export default function Thoughts({
 	}, [subreddit]);
 
 	const findComment = (link) =>
-		comments.filter((val) => `${val.link}.json` === link);
+		comments.filter(
+			(val) => `https://www.reddit.com${val.link}.json` === link
+		);
 
 	const getComments = async (postUrl) => {
-		console.log("HEY", postUrl);
+		postUrl = `${postUrl}.json`;
+		console.log("URL REQUESTED FOR COMMENTS");
+		console.log(postUrl);
+
 		// todo: FIX: find comment is not working
 		let foundCom = findComment(postUrl);
 		console.log({ foundCom });
@@ -115,26 +95,34 @@ export default function Thoughts({
 				link: link,
 				comments: c[1].data.children
 			};
-			setComments((coms) => coms.concat([comObj]));
+			setComments((coms) => [...coms, comObj]);
+			// check if postData is there for the post requested in postUrl.
+			if (
+				!permaLinks.has(
+					postUrl
+						.slice("https://www.reddit.com".length)
+						.replace(".json", "")
+				)
+			) {
+				console.log(permaLinks);
+				console.log(
+					postUrl
+						.slice("https://www.reddit.com".length)
+						.replace(".json", "")
+				);
+				console.log("did not already exists");
+				setPostsData((posts) => [...posts, ...c[0].data.children]);
+				let links = [...permaLinks, link];
+				setPermaLinks(new Set(links));
+			}
 			return comObj;
 		} catch (e) {
 			// ok try to know why it failed
 			// wait why did this url even appear here .....
 			// todo: inspect the listings obj
 			console.log("got here");
-			if (e.message === "Failed to fetch") {
-				// likely an image
-				const img = await fetch(postUrl.slice(0, postUrl.length - 5));
-				const blob = await img.blob();
-				// blob to base64data;
-				let base64data = "";
-				var reader = new FileReader();
-				reader.readAsDataURL(blob);
-				reader.onloadend = function () {
-					base64data = reader.result;
-					console.log(base64data);
-				};
-			}
+			alert("postUrl");
+			alert(postUrl);
 			return 1;
 		}
 	};
@@ -146,50 +134,64 @@ export default function Thoughts({
 			.then((res) => res.json())
 			.then((body) => {
 				setPostsData((posts) => [...posts, ...body.data.children]);
+				let newLinks = body.data.children.map(
+					(child) => child.data.permalink
+				);
+
+				let links = [...permaLinks, ...newLinks];
+				setPermaLinks(new Set(links));
 				setAfterCode(body.data.after);
 			});
 	}
 
 	const initPostNo = useRef(0);
 	const expandView = (postNo) => {
-		console.log(postNo);
 		initPostNo.current = Number(postNo);
 		setDisplayMode("focus");
 	};
 	// hmmm is passing initPostNo instead of setInitPostNo gonna take more memry ?
 
 	return (
-		<div className="viewarea">
-			{/*should we add a powerbar here to control the view styles etc ?? */}
-			{displayMode === "stack" && (
-				<>
-					<StackGrid columnWidth={300}>
-						{postsData &&
-							// this doesnt need any initial no data phase protection coz postsData has 0 elements at that time
-							postsData.map((post, i) => (
+		<Router>
+			<div className="viewarea">
+				{/*should we add a powerbar here to control the view styles etc ?? */}
+				<Switch>
+					<Route exact path="/">
+						{dataReceived && (
+							<>
+								<StackGrid columnWidth={300}>
+									{postsData.map((post, i) => (
+										<Link
+											to={`https://www.reddit.com${post.data.permalink}`}
+											style={{ textDecoration: "none" }}
+										>
+											<Post
+												key={i}
+												index={i}
+												{...post.data}
+												expandView={expandView}
+											></Post>
+										</Link>
+									))}
+								</StackGrid>
 								<Post
-									key={i}
-									index={i}
-									{...post.data}
-									expandView={expandView}
+									loadMorePosts={loadMorePosts}
+									postsLoader={true}
 								></Post>
-							))}
-					</StackGrid>
-					<Post
-						loadMorePosts={loadMorePosts}
-						postsLoader={true}
-					></Post>
-				</>
-			)}
-			{/*when i used the useRef hook to store dataReceived it didnt work coz after being set to true it did not cause a re-render */}
-			{displayMode === "focus" && dataReceived && (
-				<FocusView
-					postsData={postsData}
-					getComments={getComments}
-					initPostNo={initPostNo.current}
-				/>
-			)}
-		</div>
+							</>
+						)}
+					</Route>
+					<Route path="/:permalink">
+						<FocusView
+							postsData={postsData}
+							getComments={getComments}
+							initPostNo={initPostNo.current}
+							// PostLoad={postLoad}
+						/>
+					</Route>
+				</Switch>
+			</div>
+		</Router>
 	);
 }
 

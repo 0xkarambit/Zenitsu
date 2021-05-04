@@ -73,3 +73,12 @@
 41. video imp view -> https://developer.mozilla.org/en-US/docs/Web/HTML/Element/video#usage_notes
 
 https://www.reddit.com/r/Showerthoughts/comments/n3hepl/one_day_in_the_future_cancer_will_be_treated_as_a/ in url pathname not working.
+
+42. if we go back from a direct post load from the url the thoughts component is not rerendered and hence
+    there is no data to render.
+43. how about we try to get/find the post from the post url too.
+44. update the url when the user scrolls the post in focus view without changing the history.
+45. fix the inf loading screen on pressing n,p in direct post view.
+46. add crosspost display https://www.reddit.com/r/MechanicalKeyboards/comments/n4etmq/seems_fit/
+47. [bug] when we click on a post in stack mode and then press back button and click another post the previous one shows up
+48. change url without changing history when scrolling through posts.
