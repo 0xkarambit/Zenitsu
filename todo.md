@@ -80,5 +80,4 @@ https://www.reddit.com/r/Showerthoughts/comments/n3hepl/one_day_in_the_future_ca
 44. update the url when the user scrolls the post in focus view without changing the history.
 45. fix the inf loading screen on pressing n,p in direct post view.
 46. add crosspost display https://www.reddit.com/r/MechanicalKeyboards/comments/n4etmq/seems_fit/
-47. [bug] when we click on a post in stack mode and then press back button and click another post the previous one shows up
-48. change url without changing history when scrolling through posts.
+47. change url without changing history when scrolling through posts.

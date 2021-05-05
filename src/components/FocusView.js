@@ -6,8 +6,7 @@ import Comment from "./Comment.js";
 
 const FocusView = ({ postsData, getComments, initPostNo = 0 }) => {
 	const [currentPost, setCurrentPost] = useState(initPostNo);
-	const [currentComments, setCurrentComments] = useState([]);
-	// currentComments : {url:[url], comments: obj `children[]]`}
+	const [currentComments, setCurrentComments] = useState([]); // {url:[url], comments: obj `children[]]`}
 	const currentPostData = postsData[currentPost]?.data;
 	// currentPostData to be "undefined" means that there is no data. this is the first visit on the page ie to load this specific post from the url pathname
 	// we will load the post and comments and until the post has been loaded the currentPostData will be "undefined".

@@ -144,9 +144,10 @@ export default function Thoughts({
 			});
 	}
 
-	const initPostNo = useRef(0);
+	const [initPostNo, setInitPostNo] = useState(0);
 	const expandView = (postNo) => {
-		initPostNo.current = Number(postNo);
+		console.log({ postNo });
+		setInitPostNo(+postNo);
 		setDisplayMode("focus");
 	};
 	// hmmm is passing initPostNo instead of setInitPostNo gonna take more memry ?
@@ -185,8 +186,7 @@ export default function Thoughts({
 						<FocusView
 							postsData={postsData}
 							getComments={getComments}
-							initPostNo={initPostNo.current}
-							// PostLoad={postLoad}
+							initPostNo={initPostNo}
 						/>
 					</Route>
 				</Switch>
