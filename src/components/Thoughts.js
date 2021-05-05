@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 // import Speech from "react-speech";
 import StackGrid from "react-stack-grid";
-import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import { Switch, Route, Link } from "react-router-dom";
 
 // styling
 import "./thoughts.css";
@@ -152,45 +152,43 @@ export default function Thoughts({
 	// hmmm is passing initPostNo instead of setInitPostNo gonna take more memry ?
 
 	return (
-		<Router>
-			<div className="viewarea">
-				{/*should we add a powerbar here to control the view styles etc ?? */}
-				<Switch>
-					<Route exact path="/">
-						{dataReceived && (
-							<>
-								<StackGrid columnWidth={300}>
-									{postsData.map((post, i) => (
-										<Link
-											to={`https://www.reddit.com${post.data.permalink}`}
-											style={{ textDecoration: "none" }}
-										>
-											<Post
-												key={i}
-												index={i}
-												{...post.data}
-												expandView={expandView}
-											></Post>
-										</Link>
-									))}
-								</StackGrid>
-								<Post
-									loadMorePosts={loadMorePosts}
-									postsLoader={true}
-								></Post>
-							</>
-						)}
-					</Route>
-					<Route path="/:permalink">
-						<FocusView
-							postsData={postsData}
-							getComments={getComments}
-							initPostNo={initPostNo}
-						/>
-					</Route>
-				</Switch>
-			</div>
-		</Router>
+		<div className="viewarea">
+			{/*should we add a powerbar here to control the view styles etc ?? */}
+			<Switch>
+				<Route exact path="/">
+					{dataReceived && (
+						<>
+							<StackGrid columnWidth={300}>
+								{postsData.map((post, i) => (
+									<Link
+										to={`https://www.reddit.com${post.data.permalink}`}
+										style={{ textDecoration: "none" }}
+									>
+										<Post
+											key={i}
+											index={i}
+											{...post.data}
+											expandView={expandView}
+										></Post>
+									</Link>
+								))}
+							</StackGrid>
+							<Post
+								loadMorePosts={loadMorePosts}
+								postsLoader={true}
+							></Post>
+						</>
+					)}
+				</Route>
+				<Route path="/:permalink">
+					<FocusView
+						postsData={postsData}
+						getComments={getComments}
+						initPostNo={initPostNo}
+					/>
+				</Route>
+			</Switch>
+		</div>
 	);
 }
 

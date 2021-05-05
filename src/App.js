@@ -1,4 +1,5 @@
 import React, { useRef, useState } from "react";
+import { useLocation } from "react-router-dom";
 
 import Header from "./components/Header.js";
 import Sidebar from "./components/Sidebar.js";
@@ -6,7 +7,6 @@ import Thoughts from "./components/Thoughts.js";
 
 function App() {
 	const [subreddit, setSubreddit] = useState("showerthoughts");
-
 	const previousSubreddit = useRef();
 
 	return (

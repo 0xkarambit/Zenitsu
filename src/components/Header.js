@@ -1,4 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
+import { useHistory } from "react-router-dom";
+
 import "./header.css";
 
 import constructionSign from "./../assets/icons/construction.svg";
@@ -11,12 +13,12 @@ const icon = {
 
 export default function Header({ subreddit, setSubreddit, previousSubreddit }) {
 	const [selectMenuOpen, setSelectMenuState] = useState(false);
-
 	const toggleSelectMenu = () => setSelectMenuState(!selectMenuOpen);
 	const closeSelectMenu = () => setSelectMenuState(false);
 
 	const sel_subreddit = (sub) => {
 		closeSelectMenu();
+		// change url.
 		// sub includes "r/"
 		previousSubreddit.current = subreddit;
 		setSubreddit(sub.slice(2));
@@ -43,14 +45,14 @@ export default function Header({ subreddit, setSubreddit, previousSubreddit }) {
 					></SubredditSelect>
 				)}
 			</span>
-			{/* SITE STILL IN DEVELOPMENT NOTICE */}
-			<NOTICE />
 		</header>
 	);
 }
 
 const SubredditSelect = ({ sel_subreddit, subreddit, closeSelectMenu }) => {
 	const subSel = useRef();
+	const history = useHistory();
+	console.log(history);
 	const [inputSub, setInputSub] = useState(`r/${subreddit}`);
 
 	// focus on mount and auto close of out click.
@@ -64,12 +66,18 @@ const SubredditSelect = ({ sel_subreddit, subreddit, closeSelectMenu }) => {
 		};
 	}, []);
 
+	const onSubSelect = (inputSub) => {
+		history.push("/");
+		console.log(history);
+		sel_subreddit(inputSub);
+	};
+
 	return (
 		<div className="sub-sel">
 			<input
 				ref={subSel}
 				value={inputSub}
-				onKeyDown={(e) => e.key === "Enter" && sel_subreddit(inputSub)}
+				onKeyDown={(e) => e.key === "Enter" && onSubSelect(inputSub)}
 				onChange={(e) => {
 					let val = e.target.value;
 					if (["r", "/", ""].includes(val)) val = "r/";
@@ -80,20 +88,3 @@ const SubredditSelect = ({ sel_subreddit, subreddit, closeSelectMenu }) => {
 		</div>
 	);
 };
-
-function NOTICE() {
-	return (
-		<span
-			style={{
-				marginLeft: "10px",
-				// backgroundColor: "#ffc861",
-				color: "#2f4360",
-				borderRadius: "10px"
-			}}
-		>
-			<img src={constructionSign} alt="construction sign" style={icon} />
-			this website is still a work in progress check sometime later ...
-			thanks!
-		</span>
-	);
-}

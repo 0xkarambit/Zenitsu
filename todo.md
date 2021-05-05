@@ -81,3 +81,5 @@ https://www.reddit.com/r/Showerthoughts/comments/n3hepl/one_day_in_the_future_ca
 45. fix the inf loading screen on pressing n,p in direct post view.
 46. add crosspost display https://www.reddit.com/r/MechanicalKeyboards/comments/n4etmq/seems_fit/
 47. change url without changing history when scrolling through posts.
+48. when back is pressed after the direct post load the posts must be loaded.
+49. add current subreddit to page url.

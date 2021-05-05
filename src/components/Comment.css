@@ -1,0 +1,9 @@
+.userID {
+	font-size: 0.5em;
+}
+.comment-text {
+	margin-bottom: 5px;
+	border-bottom: dashed #e2e2e2 1px;
+	width: auto;
+	font-size: 0.8em;
+}
