@@ -1,5 +1,5 @@
 import { useHotkeys } from "react-hotkeys-hook";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { useLocation } from "react-router-dom";
 import Post from "./Post.js";
 import Comment from "./Comment.js";
@@ -14,23 +14,23 @@ const FocusView = ({ postsData, getComments, initPostNo = 0 }) => {
 		? `https://www.reddit.com${currentPostData.permalink}`
 		: window.location.pathname.slice(1);
 
-	const getDataLen = () => postsData.length; // even this returns the old value
-
 	// https://github.com/jaywcjlove/hotkeys/#defining-shortcuts
-	useHotkeys("n", () => {
-		setCurrentPost((currentPost) => {
-			console.log({ currentPost });
-			console.log(postsData); // yes this is empty in console.log; even tho dev tools show the current state ie with 1 element
-			// NOT WORKING ON SINGLE POST PAGE LOAD.
-			// i think this doesnt work because the value of postsData.length gets set here and doesnt change later on ???
-			// but this does start working after a hot reload
-			if (currentPost === postsData.length - 1) return currentPost;
-			else {
-				setCurrentComments([]);
-				return ++currentPost;
-			}
-		});
-	});
+	useHotkeys(
+		"n",
+		() => {
+			setCurrentPost((currentPost) => {
+				if (currentPost === postsData.length - 1) return currentPost;
+				else {
+					setCurrentComments([]);
+					return ++currentPost;
+				}
+			});
+		},
+		{},
+		[postsData]
+	);
+	// damn i should read the docs more often. // well the data doesnt change that often so it should be ok.
+	// https://johannesklauss.github.io/react-hotkeys-hook/docs-use-hotkeys#memoisation # good website btw.
 	useHotkeys(
 		"p",
 		() => {
@@ -51,6 +51,7 @@ const FocusView = ({ postsData, getComments, initPostNo = 0 }) => {
 		// Load Comments
 		// let curl = `${"https://www.reddit.com/r/Showerthoughts/comments/mw2amn/having_to_attend_a_wedding_you_dont_want_to_sucks/"}.json`;
 		// todo: change url to permalink in above line
+		console.log("CALLED USEEFFECT FOCUSVIEW.js line 54");
 		const result = getComments(permalink);
 		result.then((comObj) => {
 			// todo we need better error handling lol.
@@ -58,9 +59,6 @@ const FocusView = ({ postsData, getComments, initPostNo = 0 }) => {
 			console.log(comObj);
 			setCurrentComments(comObj.comments);
 		});
-		// window.location.pathname = permalink;
-		// document.addEventListener("keydown", _handleEscKey);
-		// chance to delete comments from memory when post changes ?...
 	}, [currentPost]);
 
 	if (currentPostData === undefined) {

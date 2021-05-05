@@ -104,16 +104,16 @@ export default function Thoughts({
 						.replace(".json", "")
 				)
 			) {
+				// postData did not already exist for this meaning that its a SINGLE POST LOAD from the url.
 				console.log(permaLinks);
 				console.log(
 					postUrl
 						.slice("https://www.reddit.com".length)
 						.replace(".json", "")
 				);
-				console.log("did not already exists");
-				setPostsData((posts) => [...posts, ...c[0].data.children]);
-				let links = [...permaLinks, link];
-				setPermaLinks(new Set(links));
+
+				setPostsData(c[0].data.children);
+				setPermaLinks(new Set([link]));
 			}
 			return comObj;
 		} catch (e) {
@@ -146,7 +146,6 @@ export default function Thoughts({
 
 	const [initPostNo, setInitPostNo] = useState(0);
 	const expandView = (postNo) => {
-		console.log({ postNo });
 		setInitPostNo(+postNo);
 		setDisplayMode("focus");
 	};
