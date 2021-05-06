@@ -83,3 +83,12 @@ https://www.reddit.com/r/Showerthoughts/comments/n3hepl/one_day_in_the_future_ca
 47. change url without changing history when scrolling through posts.
 48. when back is pressed after the direct post load the posts must be loaded.
 49. add current subreddit to page url.
+
+todo:
+
+fix branching
+add routes everywhere
+change FocusView UI
+add keyboard options
+change comments section style
+markdown parsing

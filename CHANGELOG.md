@@ -1,8 +1,7 @@
 ## CHANGELOG
 
-1. changed comments section styling.
-2. moved BrowerRouter outside App component.
-
-> You can't use any of the hooks from within the same component that puts the Router into the tree.
-
-> You need to move your BrowserRouter out of that component. It can go in the ReactDOM.render() call, for instance.
+1. fixed dates.
+2. added details to comments.
+3. added awards to comments.
+4. changed comment details font-weight to 600.
+5. added award tooltip cards.

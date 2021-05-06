@@ -3,14 +3,6 @@ import { useHistory } from "react-router-dom";
 
 import "./header.css";
 
-import constructionSign from "./../assets/icons/construction.svg";
-
-const icon = {
-	width: "32px",
-	height: "32px",
-	color: "white"
-};
-
 export default function Header({ subreddit, setSubreddit, previousSubreddit }) {
 	const [selectMenuOpen, setSelectMenuState] = useState(false);
 	const toggleSelectMenu = () => setSelectMenuState(!selectMenuOpen);

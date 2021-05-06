@@ -1,6 +1,85 @@
+.comment-details {
+	font-weight: 600;
+}
+
 .userID {
 	font-size: 0.5em;
 }
+
+.arrow {
+	/* do this like the header to align points Number with the upvote icon*/
+	position: relative;
+	top: 2px;
+}
+
+.score {
+	margin: 4px;
+	font-size: 0.5em;
+	color: black;
+}
+
+.time-posted {
+	margin: 2px;
+	font-size: 0.5em;
+}
+
+/* Award component classes start*/
+.awards {
+	margin-left: 10px;
+	display: inline-flex;
+	align-items: center;
+	justify-self: flex-start;
+}
+
+.award {
+	margin: 4px;
+	display: inline-flex;
+	align-items: center;
+	/* for the tooltip box */
+	position: relative;
+}
+
+.count {
+	font-size: 0.5em;
+	margin: 2px;
+}
+
+.tooltip {
+	width: 16px;
+	height: 16px;
+}
+
+.tooltip-box {
+	display: none;
+	/* styles */
+	width: 300px;
+	text-align: center;
+	background-color: #eee;
+	font-size: 0.6em;
+	font-weight: 600;
+	border-radius: 6px;
+	padding: 5px 0;
+	/* positioning */
+	position: absolute;
+	z-index: 1;
+	bottom: 100%;
+	left: 60%;
+	margin-left: -950%; /*idk why but it works lol*/
+	margin-bottom: 10px;
+}
+.text {
+	padding: 20px;
+}
+.tooltip-box-img {
+	padding-top: 20px;
+}
+
+.award:hover .tooltip-box {
+	display: block;
+}
+
+/* Award component classes end*/
+
 .comment-text {
 	margin-bottom: 5px;
 	border-bottom: dashed #e2e2e2 1px;

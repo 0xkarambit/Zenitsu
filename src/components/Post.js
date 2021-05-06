@@ -30,7 +30,7 @@ export default function Post({
 	const badThumbnails = ["", "self"];
 	// const imageUrl = preview.images[0].resolutions[] // these urls dont work restricted BUT url will work here
 	// todo: oh there can be multiple photos
-	const dateCreated = new Date(created_utc).toLocaleDateString();
+	const dateCreated = new Date(+`${created_utc}000`).toLocaleString();
 	// const relativeTime = new Intl.relativeTimeFormat("en", {style: "long", numeric: "auto"})
 	// console.log(post_hint);
 	return (
@@ -87,7 +87,7 @@ export default function Post({
 			{/* score: {score} {total_awards_received} {num_comments}
 				{created_utc} */}
 			<span className="details">
-				score: {score} {total_awards_received}
+				score: {score} awards: {total_awards_received} created:{" "}
 				{dateCreated}
 			</span>
 			{/* <div className="speech">
