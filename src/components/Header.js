@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { forwardRef, useEffect, useRef, useState } from "react";
 import { useHistory } from "react-router-dom";
 import { useHotkeys } from "react-hotkeys-hook";
 
@@ -6,12 +6,10 @@ import { makeFriendly } from "./../utils/num.js";
 
 import "./header.css";
 
-export default function Header({
-	subreddit,
-	setSubreddit,
-	previousSubreddit,
-	subCount
-}) {
+export default forwardRef(function Header(
+	{ subreddit, setSubreddit, previousSubreddit, subCount },
+	banner
+) {
 	const [selectMenuOpen, setSelectMenuState] = useState(false);
 	const toggleSelectMenu = () => setSelectMenuState(!selectMenuOpen);
 	const closeSelectMenu = () => setSelectMenuState(false);
@@ -37,7 +35,9 @@ export default function Header({
 						width="50px"
 						height="50px"
 					/>
-					<p className="banner">r/{subreddit}</p>
+					<p className="banner" ref={banner}>
+						r/{subreddit}
+					</p>
 					{![null, NaN, undefined].some((v) =>
 						Object.is(subCount, v)
 					) && (
@@ -56,7 +56,7 @@ export default function Header({
 			</span>
 		</header>
 	);
-}
+});
 
 const SubredditSelect = ({ sel_subreddit, subreddit, closeSelectMenu }) => {
 	const subSel = useRef();

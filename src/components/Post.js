@@ -2,7 +2,7 @@ import { useState } from "react";
 import Award from "./Award.js";
 
 import { makeFriendly } from "./../utils/num.js";
-// import humanizeDuration from "humanizeDuration";
+import { convertHTMLEntity } from "./../utils/htmlparsing.js";
 
 export default function Post({
 	title,
@@ -22,12 +22,13 @@ export default function Post({
 	all_awardings,
 	over_18,
 	displayMode = "stack",
+	shouldBlur,
+	setBlur,
 	expandView = () => {},
 	index,
 	loadMorePosts = false,
 	postsLoader = false
 }) {
-	const [shouldBlur, setBlur] = useState(over_18);
 	if (postsLoader) {
 		console.log("endsad");
 		return (
@@ -52,21 +53,24 @@ export default function Post({
 		>
 			<p className="author">{`u/${author}`}</p>
 			<h2 className="title">{title || "title"}</h2>
-			<p className="postbody">
-				{(() => {
-					if (selftext) {
-						return displayMode === "stack"
-							? selftext.slice(0, 200)
-							: selftext;
-					}
-				})()}
-			</p>
+			<p
+				className="postbody"
+				dangerouslySetInnerHTML={
+					displayMode === "stack"
+						? { __html: selftext.slice(0, 200) }
+						: convertHTMLEntity(selftext)
+				}
+			></p>
 			{/* IMAGE imlementaion region */}
 			{displayMode === "stack" && !badThumbnails.includes(thumbnail) && (
 				<img
 					src={thumbnail}
 					alt="thumbnail"
-					className={shouldBlur ? "blur" : ""}
+					className={
+						over_18 ? "blur" : ""
+					} /* bad solution well its not like
+					we could unblur the thumbnails before but we need a state management 
+					sys to take care of this*/
 				></img>
 			)}
 			{(() => {

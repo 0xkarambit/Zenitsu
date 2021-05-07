@@ -13,6 +13,7 @@ function App() {
 	const [subreddit, setSubreddit] = useState("showerthoughts");
 	const previousSubreddit = useRef();
 	const [subCount, setSubCount] = useState();
+	const banner = useRef();
 	return (
 		<div className="App">
 			<Header
@@ -20,6 +21,7 @@ function App() {
 				setSubreddit={setSubreddit}
 				previousSubreddit={previousSubreddit}
 				subCount={subCount}
+				ref={banner}
 			/>
 			<div className="container">
 				<Sidebar />
@@ -28,7 +30,8 @@ function App() {
 						subreddit,
 						setSubreddit,
 						previousSubreddit,
-						setSubCount
+						setSubCount,
+						banner
 					}}
 				/>
 			</div>

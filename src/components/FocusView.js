@@ -8,6 +8,7 @@ const FocusView = ({ postsData, getComments, initPostNo = 0 }) => {
 	const [currentPost, setCurrentPost] = useState(initPostNo);
 	const [currentComments, setCurrentComments] = useState([]); // {url:[url], comments: obj `children[]]`}
 	const currentPostData = postsData[currentPost]?.data;
+	const [shouldBlur, setBlur] = useState(currentPostData?.over_18);
 	// currentPostData to be "undefined" means that there is no data. this is the first visit on the page ie to load this specific post from the url pathname
 	// we will load the post and comments and until the post has been loaded the currentPostData will be "undefined".
 	let permalink = currentPostData?.permalink
@@ -22,6 +23,7 @@ const FocusView = ({ postsData, getComments, initPostNo = 0 }) => {
 				if (currentPost === postsData.length - 1) return currentPost;
 				else {
 					setCurrentComments([]);
+					setBlur(true);
 					return ++currentPost;
 				}
 			});
@@ -40,6 +42,7 @@ const FocusView = ({ postsData, getComments, initPostNo = 0 }) => {
 					return 0;
 				} else {
 					setCurrentComments([]);
+					setBlur(true);
 					return --currentPost;
 				}
 			});
@@ -66,8 +69,19 @@ const FocusView = ({ postsData, getComments, initPostNo = 0 }) => {
 	}
 	return (
 		<>
-			<Post {...currentPostData} displayMode={"focus"} />
+			<Post
+				{...currentPostData}
+				displayMode={"focus"}
+				shouldBlur={shouldBlur}
+				setBlur={setBlur}
+			/>
 			{/*<Comments/>*/}
+			<h4
+				className="comments-section-banner"
+				style={{ margin: "12px 0px -2px 12px" }}
+			>
+				Comments Section
+			</h4>
 			<div className="comments">
 				{/*todo: show loading comments banner */}
 				{currentComments &&

@@ -108,3 +108,9 @@
 	margin: auto;
 	margin-left: 20px;
 }
+
+/* FOR REDDIT BODY_HTML */
+ol {
+	list-style: decimal outside;
+	margin: 14px 30px;
+}

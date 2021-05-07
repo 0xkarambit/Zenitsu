@@ -14,7 +14,8 @@ export default function Thoughts({
 	subreddit,
 	setSubreddit,
 	previousSubreddit,
-	setSubCount
+	setSubCount,
+	banner
 }) {
 	// the displayMode gets set to $TESTINGMODE after every subreddit change.
 	const TESTINGMODE = "stack";
@@ -121,6 +122,9 @@ export default function Thoughts({
 				setPostsData(c[0].data.children);
 				setSubCount(c[0].data.children[0].data.subreddit_subscribers);
 				setPermaLinks(new Set([link]));
+				// ok we need to set the subreddit name without fetching the posts. ref ?
+				banner.current.innerText =
+					"r/" + c[0].data.children[0].data.subreddit;
 			}
 			return comObj;
 		} catch (e) {

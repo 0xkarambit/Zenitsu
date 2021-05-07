@@ -16,8 +16,9 @@ const LoadMoreComments = ({
 		});
 	};
 	return (
+		// todo: show how many to load
 		<button class="comments-loader" onClick={load}>
-			load more comments id
+			load more comments {id}
 		</button>
 	);
 };

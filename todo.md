@@ -96,3 +96,16 @@ markdown parsing
 blur hide age restrictive content by default
 
 fix the bad body_html parsing.
+
+move details to the bottom (except author & data)
+add edited tag.
+add relative time.
+fix the bad subreddit listings stack display
+add:
+user's tags i guess like "Bad luck Brian" here
+https://www.reddit.com/r/memes/comments/n71r84/one_of_the_wise_teachings_of_sun_tzu/
+hide comments that have a low score by default.
+OK so the html entities get parsed but the markdown doesnt.
+compare this with this
+http://localhost:3000/https://www.reddit.com/r/nosleep/comments/n6u233/my_neighbor_has_been_paying_me_to_spend_time_with/
+https://www.reddit.com/r/nosleep/comments/n6u233/my_neighbor_has_been_paying_me_to_spend_time_with/
