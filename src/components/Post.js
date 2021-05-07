@@ -1,7 +1,12 @@
+import { useState } from "react";
 import Award from "./Award.js";
+
+import { makeFriendly } from "./../utils/num.js";
+// import humanizeDuration from "humanizeDuration";
 
 export default function Post({
 	title,
+	selftext_html, // todo: post desc needs markdown too...
 	selftext,
 	score,
 	author,
@@ -15,12 +20,14 @@ export default function Post({
 	post_hint,
 	url_overridden_by_dest,
 	all_awardings,
+	over_18,
 	displayMode = "stack",
 	expandView = () => {},
 	index,
 	loadMorePosts = false,
 	postsLoader = false
 }) {
+	const [shouldBlur, setBlur] = useState(over_18);
 	if (postsLoader) {
 		console.log("endsad");
 		return (
@@ -35,8 +42,7 @@ export default function Post({
 	// todo: oh there can be multiple photos
 	const dateCreated = new Date(+`${created_utc}000`).toLocaleString();
 	console.log(+`${created_utc}000`);
-	// const relativeTime = new Intl.relativeTimeFormat("en", {style: "long", numeric: "auto"})
-	// console.log(post_hint);
+	// const relativeTime = new Intl.relativeTimeFormat("en", {style: "long", numeric: "auto"});
 	return (
 		<div
 			className="post"
@@ -57,7 +63,11 @@ export default function Post({
 			</p>
 			{/* IMAGE imlementaion region */}
 			{displayMode === "stack" && !badThumbnails.includes(thumbnail) && (
-				<img src={thumbnail} alt="thumbnail"></img>
+				<img
+					src={thumbnail}
+					alt="thumbnail"
+					className={shouldBlur ? "blur" : ""}
+				></img>
 			)}
 			{(() => {
 				if (displayMode === "focus") {
@@ -69,6 +79,12 @@ export default function Post({
 								src={url}
 								alt="thumbnail"
 								style={{ objectFit: "contain" }}
+								className={shouldBlur ? "blur" : ""}
+								onClick={() => {
+									setBlur(false); // we have to reset it on change, ok keep an array of this.
+								}}
+								// wait do i need to blur text too ? yes
+								// todo: better yet https://stackoverflow.com/questions/11977103/blur-effect-on-a-div-element
 							></img>
 						);
 					} else if (post_hint === "hosted:video") {
@@ -82,10 +98,11 @@ export default function Post({
 								poster={thumbnail}
 								height="400px"
 								width="400px"
+								className={shouldBlur ? "blur" : ""}
 							></video>
 						);
 					} else {
-						if (![undefined, "url"].includes(post_hint)) {
+						if (![undefined, "url", "link"].includes(post_hint)) {
 							alert(post_hint); // wtf is a link lol check rerendering problem
 							alert(url); // wtf is a link lol check rerendering problem
 							// so now i gotta find the file type from the extension ?
@@ -97,7 +114,11 @@ export default function Post({
 			{/* score: {score} {total_awards_received} {num_comments}
 				{created_utc} */}
 			<span className="details">
-				score: {score} created: {dateCreated} awards:{" "}
+				score: {/*todo: add icon here */}
+				<span title={score} style={{ margin: "0px 5px 0px 5px" }}>
+					{makeFriendly(score)}{" "}
+				</span>
+				created: {dateCreated} awards:{" "}
 				{all_awardings.map(({ name, description, icon_url, count }) => {
 					return (
 						<Award {...{ name, description, icon_url, count }} />

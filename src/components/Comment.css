@@ -87,6 +87,10 @@
 	font-size: 0.8em;
 }
 
+.toplevel-comment {
+	margin-left: 0px !important;
+}
+
 .comment {
 	border-left: 2px solid grey;
 	/* margin-left: 20px; */
@@ -95,3 +99,12 @@
 /* .comment-details {
 	border: 2px dotted red;
 } */
+
+/* COMMENT LOADER */
+.comments-loader {
+	font-size: 0.7em;
+	background-color: #b5b5b5;
+	width: 20%;
+	margin: auto;
+	margin-left: 20px;
+}

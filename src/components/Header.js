@@ -1,5 +1,8 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useHistory } from "react-router-dom";
+import { useHotkeys } from "react-hotkeys-hook";
+
+import { makeFriendly } from "./../utils/num.js";
 
 import "./header.css";
 
@@ -12,6 +15,8 @@ export default function Header({
 	const [selectMenuOpen, setSelectMenuState] = useState(false);
 	const toggleSelectMenu = () => setSelectMenuState(!selectMenuOpen);
 	const closeSelectMenu = () => setSelectMenuState(false);
+
+	useHotkeys("s", toggleSelectMenu);
 
 	const sel_subreddit = (sub) => {
 		closeSelectMenu();
@@ -33,8 +38,12 @@ export default function Header({
 						height="50px"
 					/>
 					<p className="banner">r/{subreddit}</p>
-					{subCount !== null && (
-						<p className="members">{subCount} members</p>
+					{![null, NaN, undefined].some((v) =>
+						Object.is(subCount, v)
+					) && (
+						<p className="members" title={subCount}>
+							{makeFriendly(subCount)} members
+						</p>
 					)}
 				</span>
 				{/* yup nice now i just need to know a good way to make forms in react! THIS SHOULD BE ITS OWN COMPONENT TODO: ADD FOCUS ON USEFFECT*/}

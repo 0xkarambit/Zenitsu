@@ -77,3 +77,5 @@ how do i know what ."url" is ? | post link | video link | image | forwarding lin
 
 the ones withoit images dont have a thumbnail ???
 we can use the "thumbnail_height", "thumbnail_width"....
+
+post Object properties: pinned, over_18, archived, spoiler, locked, send_replies?, is_video?
