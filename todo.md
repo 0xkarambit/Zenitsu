@@ -92,3 +92,14 @@ change FocusView UI
 add keyboard options
 change comments section style
 markdown parsing
+
+clean postsData on subChange and fix search bar layout
+blur hide age restrictive content by default
+
+learn:
+state management
+chakra ui bulma css tailwind
+
+css grid: https://www.youtube.com/watch?v=7kVeCqQCxlk , https://www.youtube.com/watch?v=SPFDLHNm5KQ
+styled comp ben:? https://www.youtube.com/watch?v=ewVZadu0gzw
+bulma : https://www.youtube.com/watch?v=hiTxsjxHIMY

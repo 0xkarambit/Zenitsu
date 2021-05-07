@@ -22,8 +22,13 @@ function SearchBar(props) {
 		width: "20px",
 		height: "20px"
 	};
+	const level = {
+		display: "flex",
+		justifyContent: "center",
+		alignItems: "center"
+	};
 	return (
-		<span>
+		<span style={level}>
 			<input type="text" placeholder="Search"></input>
 			<img src={SearchLogo} style={icon} alt="search icon"></img>
 		</span>

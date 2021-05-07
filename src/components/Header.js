@@ -3,7 +3,12 @@ import { useHistory } from "react-router-dom";
 
 import "./header.css";
 
-export default function Header({ subreddit, setSubreddit, previousSubreddit }) {
+export default function Header({
+	subreddit,
+	setSubreddit,
+	previousSubreddit,
+	subCount
+}) {
 	const [selectMenuOpen, setSelectMenuState] = useState(false);
 	const toggleSelectMenu = () => setSelectMenuState(!selectMenuOpen);
 	const closeSelectMenu = () => setSelectMenuState(false);
@@ -28,6 +33,9 @@ export default function Header({ subreddit, setSubreddit, previousSubreddit }) {
 						height="50px"
 					/>
 					<p className="banner">r/{subreddit}</p>
+					{subCount !== null && (
+						<p className="members">{subCount} members</p>
+					)}
 				</span>
 				{/* yup nice now i just need to know a good way to make forms in react! THIS SHOULD BE ITS OWN COMPONENT TODO: ADD FOCUS ON USEFFECT*/}
 				{selectMenuOpen && (
@@ -60,7 +68,6 @@ const SubredditSelect = ({ sel_subreddit, subreddit, closeSelectMenu }) => {
 
 	const onSubSelect = (inputSub) => {
 		history.push("/");
-		console.log(history);
 		sel_subreddit(inputSub);
 	};
 

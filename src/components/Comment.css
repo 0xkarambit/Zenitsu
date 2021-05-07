@@ -86,3 +86,12 @@
 	width: auto;
 	font-size: 0.8em;
 }
+
+.comment {
+	border-left: 2px solid grey;
+	/* margin-left: 20px; */
+}
+
+/* .comment-details {
+	border: 2px dotted red;
+} */

@@ -1,3 +1,5 @@
+import Award from "./Award.js";
+
 export default function Post({
 	title,
 	selftext,
@@ -12,6 +14,7 @@ export default function Post({
 	url,
 	post_hint,
 	url_overridden_by_dest,
+	all_awardings,
 	displayMode = "stack",
 	expandView = () => {},
 	index,
@@ -31,6 +34,7 @@ export default function Post({
 	// const imageUrl = preview.images[0].resolutions[] // these urls dont work restricted BUT url will work here
 	// todo: oh there can be multiple photos
 	const dateCreated = new Date(+`${created_utc}000`).toLocaleString();
+	console.log(+`${created_utc}000`);
 	// const relativeTime = new Intl.relativeTimeFormat("en", {style: "long", numeric: "auto"})
 	// console.log(post_hint);
 	return (
@@ -80,6 +84,12 @@ export default function Post({
 								width="400px"
 							></video>
 						);
+					} else {
+						if (![undefined, "url"].includes(post_hint)) {
+							alert(post_hint); // wtf is a link lol check rerendering problem
+							alert(url); // wtf is a link lol check rerendering problem
+							// so now i gotta find the file type from the extension ?
+						}
 					}
 				}
 			})()}
@@ -87,8 +97,12 @@ export default function Post({
 			{/* score: {score} {total_awards_received} {num_comments}
 				{created_utc} */}
 			<span className="details">
-				score: {score} awards: {total_awards_received} created:{" "}
-				{dateCreated}
+				score: {score} created: {dateCreated} awards:{" "}
+				{all_awardings.map(({ name, description, icon_url, count }) => {
+					return (
+						<Award {...{ name, description, icon_url, count }} />
+					);
+				})}
 			</span>
 			{/* <div className="speech">
 				<Speech stop={true} pause={true} resume={true} text={title} />

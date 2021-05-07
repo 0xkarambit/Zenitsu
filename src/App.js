@@ -12,17 +12,25 @@ function App() {
 	console.log(m?.params?.postUrl);
 	const [subreddit, setSubreddit] = useState("showerthoughts");
 	const previousSubreddit = useRef();
-
+	const [subCount, setSubCount] = useState();
 	return (
 		<div className="App">
 			<Header
 				subreddit={subreddit}
 				setSubreddit={setSubreddit}
 				previousSubreddit={previousSubreddit}
+				subCount={subCount}
 			/>
 			<div className="container">
 				<Sidebar />
-				<Thoughts {...{ subreddit, setSubreddit, previousSubreddit }} />
+				<Thoughts
+					{...{
+						subreddit,
+						setSubreddit,
+						previousSubreddit,
+						setSubCount
+					}}
+				/>
 			</div>
 		</div>
 	);

@@ -13,7 +13,8 @@ import FocusView from "./FocusView.js";
 export default function Thoughts({
 	subreddit,
 	setSubreddit,
-	previousSubreddit
+	previousSubreddit,
+	setSubCount
 }) {
 	// the displayMode gets set to $TESTINGMODE after every subreddit change.
 	const TESTINGMODE = "stack";
@@ -47,6 +48,7 @@ export default function Thoughts({
 				.then((json) => {
 					let children = json.data.children;
 					setPostsData(children);
+					setSubCount(children[0].data.subreddit_subscribers);
 					let newLinks = children.map(
 						(child) => child.data.permalink
 					);
@@ -68,6 +70,10 @@ export default function Thoughts({
 		} catch (e) {
 			console.log(e);
 		}
+		return () => {
+			setPostsData([]);
+			setSubCount(null);
+		};
 	}, [subreddit]);
 
 	const findComment = (link) =>
@@ -113,6 +119,7 @@ export default function Thoughts({
 				);
 
 				setPostsData(c[0].data.children);
+				setSubCount(c[0].data.children[0].data.subreddit_subscribers);
 				setPermaLinks(new Set([link]));
 			}
 			return comObj;
