@@ -115,3 +115,5 @@ add flairs (user + post) (https://www.reddit.com/r/Animemes/comments/n7gh8k/if_y
 try this
 response body encoding
 For legacy reasons, all JSON response bodies currently have <, >, and & replaced with &lt;, &gt;, and &amp;, respectively. If you wish to opt out of this behaviour, add a raw_json=1 parameter to your request.
+
+we might have to make a new video player because there is no way we can change the volume.

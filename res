@@ -84,3 +84,8 @@ how do we use the preview object ???? (cors err ifirc)
 
 VIDEO
 | ok so url ie (https://v.redd.it/7dqo4hc1itx61) takes you to the post url eventually. SO ADD DASH_360.mp4?source=fallback at end
+
+
+OK it says rich:video for external sources.
+
+ok so we will have to parse FancyPants comments and markdown comments differently.

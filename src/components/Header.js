@@ -61,7 +61,6 @@ export default forwardRef(function Header(
 const SubredditSelect = ({ sel_subreddit, subreddit, closeSelectMenu }) => {
 	const subSel = useRef();
 	const history = useHistory();
-	console.log(history);
 	const [inputSub, setInputSub] = useState(`r/${subreddit}`);
 
 	// focus on mount and auto close of out click.

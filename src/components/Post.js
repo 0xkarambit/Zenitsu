@@ -43,7 +43,6 @@ export default function Post({
 	// const imageUrl = preview.images[0].resolutions[] // these urls dont work restricted BUT url will work here
 	// todo: oh there can be multiple photos
 	const dateCreated = new Date(+`${created_utc}000`).toLocaleString();
-	console.log(+`${created_utc}000`);
 	// const relativeTime = new Intl.relativeTimeFormat("en", {style: "long", numeric: "auto"});
 	return (
 		<div
@@ -96,7 +95,9 @@ export default function Post({
 						// else is_video?
 						return (
 							<VideoPlayer
-								videoUrl={url + "/DASH_360.mp4?source=fallback"}
+								videoUrl={
+									url + "/DASH_1080.mp4?source=fallback"
+								}
 								audioUrl={
 									url + "/DASH_audio.mp4?source=fallback"
 								}

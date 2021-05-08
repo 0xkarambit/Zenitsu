@@ -1,3 +1,3 @@
 ## CHANGELOG
 
-1. added hosted:video imp with audio (not perfect yet).
+1. hosted:video audio synced on peek, play, pause, stalled, waiting, canPlayThrough.
