@@ -92,18 +92,30 @@ export default function Post({
 							></img>
 						);
 					} else if (post_hint === "hosted:video") {
+						// else is_video?
 						return (
-							<video
-								src={url_overridden_by_dest}
-								type="video/mp4"
-								controls="true"
-								loop="true"
-								preload="metadata"
-								poster={thumbnail}
-								height="400px"
-								width="400px"
-								className={shouldBlur ? "blur" : ""}
-							></video>
+							<>
+								<video
+									// NOW AUDIO LEFT LOL // url + "/DASH_audio.mp4?source=fallback"
+									// video examples
+									controls="true"
+									loop="true"
+									preload="metadata"
+									poster={thumbnail}
+									height="400px"
+									width="400px"
+									autoPlay={true}
+									className={shouldBlur ? "blur" : ""}
+								>
+									<source
+										src={
+											url +
+											"/DASH_360.mp4?source=fallback"
+										}
+										type="video/mp4"
+									/>
+								</video>
+							</>
 						);
 					} else {
 						if (![undefined, "url", "link"].includes(post_hint)) {

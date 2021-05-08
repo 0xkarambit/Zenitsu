@@ -23,7 +23,8 @@ const FocusView = ({ postsData, getComments, initPostNo = 0 }) => {
 				if (currentPost === postsData.length - 1) return currentPost;
 				else {
 					setCurrentComments([]);
-					setBlur(true);
+					if (postsData[currentPost + 1]?.data?.over_18)
+						setBlur(true);
 					return ++currentPost;
 				}
 			});
@@ -42,7 +43,8 @@ const FocusView = ({ postsData, getComments, initPostNo = 0 }) => {
 					return 0;
 				} else {
 					setCurrentComments([]);
-					setBlur(true);
+					if (postsData[currentPost + 1]?.data?.over_18)
+						setBlur(true);
 					return --currentPost;
 				}
 			});
@@ -80,7 +82,7 @@ const FocusView = ({ postsData, getComments, initPostNo = 0 }) => {
 				className="comments-section-banner"
 				style={{ margin: "12px 0px -2px 12px" }}
 			>
-				Comments Section
+				Comments {currentPostData.num_comments}
 			</h4>
 			<div className="comments">
 				{/*todo: show loading comments banner */}

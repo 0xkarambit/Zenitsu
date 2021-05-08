@@ -78,4 +78,9 @@ how do i know what ."url" is ? | post link | video link | image | forwarding lin
 the ones withoit images dont have a thumbnail ???
 we can use the "thumbnail_height", "thumbnail_width"....
 
-post Object properties: pinned, over_18, archived, spoiler, locked, send_replies?, is_video?
+post Object properties: pinned, over_18, archived, spoiler, locked, send_replies?, is_video?, subreddit_type
+
+how do we use the preview object ???? (cors err ifirc)
+
+VIDEO
+| ok so url ie (https://v.redd.it/7dqo4hc1itx61) takes you to the post url eventually. SO ADD DASH_360.mp4?source=fallback at end

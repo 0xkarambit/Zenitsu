@@ -109,3 +109,9 @@ OK so the html entities get parsed but the markdown doesnt.
 compare this with this
 http://localhost:3000/https://www.reddit.com/r/nosleep/comments/n6u233/my_neighbor_has_been_paying_me_to_spend_time_with/
 https://www.reddit.com/r/nosleep/comments/n6u233/my_neighbor_has_been_paying_me_to_spend_time_with/
+
+add flairs (user + post) (https://www.reddit.com/r/Animemes/comments/n7gh8k/if_yo_leg_get_cut_off_will_it_hurt/)
+
+try this
+response body encoding
+For legacy reasons, all JSON response bodies currently have <, >, and & replaced with &lt;, &gt;, and &amp;, respectively. If you wish to opt out of this behaviour, add a raw_json=1 parameter to your request.
