@@ -119,7 +119,7 @@ export default function Thoughts({
 						.replace(".json", "")
 				);
 
-				setPostsData(c[0].data.children);
+				setPostsData(c[0].data.children); // HERE IS THE ERROR.
 				setSubCount(c[0].data.children[0].data.subreddit_subscribers);
 				setPermaLinks(new Set([link]));
 				// ok we need to set the subreddit name without fetching the posts. ref ?
@@ -132,8 +132,10 @@ export default function Thoughts({
 			// wait why did this url even appear here .....
 			// todo: inspect the listings obj
 			console.log("got here");
-			alert("postUrl");
+			console.log(e);
+			console.log(e.stack);
 			alert(postUrl);
+			debugger;
 			return 1;
 		}
 	};

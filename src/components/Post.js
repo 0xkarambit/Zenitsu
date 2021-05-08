@@ -1,5 +1,6 @@
 import { useState } from "react";
 import Award from "./Award.js";
+import VideoPlayer from "./VideoPlayer.js";
 
 import { makeFriendly } from "./../utils/num.js";
 import { convertHTMLEntity } from "./../utils/htmlparsing.js";
@@ -94,28 +95,14 @@ export default function Post({
 					} else if (post_hint === "hosted:video") {
 						// else is_video?
 						return (
-							<>
-								<video
-									// NOW AUDIO LEFT LOL // url + "/DASH_audio.mp4?source=fallback"
-									// video examples
-									controls="true"
-									loop="true"
-									preload="metadata"
-									poster={thumbnail}
-									height="400px"
-									width="400px"
-									autoPlay={true}
-									className={shouldBlur ? "blur" : ""}
-								>
-									<source
-										src={
-											url +
-											"/DASH_360.mp4?source=fallback"
-										}
-										type="video/mp4"
-									/>
-								</video>
-							</>
+							<VideoPlayer
+								videoUrl={url + "/DASH_360.mp4?source=fallback"}
+								audioUrl={
+									url + "/DASH_audio.mp4?source=fallback"
+								}
+								poster={thumbnail}
+								blur={false}
+							></VideoPlayer>
 						);
 					} else {
 						if (![undefined, "url", "link"].includes(post_hint)) {

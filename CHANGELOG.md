@@ -1,5 +1,3 @@
 ## CHANGELOG
 
-1. implemented hosted:video (no audio currently).
-2. fixed the auto-blur on scroll.
-3. added num_comments.
+1. added hosted:video imp with audio (not perfect yet).
