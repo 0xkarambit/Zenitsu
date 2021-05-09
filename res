@@ -90,3 +90,15 @@ OK it says rich:video for external sources.
 
 ok so we will have to parse FancyPants comments and markdown comments differently.
 some have <div class="md"></div>
+
+now we have to show tweets too 
+look at rdddeck.com | every post has a domain next to the title area
+
+ex : https://www.reddit.com/r/Futurology/comments/n7q6m8/startup_expects_to_have_lab_grown_chicken_breasts/.json
+has domain: ft.com
+has flair: BioTech
+
+IMP OBS: the domains for which rdddeck.com doesnt have a specific component to display it just shows the link.
+what is this "is_reddit_media_domain" ?
+
+give option to truncate the long post titles. 

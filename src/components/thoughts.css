@@ -55,3 +55,28 @@
 	/* i guess that fixes it todo: not for mobile toh maybe*/
 	width: 20vw;
 }
+
+/* POST.JS */
+.spoiler {
+	font-size: 0.7em;
+	display: inline-block;
+	color: grey;
+	font-weight: 600;
+	border: 2px solid grey;
+	padding: 9px;
+}
+
+.incomprehensible_post_hint {
+	margin: 10px 0px;
+}
+
+.domain {
+	margin-right: 10px;
+	padding: 5px;
+	/* border: 3px solid skyblue; */
+	/* border-radius: 5px; */
+}
+
+.url > a {
+	color: blue;
+}

@@ -24,6 +24,7 @@ export default function Post({
 	url_overridden_by_dest,
 	all_awardings,
 	over_18,
+	domain,
 	displayMode = "stack",
 	shouldBlur,
 	setBlur,
@@ -105,14 +106,30 @@ export default function Post({
 								}
 								poster={thumbnail}
 								blur={false}
-							></VideoPlayer>
+							/>
 						);
 					} else if (post_hint === "rich:video") {
 						return <ReactPlayer url={url} loop controls pip />;
 					} else {
+						if (post_hint === "link") {
+							return (
+								<div className="incomprehensible_post_hint">
+									{/*<span className="domain">{domain}</span> DOESNT LOOK GOOD RIGHT NOW SHOW AFTER REDESIGN*/}
+									<span className="url">
+										<a
+											href={url}
+											target="_blank"
+											rel="noreferrer"
+										>
+											{url}
+										</a>
+									</span>
+								</div>
+							);
+						}
 						if (![undefined, "url", "link"].includes(post_hint)) {
-							// alert(post_hint); // wtf is a link lol check rerendering problem
-							// alert(url); // wtf is a link lol check rerendering problem
+							alert(post_hint); // wtf is a link lol check rerendering problem
+							alert(url); // wtf is a link lol check rerendering problem
 							// so now i gotta find the file type from the extension ?
 						}
 					}

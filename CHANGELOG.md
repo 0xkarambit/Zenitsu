@@ -1,3 +1,3 @@
 ## CHANGELOG
 
-1. rich:video support through react-player.
+1. added incomprehensible_post_hint link display (example for twitter links).

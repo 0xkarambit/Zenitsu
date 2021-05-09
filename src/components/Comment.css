@@ -32,6 +32,10 @@
 }
 
 .award {
+	/* for the award count in POST details */
+	font-size: 1.5em;
+	font-weight: 600;
+	/**/
 	margin: 4px;
 	display: inline-flex;
 	align-items: center;
@@ -45,8 +49,8 @@
 }
 
 .tooltip {
-	width: 16px;
-	height: 16px;
+	width: 20px;
+	height: 20px;
 }
 
 .tooltip-box {
