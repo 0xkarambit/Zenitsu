@@ -1,3 +1,3 @@
 ## CHANGELOG
 
-1. added SPOILER tag on thumbnail.
+1. added relative time passed till date.

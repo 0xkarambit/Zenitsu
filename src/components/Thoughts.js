@@ -32,7 +32,6 @@ export default function Thoughts({
 	React.useEffect(() => {
 		// to avoid repainting/rerending/changing state when post url is specified in pathname.
 		if (window.location.pathname !== "/") return null;
-		console.log("status ");
 		// const url = "https://www.reddit.com/r/Showerthoughts/top/?t=month";
 		// by default .json at the end pulls the hot listings
 		// is this try-catch useless lol.

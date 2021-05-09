@@ -4,7 +4,7 @@ import "./Comment.css";
 import arrowUp from "./../assets/icons/arrow-up.svg";
 import Award from "./Award.js";
 
-import { makeFriendly } from "./../utils/num.js";
+import { makeFriendly, elapsedTime } from "./../utils/num.js";
 import { convertHTMLEntity } from "./../utils/htmlparsing.js";
 
 const Comment = ({
@@ -32,10 +32,12 @@ const Comment = ({
 		marginLeft: `${14}px`
 	};
 	let className = topLevel ? "toplevel-comment" : "comment";
-	let timeCreated = new Date(+`${data.created_utc}000`).toLocaleString();
-	if (data.body.includes("SpaceX")) {
-		console.log({ j: data.body_html });
-	}
+	let timeCreated = +`${data.created_utc}000`;
+	// console.log({
+	// 	name: data.author,
+	// 	date: +`${data.created_utc}000`,
+	// 	ago: elapsedTime(+`${data.created_utc}000`)
+	// });
 	return (
 		// using key as [commentObj]data.id idk how the id is used in reddit tho.
 		<div className={className} style={commentMarginLeft}>
@@ -50,7 +52,7 @@ const Comment = ({
 					></img>
 					{makeFriendly(data.score)}
 				</span>
-				<span className="time-posted">{timeCreated}</span>
+				<span className="time-posted">{elapsedTime(timeCreated)}</span>
 				<span className="awards">
 					{data.all_awardings.map(
 						({ name, description, icon_url, count }) => {

@@ -102,3 +102,13 @@ IMP OBS: the domains for which rdddeck.com doesnt have a specific component to d
 what is this "is_reddit_media_domain" ?
 
 give option to truncate the long post titles. 
+
+spoiler was for :/https://www.reddit.com/r/Boxing/comments/n8607o/spoiler_saul_alvarez_vs_billy_joe_saunders/
+
+Q: what is a self post reddit ?
+A: A self post is a text post, instead of a link post. A link post directs to an external link. A self post is nothing but the text you enter. A link post earns you link karma, a self post does not.
+
+_____________FOR thumbnail___________________
+Submissions have a "submission.thumbnail" attribute.
+Although keep in mind, if there are no possible thumbnails, they will be
+keywords referring to the default reddit icons ("self", "image", "default"...).

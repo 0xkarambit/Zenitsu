@@ -4,7 +4,7 @@ import Award from "./Award.js";
 import VideoPlayer from "./VideoPlayer.js";
 import ReactPlayer from "react-player";
 
-import { makeFriendly } from "./../utils/num.js";
+import { makeFriendly, elapsedTime } from "./../utils/num.js";
 import { convertHTMLEntity } from "./../utils/htmlparsing.js";
 
 export default function Post({
@@ -34,7 +34,6 @@ export default function Post({
 	postsLoader = false
 }) {
 	if (postsLoader) {
-		console.log("endsad");
 		return (
 			<div className="post">
 				<button onClick={loadMorePosts}>loadMorePosts</button>
@@ -45,7 +44,7 @@ export default function Post({
 	const badThumbnails = ["", "self", "spoiler"];
 	// const imageUrl = preview.images[0].resolutions[] // these urls dont work restricted BUT url will work here
 	// todo: oh there can be multiple photos
-	const dateCreated = new Date(+`${created_utc}000`).toLocaleString();
+	const timeCreated = +`${created_utc}000`;
 	// const relativeTime = new Intl.relativeTimeFormat("en", {style: "long", numeric: "auto"});
 	return (
 		<div
@@ -149,7 +148,7 @@ export default function Post({
 				<span title={score} style={{ margin: "0px 5px 0px 5px" }}>
 					{makeFriendly(score)}{" "}
 				</span>
-				created: {dateCreated} awards:{" "}
+				{elapsedTime(timeCreated)} awards:{" "}
 				{all_awardings.map(({ name, description, icon_url, count }) => {
 					return (
 						<Award {...{ name, description, icon_url, count }} />
