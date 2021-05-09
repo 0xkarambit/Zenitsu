@@ -42,7 +42,7 @@ export default function Post({
 		);
 	}
 	const link = `https://www.reddit.com${permalink}`;
-	const badThumbnails = ["", "self"];
+	const badThumbnails = ["", "self", "spoiler"];
 	// const imageUrl = preview.images[0].resolutions[] // these urls dont work restricted BUT url will work here
 	// todo: oh there can be multiple photos
 	const dateCreated = new Date(+`${created_utc}000`).toLocaleString();
@@ -55,7 +55,13 @@ export default function Post({
 			}}
 		>
 			<p className="author">{`u/${author}`}</p>
-			<h2 className="title">{title || "title"}</h2>
+			<h2 className="title">
+				{title || "title"}
+				{/*TODO: the message in thumbnail could be something else too right ya, browser reddit to know more*/}
+				{thumbnail === "spoiler" && (
+					<span className="spoiler">SPOILER</span>
+				)}
+			</h2>
 			<p
 				className="postbody"
 				dangerouslySetInnerHTML={

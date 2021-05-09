@@ -1,3 +1,3 @@
 ## CHANGELOG
 
-1. added incomprehensible_post_hint link display (example for twitter links).
+1. added SPOILER tag on thumbnail.

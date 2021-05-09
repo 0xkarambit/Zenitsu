@@ -58,12 +58,15 @@
 
 /* POST.JS */
 .spoiler {
-	font-size: 0.7em;
+	font-size: 0.5em;
 	display: inline-block;
 	color: grey;
 	font-weight: 600;
 	border: 2px solid grey;
-	padding: 9px;
+	padding: 5px;
+	position: relative;
+	top: -5px; /*not responsive*/
+	margin-left: 10px;
 }
 
 .incomprehensible_post_hint {
