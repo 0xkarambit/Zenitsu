@@ -89,3 +89,4 @@ VIDEO
 OK it says rich:video for external sources.
 
 ok so we will have to parse FancyPants comments and markdown comments differently.
+some have <div class="md"></div>

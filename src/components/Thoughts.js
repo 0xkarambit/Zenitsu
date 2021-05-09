@@ -123,6 +123,7 @@ export default function Thoughts({
 				setSubCount(c[0].data.children[0].data.subreddit_subscribers);
 				setPermaLinks(new Set([link]));
 				// ok we need to set the subreddit name without fetching the posts. ref ?
+				console.log("triggered");
 				banner.current.innerText =
 					"r/" + c[0].data.children[0].data.subreddit;
 			}

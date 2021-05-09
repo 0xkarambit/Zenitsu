@@ -1,6 +1,8 @@
 import { useState } from "react";
 import Award from "./Award.js";
+
 import VideoPlayer from "./VideoPlayer.js";
+import ReactPlayer from "react-player";
 
 import { makeFriendly } from "./../utils/num.js";
 import { convertHTMLEntity } from "./../utils/htmlparsing.js";
@@ -105,10 +107,12 @@ export default function Post({
 								blur={false}
 							></VideoPlayer>
 						);
+					} else if (post_hint === "rich:video") {
+						return <ReactPlayer url={url} loop controls pip />;
 					} else {
 						if (![undefined, "url", "link"].includes(post_hint)) {
-							alert(post_hint); // wtf is a link lol check rerendering problem
-							alert(url); // wtf is a link lol check rerendering problem
+							// alert(post_hint); // wtf is a link lol check rerendering problem
+							// alert(url); // wtf is a link lol check rerendering problem
 							// so now i gotta find the file type from the extension ?
 						}
 					}
