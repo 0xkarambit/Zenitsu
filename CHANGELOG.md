@@ -1,3 +1,3 @@
 ## CHANGELOG
 
-1. added relative time passed till date.
+1. tried to add image gallery (shows just the first img currently).

@@ -119,3 +119,6 @@ For legacy reasons, all JSON response bodies currently have <, >, and & replaced
 we might have to make a new video player because there is no way we can change the volume.
 
 i need to change the colors a bit to add focus to important fields
+
+ADD SHORTCUTS
+use srcset attribute !!

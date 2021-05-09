@@ -112,3 +112,9 @@ _____________FOR thumbnail___________________
 Submissions have a "submission.thumbnail" attribute.
 Although keep in mind, if there are no possible thumbnails, they will be
 keywords referring to the default reddit icons ("self", "image", "default"...).
+
+thumbnail images: https://www.reddit.com/r/redditdev/comments/2wwuje/what_does_it_mean_when_the_thumbnail_field_has/
+
+
+multiple images
+wtf there is no post_hint https://www.reddit.com/r/StardustCrusaders/comments/n8e5cr/my_joseph_joestar_cosplay.json

@@ -1,8 +1,9 @@
 import { useState } from "react";
 import Award from "./Award.js";
 
-import VideoPlayer from "./VideoPlayer.js";
 import ReactPlayer from "react-player";
+import VideoPlayer from "./VideoPlayer.js";
+import ImageGallery from "./ImageGallery.js";
 
 import { makeFriendly, elapsedTime } from "./../utils/num.js";
 import { convertHTMLEntity } from "./../utils/htmlparsing.js";
@@ -25,6 +26,8 @@ export default function Post({
 	all_awardings,
 	over_18,
 	domain,
+	is_gallery,
+	gallery_data,
 	displayMode = "stack",
 	shouldBlur,
 	setBlur,
@@ -82,6 +85,9 @@ export default function Post({
 				></img>
 			)}
 			{(() => {
+				if (is_gallery === true) {
+					return <ImageGallery gallery={gallery_data.items} />;
+				}
 				if (displayMode === "focus") {
 					if (post_hint === "image") {
 						return (
