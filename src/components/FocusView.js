@@ -4,7 +4,7 @@ import { useLocation } from "react-router-dom";
 import Post from "./Post.js";
 import Comment from "./Comment.js";
 
-const FocusView = ({ postsData, getComments, initPostNo = 0 }) => {
+const FocusView = ({ postsData, getComments, initPostNo = 0, viewStyle }) => {
 	const [currentPost, setCurrentPost] = useState(initPostNo);
 	const [currentComments, setCurrentComments] = useState([]); // {url:[url], comments: obj `children[]]`}
 	const currentPostData = postsData[currentPost]?.data;
@@ -72,19 +72,21 @@ const FocusView = ({ postsData, getComments, initPostNo = 0 }) => {
 	return (
 		<>
 			<Post
+				// this returns a div with class "post"
 				{...currentPostData}
 				displayMode={"focus"}
 				shouldBlur={shouldBlur}
 				setBlur={setBlur}
+				viewStyle={viewStyle}
 			/>
-			{/*<Comments/>*/}
-			<h4
-				className="comments-section-banner"
-				style={{ margin: "12px 0px -2px 12px" }}
-			>
-				Comments {currentPostData.num_comments}
-			</h4>
 			<div className="comments">
+				{/*<Comments/>*/}
+				<h4
+					className="comments-section-banner"
+					style={{ margin: "12px 0px -2px 12px" }}
+				>
+					Comments {currentPostData.num_comments}
+				</h4>
 				{/*todo: show loading comments banner */}
 				{currentComments &&
 					currentComments.map((commentObj) => {

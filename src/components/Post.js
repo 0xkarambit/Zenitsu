@@ -33,6 +33,7 @@ export default function Post({
 	setBlur,
 	expandView = () => {},
 	index,
+	viewStyle,
 	loadMorePosts = false,
 	postsLoader = false
 }) {
@@ -50,7 +51,7 @@ export default function Post({
 	// todo: oh there can be multiple photos
 	const timeCreated = +`${created_utc}000`;
 	// idk if we should really be using useMemo here or not.
-	const gallery = useMemo(() => gallery_data.items, [gallery_data]);
+	const gallery = useMemo(() => gallery_data?.items, [gallery_data]);
 	return postsLoader ? (
 		<div className="post">
 			<button onClick={loadMorePosts}>loadMorePosts</button>
@@ -61,6 +62,7 @@ export default function Post({
 			onClick={() => {
 				expandView(index);
 			}}
+			data-view-vert={viewStyle}
 		>
 			<p className="author">{`u/${author}`}</p>
 			<h2 className="title">
@@ -126,7 +128,7 @@ export default function Post({
 							/>
 						);
 					} else if (post_hint === "rich:video") {
-						return <ReactPlayer url={url} loop controls pip />;
+						return <ReactPlayer url={url} controls pip />;
 					} else {
 						if (post_hint === "link") {
 							return (

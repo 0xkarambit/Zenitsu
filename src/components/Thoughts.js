@@ -15,7 +15,8 @@ export default function Thoughts({
 	setSubreddit,
 	previousSubreddit,
 	setSubCount,
-	banner
+	banner,
+	viewStyle
 }) {
 	// the displayMode gets set to $TESTINGMODE after every subreddit change.
 	const TESTINGMODE = "stack";
@@ -165,7 +166,7 @@ export default function Thoughts({
 	// hmmm is passing initPostNo instead of setInitPostNo gonna take more memry ?
 
 	return (
-		<div className="viewarea">
+		<div className="viewarea" data-view-vert={viewStyle}>
 			{/*should we add a powerbar here to control the view styles etc ?? */}
 			<Switch>
 				<Route exact path="/">
@@ -198,6 +199,7 @@ export default function Thoughts({
 						postsData={postsData}
 						getComments={getComments}
 						initPostNo={initPostNo}
+						viewStyle={viewStyle}
 					/>
 				</Route>
 			</Switch>

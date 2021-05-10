@@ -6,6 +6,7 @@ import Award from "./Award.js";
 
 import { makeFriendly, elapsedTime } from "./../utils/num.js";
 import { convertHTMLEntity } from "./../utils/htmlparsing.js";
+// import ProfilePic from "./ProfilePic.js";
 
 const Comment = ({
 	data,
@@ -42,6 +43,7 @@ const Comment = ({
 		// using key as [commentObj]data.id idk how the id is used in reddit tho.
 		<div className={className} style={commentMarginLeft}>
 			<p style={marginLeft} className="comment-details">
+				{/*<ProfilePic id={data.author}></ProfilePic>*/}
 				<span className="userID">{`u/${data.author}`}</span>
 				<span className="score">
 					<img
@@ -108,3 +110,7 @@ const Comment = ({
 };
 
 export default Comment;
+
+// profile pics
+// https://www.reddit.com/user/<USERNAME>/about.json
+// data/icon_img

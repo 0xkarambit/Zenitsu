@@ -121,3 +121,11 @@ wtf there is no post_hint https://www.reddit.com/r/StardustCrusaders/comments/n8
 
 
 Video wont play: http://localhost:3000/https://www.reddit.com/r/Images/comments/n8fzpm/art_edit_howling_at_the_moon_in_norway/
+
+add FLAIRS |add nsfw flairs.
+add locatStorage support.
+change the subreddit red innerHTMl
+
+// ? OK SO I CANT GET THE ICON_IMG (without OAuth ig)|| Error 403 also we cant load these for every comment. too much data use
+not able to make pos: sticky work.
+OK SO NOW WE CANT browse a sub if we see a post directly in single mode.

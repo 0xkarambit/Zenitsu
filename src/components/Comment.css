@@ -98,6 +98,8 @@
 .comment {
 	border-left: 2px solid grey;
 	/* margin-left: 20px; */
+	/* OMG USING THIS MADE THE GAPS in thread lines disappear !!! */
+	overflow: hidden;
 }
 
 /* .comment-details {
@@ -111,6 +113,11 @@
 	width: 20%;
 	margin: auto;
 	margin-left: 20px;
+}
+
+.profilepic {
+	width: 10px;
+	height: 10px;
 }
 
 /* FOR REDDIT BODY_HTML */

@@ -15,9 +15,17 @@ function App() {
 	const previousSubreddit = useRef();
 	const [subCount, setSubCount] = useState();
 	const banner = useRef();
+	const [viewStyle, setViewStyle] = useState(false);
 
+	// scroll to top
 	useHotkeys("g g", () => {
 		document.querySelector("#root").scrollIntoView();
+	});
+
+	// switch to vert split view style
+	useHotkeys("ctrl + v", () => {
+		// bad implementation and bad var names actually.
+		setViewStyle((vs) => !vs);
 	});
 
 	return (
@@ -37,7 +45,8 @@ function App() {
 						setSubreddit,
 						previousSubreddit,
 						setSubCount,
-						banner
+						banner,
+						viewStyle
 					}}
 				/>
 			</div>

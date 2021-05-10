@@ -125,6 +125,16 @@ use srcset attribute !!
 
 BUG: somethimes the src attribute doesnt change when scrolling posts ??
 
+to add:
+
+state management
+color themes selection
+keyboard shortcuts and selection menu
+change FocusView layout
+optimising image loading
+add localstorage support
+styled components?
+
 learn:
 state management
 chakra ui bulma css tailwind
