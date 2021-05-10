@@ -13,6 +13,26 @@
 	transform: scale(1.04); /*SHOW OPTION TO OPEN IN BIGGER VIEWER ?*/
 }
 
+/* IDK WHY BUT ITS NOT WORKING */
+.gallery > img::after {
+	content: attr(data-content);
+	display: block;
+	position: absolute;
+	top: 20px;
+	right: 20px;
+	width: 10px;
+	height: 10px;
+	background: green;
+	color: blue;
+	border: 20px solid salmon;
+	/* opacity: 0.5; */
+}
+
+.image-count {
+	width: 20%;
+	text-align: center;
+}
+
 /* animation */
 
 /* .slide {

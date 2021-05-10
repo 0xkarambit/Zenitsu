@@ -1,3 +1,4 @@
 ## CHANGELOG
 
-1. Image Gallery working (not perfect).
+1. image counter added in gallery.
+2. press g to scroll to top.

@@ -28,31 +28,36 @@ const ImageGallery = ({ gallery }) => {
 	// should we have multiple img tags or same img tag;
 	// add blur ability too.
 	return (
-		<div className="gallery">
-			{/*sources.map( url => <img src={url} alt=""/>)*/}
-			{n === 0 ? null : (
-				<FaArrowAltCircleLeft
-					className="left-arrow"
-					fontSize="2em"
-					onClick={prev}
+		<>
+			<div className="gallery">
+				{/*sources.map( url => <img src={url} alt=""/>)*/}
+				{n === 0 ? null : (
+					<FaArrowAltCircleLeft
+						className="left-arrow"
+						fontSize="2em"
+						onClick={prev}
+					/>
+				)}
+				<img
+					height="400px"
+					width="auto"
+					style={{ objectFit: "contain" }}
+					src={sources[n]}
+					alt={`no ${n + 1}`}
+					data-content={`${n + 1}/${sources.length}`}
+					// srcset="" todo: use scrset everywhere for optimised performace.
 				/>
-			)}
-			<img
-				height="400px"
-				width="auto"
-				style={{ objectFit: "contain" }}
-				src={sources[n]}
-				alt={`no ${n + 1}`}
-				// srcset="" todo: use scrset everywhere for optimised performace.
-			/>
-			{n === sources.length - 1 ? null : (
-				<FaArrowAltCircleRight
-					fontSize="2em"
-					className="right-arrow"
-					onClick={next}
-				/>
-			)}
-		</div>
+				{n === sources.length - 1 ? null : (
+					<FaArrowAltCircleRight
+						fontSize="2em"
+						className="right-arrow"
+						onClick={next}
+					/>
+				)}
+			</div>
+			{/*NOT GOOD*/}
+			<p className="image-count">{`${n + 1}/${sources.length}`}</p>
+		</>
 	);
 };
 

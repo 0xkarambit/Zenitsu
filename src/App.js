@@ -1,5 +1,6 @@
 import React, { useRef, useState } from "react";
 import { useLocation, useRouteMatch } from "react-router-dom";
+import { useHotkeys } from "react-hotkeys-hook";
 
 import Header from "./components/Header.js";
 import Sidebar from "./components/Sidebar.js";
@@ -14,6 +15,11 @@ function App() {
 	const previousSubreddit = useRef();
 	const [subCount, setSubCount] = useState();
 	const banner = useRef();
+
+	useHotkeys("g g", () => {
+		document.querySelector("#root").scrollIntoView();
+	});
+
 	return (
 		<div className="App">
 			<Header
