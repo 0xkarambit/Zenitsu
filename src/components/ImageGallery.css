@@ -1,0 +1,27 @@
+.gallery {
+	display: flex;
+	justify-content: start;
+	align-items: center;
+}
+
+.gallery > img {
+	margin: 10px;
+	transition-duration: 1s;
+	/* transform: scale(1.08); */
+}
+.gallery > img:hover {
+	transform: scale(1.04); /*SHOW OPTION TO OPEN IN BIGGER VIEWER ?*/
+}
+
+/* animation */
+
+/* .slide {
+  opacity: 0;
+  transition-duration: 1s ease;
+}
+
+.slide.active {
+  opacity: 1;
+  transition-duration: 1s;
+  transform: scale(1.08);
+} */

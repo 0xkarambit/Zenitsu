@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import Award from "./Award.js";
 
 import ReactPlayer from "react-player";
@@ -36,20 +36,26 @@ export default function Post({
 	loadMorePosts = false,
 	postsLoader = false
 }) {
-	if (postsLoader) {
-		return (
-			<div className="post">
-				<button onClick={loadMorePosts}>loadMorePosts</button>
-			</div>
-		);
-	}
+	// moved to the bottom hooks were getting in the way lol.
+	// if (postsLoader) {
+	// 	return (
+	// 		<div className="post">
+	// 			<button onClick={loadMorePosts}>loadMorePosts</button>
+	// 		</div>
+	// 	);
+	// }
 	const link = `https://www.reddit.com${permalink}`;
 	const badThumbnails = ["", "self", "spoiler"];
 	// const imageUrl = preview.images[0].resolutions[] // these urls dont work restricted BUT url will work here
 	// todo: oh there can be multiple photos
 	const timeCreated = +`${created_utc}000`;
-	// const relativeTime = new Intl.relativeTimeFormat("en", {style: "long", numeric: "auto"});
-	return (
+	// idk if we should really be using useMemo here or not.
+	const gallery = useMemo(() => gallery_data.items, [gallery_data]);
+	return postsLoader ? (
+		<div className="post">
+			<button onClick={loadMorePosts}>loadMorePosts</button>
+		</div>
+	) : (
 		<div
 			className="post"
 			onClick={() => {
@@ -86,7 +92,7 @@ export default function Post({
 			)}
 			{(() => {
 				if (is_gallery === true) {
-					return <ImageGallery gallery={gallery_data.items} />;
+					return <ImageGallery gallery={gallery} />;
 				}
 				if (displayMode === "focus") {
 					if (post_hint === "image") {

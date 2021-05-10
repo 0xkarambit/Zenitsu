@@ -122,3 +122,18 @@ i need to change the colors a bit to add focus to important fields
 
 ADD SHORTCUTS
 use srcset attribute !!
+
+BUG: somethimes the src attribute doesnt change when scrolling posts ??
+
+learn:
+state management
+chakra ui bulma css tailwind
+
+css grid: https://www.youtube.com/watch?v=7kVeCqQCxlk , https://www.youtube.com/watch?v=SPFDLHNm5KQ
+styled comp ben:? https://www.youtube.com/watch?v=ewVZadu0gzw
+bulma : https://www.youtube.com/watch?v=hiTxsjxHIMY
+
+tippy
+popper
+git log --pretty=online --graph --decorate --all
+https://www.reddit.com/dev/api/

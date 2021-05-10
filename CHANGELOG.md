@@ -1,3 +1,3 @@
 ## CHANGELOG
 
-1. tried to add image gallery (shows just the first img currently).
+1. Image Gallery working (not perfect).
