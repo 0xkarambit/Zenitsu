@@ -129,3 +129,9 @@ change the subreddit red innerHTMl
 // ? OK SO I CANT GET THE ICON_IMG (without OAuth ig)|| Error 403 also we cant load these for every comment. too much data use
 not able to make pos: sticky work.
 OK SO NOW WE CANT browse a sub if we see a post directly in single mode.
+
+NOTES for post 
+
+only add attribute if in "focus" mode, set a fixed or user adjustably fixed width for the post and give space to comments
+some a half sized : http://localhost:3000/https://www.reddit.com/r/quotes/comments/n8vuz5/before_you_marry_a_person_you_should_first_make/
+some take all the space : http://localhost:3000/https://www.reddit.com/r/quotes/comments/n8vuz5/before_you_marry_a_person_you_should_first_make/

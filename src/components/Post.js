@@ -62,7 +62,7 @@ export default function Post({
 			onClick={() => {
 				expandView(index);
 			}}
-			data-view-vert={viewStyle}
+			data-view-vert={displayMode === "stack" ? null : viewStyle}
 		>
 			<p className="author">{`u/${author}`}</p>
 			<h2 className="title">

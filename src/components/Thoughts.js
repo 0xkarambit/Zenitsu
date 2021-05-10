@@ -166,7 +166,10 @@ export default function Thoughts({
 	// hmmm is passing initPostNo instead of setInitPostNo gonna take more memry ?
 
 	return (
-		<div className="viewarea" data-view-vert={viewStyle}>
+		<div
+			className="viewarea"
+			data-view-vert={displayMode === "stack" ? null : viewStyle}
+		>
 			{/*should we add a powerbar here to control the view styles etc ?? */}
 			<Switch>
 				<Route exact path="/">
