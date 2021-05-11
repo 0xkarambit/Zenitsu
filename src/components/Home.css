@@ -1,0 +1,30 @@
+.home {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+
+	text-align: center;
+	font-family: Arial, Helvetica, sans-serif;
+	/* border: 2px solid black; */
+	min-height: 60vh;
+	overflow: none;
+}
+
+.box {
+	width: 500px;
+	height: 150px;
+	background-color: burlywood;
+	padding: 20px;
+	border-radius: 10px;
+}
+
+.home > h1 {
+	margin: 0px;
+	padding: 0px;
+}
+
+.selector {
+	font-size: 28px;
+	width: 40%;
+	margin: auto;
+}

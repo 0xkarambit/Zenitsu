@@ -1,7 +1,15 @@
 import React, { useEffect, useRef, useState } from "react";
 // import Speech from "react-speech";
 import StackGrid from "react-stack-grid";
-import { Switch, Route, Link } from "react-router-dom";
+import {
+	Switch,
+	Route,
+	Link,
+	useParams,
+	useHistory,
+	useLocation,
+	useRouteMatch
+} from "react-router-dom";
 
 // styling
 import "./thoughts.css";
@@ -11,14 +19,16 @@ import Post from "./Post.js";
 import FocusView from "./FocusView.js";
 
 export default function Thoughts({
-	subreddit,
-	setSubreddit,
 	previousSubreddit,
 	setSubCount,
-	banner,
 	viewStyle
 }) {
 	// the displayMode gets set to $TESTINGMODE after every subreddit change.
+	const match = useRouteMatch("/:subreddit");
+	const { subreddit } = match.params;
+	const history = useHistory();
+	// const location = useLocation();
+
 	const TESTINGMODE = "stack";
 	const [afterCode, setAfterCode] = useState("");
 	let [dataReceived, setDataReceived] = useState(false);
@@ -31,11 +41,14 @@ export default function Thoughts({
 
 	// fetching the data on mount;
 	React.useEffect(() => {
-		// to avoid repainting/rerending/changing state when post url is specified in pathname.
-		if (window.location.pathname !== "/") return null;
+		// to avoid fetching all listings of a subreddit when the user only intends to view one. SINGLE PAGE LOAD
+		if (!match.isExact) return null;
 		// const url = "https://www.reddit.com/r/Showerthoughts/top/?t=month";
 		// by default .json at the end pulls the hot listings
 		// is this try-catch useless lol.
+		setTimeout(() => {
+			console.log("USE EFFECT CALLLEEDDDDD");
+		}, 5000);
 		try {
 			// how do i load the top listings !!??
 			const url = `https://www.reddit.com/r/${subreddit}.json`;
@@ -66,7 +79,9 @@ export default function Thoughts({
 					} else if (e.message === "Not Found") {
 						alert("no such community exists");
 					}
-					setSubreddit(previousSubreddit.current);
+					// ? replace history coz NONONONONOO just back;
+					history.goBack();
+					// setSubreddit(previousSubreddit.current);
 				});
 		} catch (e) {
 			console.log(e);
@@ -124,7 +139,8 @@ export default function Thoughts({
 				setPermaLinks(new Set([link]));
 				alert("triggered");
 				// it doesnt load the posts coz of the 1st line in useEffect.
-				setSubreddit(c[0].data.children[0].data.subreddit);
+				//? it will take it automatically from the url
+				// setSubreddit(c[0].data.children[0].data.subreddit);
 				// but if i back now it wont load the posts of the sub we were on.
 			}
 			return comObj;
@@ -164,7 +180,6 @@ export default function Thoughts({
 		setDisplayMode("focus");
 	};
 	// hmmm is passing initPostNo instead of setInitPostNo gonna take more memry ?
-
 	return (
 		<div
 			className="viewarea"
@@ -172,13 +187,13 @@ export default function Thoughts({
 		>
 			{/*should we add a powerbar here to control the view styles etc ?? */}
 			<Switch>
-				<Route exact path="/">
+				<Route exact path="/:subreddit">
 					{dataReceived && (
 						<>
 							<StackGrid columnWidth={300}>
 								{postsData.map((post, i) => (
 									<Link
-										to={`https://www.reddit.com${post.data.permalink}`}
+										to={`/${subreddit}/https://www.reddit.com${post.data.permalink}`}
 										style={{ textDecoration: "none" }}
 									>
 										<Post
@@ -197,7 +212,8 @@ export default function Thoughts({
 						</>
 					)}
 				</Route>
-				<Route path="/:permalink">
+				{/*alternatively use useRouteMatch.url or what idk rn */}
+				<Route path={`/${subreddit}/:permalink`}>
 					<FocusView
 						postsData={postsData}
 						getComments={getComments}

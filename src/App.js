@@ -1,20 +1,21 @@
 import React, { useRef, useState } from "react";
-import { useLocation, useRouteMatch } from "react-router-dom";
+import { useLocation, useRouteMatch, Route, Switch } from "react-router-dom";
 import { useHotkeys } from "react-hotkeys-hook";
 
 import Header from "./components/Header.js";
 import Sidebar from "./components/Sidebar.js";
 import Thoughts from "./components/Thoughts.js";
 
+import Home from "./components/Home.js";
+
 function App() {
 	// app should show sub selection page or home page on /
 	let m = useRouteMatch("/:postUrl");
 	// {match:{params:{subName}}}
 	console.log(m?.params?.postUrl);
-	const [subreddit, setSubreddit] = useState("showerthoughts");
+	// const [subreddit, setSubreddit] = useState("showerthoughts");
 	const previousSubreddit = useRef();
 	const [subCount, setSubCount] = useState();
-	const banner = useRef();
 	const [viewStyle, setViewStyle] = useState(false);
 
 	// scroll to top
@@ -30,26 +31,27 @@ function App() {
 
 	return (
 		<div className="App">
-			<Header
-				subreddit={subreddit}
-				setSubreddit={setSubreddit}
-				previousSubreddit={previousSubreddit}
-				subCount={subCount}
-				ref={banner}
-			/>
-			<div className="container">
-				<Sidebar />
-				<Thoughts
-					{...{
-						subreddit,
-						setSubreddit,
-						previousSubreddit,
-						setSubCount,
-						banner,
-						viewStyle
-					}}
-				/>
-			</div>
+			<Switch>
+				<Route exact path="/">
+					<Home />
+				</Route>
+				<Route path="/:subreddit">
+					<Header
+						previousSubreddit={previousSubreddit}
+						subCount={subCount}
+					/>
+					<div className="container">
+						<Sidebar />
+						<Thoughts
+							{...{
+								previousSubreddit,
+								setSubCount,
+								viewStyle
+							}}
+						/>
+					</div>
+				</Route>
+			</Switch>
 		</div>
 	);
 }

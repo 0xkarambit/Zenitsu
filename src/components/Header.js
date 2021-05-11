@@ -1,15 +1,14 @@
 import React, { forwardRef, useEffect, useRef, useState } from "react";
-import { useHistory } from "react-router-dom";
+import { useHistory, useParams } from "react-router-dom";
 import { useHotkeys } from "react-hotkeys-hook";
 
 import { makeFriendly } from "./../utils/num.js";
 
 import "./header.css";
 
-export default forwardRef(function Header(
-	{ subreddit, setSubreddit, previousSubreddit, subCount },
-	banner
-) {
+export default function Header({ previousSubreddit, subCount }) {
+	const { subreddit } = useParams();
+	const history = useHistory();
 	const [selectMenuOpen, setSelectMenuState] = useState(false);
 	const toggleSelectMenu = () => setSelectMenuState(!selectMenuOpen);
 	const closeSelectMenu = () => setSelectMenuState(false);
@@ -21,7 +20,8 @@ export default forwardRef(function Header(
 		// change url.
 		// sub includes "r/"
 		previousSubreddit.current = subreddit;
-		setSubreddit(sub.slice(2));
+		history.push("/" + sub.slice(2));
+		// setSubreddit(sub.slice(2));
 	};
 
 	return (
@@ -35,9 +35,7 @@ export default forwardRef(function Header(
 						width="50px"
 						height="50px"
 					/>
-					<p className="banner" ref={banner}>
-						r/{subreddit}
-					</p>
+					<p className="banner">r/{subreddit}</p>
 					{![null, NaN, undefined].some((v) =>
 						Object.is(subCount, v)
 					) && (
@@ -56,7 +54,7 @@ export default forwardRef(function Header(
 			</span>
 		</header>
 	);
-});
+}
 
 const SubredditSelect = ({ sel_subreddit, subreddit, closeSelectMenu }) => {
 	const subSel = useRef();
@@ -74,17 +72,12 @@ const SubredditSelect = ({ sel_subreddit, subreddit, closeSelectMenu }) => {
 		};
 	}, []);
 
-	const onSubSelect = (inputSub) => {
-		history.push("/");
-		sel_subreddit(inputSub);
-	};
-
 	return (
 		<div className="sub-sel">
 			<input
 				ref={subSel}
 				value={inputSub}
-				onKeyDown={(e) => e.key === "Enter" && onSubSelect(inputSub)}
+				onKeyDown={(e) => e.key === "Enter" && sel_subreddit(inputSub)}
 				onChange={(e) => {
 					let val = e.target.value;
 					if (["r", "/", ""].includes(val)) val = "r/";

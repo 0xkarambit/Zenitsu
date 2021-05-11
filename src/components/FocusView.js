@@ -1,6 +1,6 @@
 import { useHotkeys } from "react-hotkeys-hook";
 import { useEffect, useState, useCallback } from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, useParams, useRouteMatch } from "react-router-dom";
 import Post from "./Post.js";
 import Comment from "./Comment.js";
 
@@ -11,10 +11,19 @@ const FocusView = ({ postsData, getComments, initPostNo = 0, viewStyle }) => {
 	const [shouldBlur, setBlur] = useState(currentPostData?.over_18);
 	// currentPostData to be "undefined" means that there is no data. this is the first visit on the page ie to load this specific post from the url pathname
 	// we will load the post and comments and until the post has been loaded the currentPostData will be "undefined".
+	const {
+		params: { subreddit }
+	} = useRouteMatch("/:subreddit");
+
 	let permalink = currentPostData?.permalink
 		? `https://www.reddit.com${currentPostData.permalink}`
-		: window.location.pathname.slice(1);
+		: window.location.pathname.replace(`/${subreddit}/`, "");
 
+	// const location = useLocation();
+	// console.log({ location });
+
+	// const { permalink } = useParams();
+	console.log({ permalink });
 	// https://github.com/jaywcjlove/hotkeys/#defining-shortcuts
 	useHotkeys(
 		"n",
