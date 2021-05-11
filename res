@@ -135,3 +135,5 @@ NOTES for post
 only add attribute if in "focus" mode, set a fixed or user adjustably fixed width for the post and give space to comments
 some a half sized : http://localhost:3000/https://www.reddit.com/r/quotes/comments/n8vuz5/before_you_marry_a_person_you_should_first_make/
 some take all the space : http://localhost:3000/https://www.reddit.com/r/quotes/comments/n8vuz5/before_you_marry_a_person_you_should_first_make/
+
+are the videos even working ?? and images are lagging too right ??!

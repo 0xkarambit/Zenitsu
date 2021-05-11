@@ -122,10 +122,10 @@ export default function Thoughts({
 				setPostsData(c[0].data.children); // HERE IS THE ERROR.
 				setSubCount(c[0].data.children[0].data.subreddit_subscribers);
 				setPermaLinks(new Set([link]));
-				// ok we need to set the subreddit name without fetching the posts. ref ?
-				console.log("triggered");
-				banner.current.innerText =
-					"r/" + c[0].data.children[0].data.subreddit;
+				alert("triggered");
+				// it doesnt load the posts coz of the 1st line in useEffect.
+				setSubreddit(c[0].data.children[0].data.subreddit);
+				// but if i back now it wont load the posts of the sub we were on.
 			}
 			return comObj;
 		} catch (e) {

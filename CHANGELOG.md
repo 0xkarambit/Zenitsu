@@ -1,3 +1,3 @@
 ## CHANGELOG
 
-1. fixed bad stack display mode screen on vert display mode.
+1. fixed bad sub naming on single post load.
