@@ -4,11 +4,32 @@ import { useLocation } from "react-router-dom";
 import Post from "./Post.js";
 import Comment from "./Comment.js";
 
-const FocusView = ({ postsData, getComments, initPostNo = 0, viewStyle }) => {
+const FocusView = ({
+	postsData,
+	getComments,
+	initPostNo = 0,
+	viewStyle,
+	shouldBlurAll
+}) => {
 	const [currentPost, setCurrentPost] = useState(initPostNo);
 	const [currentComments, setCurrentComments] = useState([]); // {url:[url], comments: obj `children[]]`}
 	const currentPostData = postsData[currentPost]?.data;
-	const [shouldBlur, setBlur] = useState(currentPostData?.over_18);
+	const [shouldBlur, setBlur] = useState(
+		shouldBlurAll && currentPostData?.over_18
+	);
+	// alert(currentPostData?.over_18);
+	// alert(shouldBlur); // undefined on single post load.
+	const [unBlurred, setUnBlurred] = useState({});
+
+	useHotkeys("ctrl + b", () => {
+		setBlur((b) => !b);
+		setUnBlurred((b) => {
+			// alert(b[currentPost]);
+			b[currentPost] = b[currentPost] === undefined ? true : false;
+			return b;
+		});
+	});
+
 	// currentPostData to be "undefined" means that there is no data. this is the first visit on the page ie to load this specific post from the url pathname
 	// we will load the post and comments and until the post has been loaded the currentPostData will be "undefined".
 	let permalink = currentPostData?.permalink
@@ -23,8 +44,11 @@ const FocusView = ({ postsData, getComments, initPostNo = 0, viewStyle }) => {
 				if (currentPost === postsData.length - 1) return currentPost;
 				else {
 					setCurrentComments([]);
-					if (postsData[currentPost + 1]?.data?.over_18)
-						setBlur(true);
+					if (
+						!unBlurred[currentPost + 1] &&
+						postsData[currentPost + 1]?.data?.over_18
+					)
+						shouldBlurAll && setBlur(true);
 					return ++currentPost;
 				}
 			});
@@ -43,8 +67,14 @@ const FocusView = ({ postsData, getComments, initPostNo = 0, viewStyle }) => {
 					return 0;
 				} else {
 					setCurrentComments([]);
-					if (postsData[currentPost + 1]?.data?.over_18)
-						setBlur(true);
+					// why is next log true for every one. ? couldnt get memoised deblurring to work.
+					// not switching.. not changing even on ctrl + b on another post.
+					console.log({ b: !unBlurred[currentPost - 1] });
+					if (
+						!unBlurred[currentPost - 1] &&
+						postsData[currentPost - 1]?.data?.over_18
+					)
+						shouldBlurAll && setBlur(true);
 					return --currentPost;
 				}
 			});
@@ -53,16 +83,24 @@ const FocusView = ({ postsData, getComments, initPostNo = 0, viewStyle }) => {
 	);
 
 	useEffect(() => {
+		// realistically this should happen when the sub changes.
+		return () => setUnBlurred({});
+	}, []);
+	useEffect(() => {
 		// Load Comments
 		// let curl = `${"https://www.reddit.com/r/Showerthoughts/comments/mw2amn/having_to_attend_a_wedding_you_dont_want_to_sucks/"}.json`;
 		// todo: change url to permalink in above line
 		console.log("CALLED USEEFFECT FOCUSVIEW.js line 54");
 		const result = getComments(permalink);
-		result.then((comObj) => {
+		result.then(({ comObj, data }) => {
 			// todo we need better error handling lol.
 			if (comObj === 1) alert("likely fetch request went wrong");
-			console.log(comObj);
+			// console.log(comObj);
 			setCurrentComments(comObj.comments);
+			// for singel page loads
+			if (shouldBlur === undefined) {
+				setBlur(shouldBlurAll && data.over_18);
+			}
 		});
 	}, [currentPost]);
 
@@ -78,6 +116,7 @@ const FocusView = ({ postsData, getComments, initPostNo = 0, viewStyle }) => {
 				shouldBlur={shouldBlur}
 				setBlur={setBlur}
 				viewStyle={viewStyle}
+				shouldBlurAll={shouldBlurAll}
 			/>
 			<div className="comments">
 				{/*<Comments/>*/}

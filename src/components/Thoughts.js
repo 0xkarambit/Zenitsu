@@ -16,7 +16,8 @@ export default function Thoughts({
 	previousSubreddit,
 	setSubCount,
 	banner,
-	viewStyle
+	viewStyle,
+	shouldBlurAll
 }) {
 	// the displayMode gets set to $TESTINGMODE after every subreddit change.
 	const TESTINGMODE = "stack";
@@ -29,6 +30,7 @@ export default function Thoughts({
 	// comments will be loaded by children components.
 	const [comments, setComments] = React.useState([]);
 
+	//  # dont return null keep it pending for watching history, atoms for implementing the shortcuts in a single place
 	// fetching the data on mount;
 	React.useEffect(() => {
 		// to avoid repainting/rerending/changing state when post url is specified in pathname.
@@ -90,7 +92,7 @@ export default function Thoughts({
 		// todo: FIX: find comment is not working
 		let foundCom = findComment(postUrl);
 		console.log({ foundCom });
-		if (foundCom.length !== 0) return foundCom[0];
+		if (foundCom.length !== 0) return { comObj: foundCom[0] };
 
 		// if comments are not in comments fetch them;
 		try {
@@ -129,7 +131,7 @@ export default function Thoughts({
 				// banner.current.setAttribute("dangerouslySetInnerHTML", {}); WONT WORK
 				// if subName is null use another state variable for subname set by the getComments def & set true sub on unmount.
 			}
-			return comObj;
+			return { comObj: comObj, data: c[0].data.children[0].data };
 		} catch (e) {
 			// ok try to know why it failed
 			// wait why did this url even appear here .....
@@ -188,6 +190,7 @@ export default function Thoughts({
 											index={i}
 											{...post.data}
 											expandView={expandView}
+											shouldBlurAll={shouldBlurAll}
 										></Post>
 									</Link>
 								))}
@@ -205,6 +208,7 @@ export default function Thoughts({
 						getComments={getComments}
 						initPostNo={initPostNo}
 						viewStyle={viewStyle}
+						shouldBlurAll={shouldBlurAll}
 					/>
 				</Route>
 			</Switch>

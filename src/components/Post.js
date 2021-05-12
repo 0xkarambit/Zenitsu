@@ -35,7 +35,8 @@ export default function Post({
 	index,
 	viewStyle,
 	loadMorePosts = false,
-	postsLoader = false
+	postsLoader = false,
+	shouldBlurAll = true
 }) {
 	// moved to the bottom hooks were getting in the way lol.
 	// if (postsLoader) {
@@ -86,7 +87,7 @@ export default function Post({
 					src={thumbnail}
 					alt="thumbnail"
 					className={
-						over_18 ? "blur" : ""
+						shouldBlurAll && over_18 ? "blur" : ""
 					} /* bad solution well its not like
 					we could unblur the thumbnails before but we need a state management 
 					sys to take care of this*/
