@@ -32,12 +32,20 @@ p {
 }
 
 .sub-sel {
-	position: absolute;
-	top: 100px;
-	left: 100px;
+	position: fixed;
+	top: 17%;
+	left: 50%;
+	transform: translate(-50%);
 	/* float: left; */
+	font-size: 24px;
 	text-align: center;
-	width: inherit;
+	width: auto;
+	z-index: 100;
+}
+
+.sub-sel > input {
+	background-color: #222;
+	color: whitesmoke;
 }
 
 /*fix the input style*/

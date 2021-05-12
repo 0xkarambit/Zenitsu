@@ -1,3 +1,3 @@
 ## CHANGELOG
 
-1. fixed bad sub naming on single post load.
+1. changed sub selection input style, and press 'esc' to close it now.
