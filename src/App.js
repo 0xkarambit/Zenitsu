@@ -17,6 +17,13 @@ function App() {
 	const previousSubreddit = useRef();
 	const [subCount, setSubCount] = useState();
 	const [viewStyle, setViewStyle] = useState(false);
+	const [shouldBlurAll, setShouldBlurAll] = useState(true);
+
+	useHotkeys("ctrl + shift + b", (e) => {
+		// prevent hiding, opening bookmarks bar.
+		e.preventDefault();
+		setShouldBlurAll((b) => !b);
+	});
 
 	// scroll to top
 	useHotkeys("g g", () => {
@@ -46,7 +53,8 @@ function App() {
 							{...{
 								previousSubreddit,
 								setSubCount,
-								viewStyle
+								viewStyle,
+								shouldBlurAll
 							}}
 						/>
 					</div>

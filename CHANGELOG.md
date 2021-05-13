@@ -1,3 +1,3 @@
 ## CHANGELOG
 
-1. fixed bad sub naming on single post load.
+1. image gallery showing in stack mode fix.
