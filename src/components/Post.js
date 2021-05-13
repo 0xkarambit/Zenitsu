@@ -94,10 +94,10 @@ export default function Post({
 				></img>
 			)}
 			{(() => {
-				if (is_gallery === true) {
-					return <ImageGallery gallery={gallery} />;
-				}
 				if (displayMode === "focus") {
+					if (is_gallery === true) {
+						return <ImageGallery gallery={gallery} />;
+					}
 					if (post_hint === "image") {
 						return (
 							<img
