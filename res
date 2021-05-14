@@ -148,3 +148,17 @@ while scrolling focus on the post. to scroll up.
 do different subs do spoiler info differently ? https://www.reddit.com/r/pics/comments/nbzqeh/behind_the_scenes_of_king_kong/
 
 submitting a sub-sel with no change makes you lose the forward history !!.
+
+type prefixes
+
+t1_	Comment
+t2_	Account
+t3_	Link
+t4_	Message
+t5_	Subreddit
+t6_	Award
+
+checkout:  https://terminal.sexy/
+react-split-pane
+
+should i use a wrapper ? https://www.npmjs.com/package/snoowrap

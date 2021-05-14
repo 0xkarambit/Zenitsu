@@ -3,8 +3,8 @@ header {
 	align-items: center;
 	/* justify-content: left; */
 	/* for the site-in-development notice */
-	justify-content: flex-start;
-	background-color: #fcc1a7;
+	justify-content: space-between;
+	/*background-color: #fcc1a7;*/
 	color: white;
 	font-size: 2em;
 	/* lineHeight: 100px; */
@@ -57,4 +57,8 @@ input {
 	font-family: Arial, Helvetica, sans-serif;
 	font-size: 0.8em;
 	margin-left: 10px;
+}
+
+.desc {
+	font-size: 0.5em;
 }

@@ -18,7 +18,7 @@ import "./thoughts.css";
 import Post from "./Post.js";
 import FocusView from "./FocusView.js";
 
-export default function Thoughts({ setSubCount, viewStyle, shouldBlurAll }) {
+export default function Thoughts({ viewStyle, shouldBlurAll }) {
 	// the displayMode gets set to $TESTINGMODE after every subreddit change.
 	const match = useRouteMatch("/:subreddit");
 	const { subreddit } = match.params;
@@ -49,7 +49,6 @@ export default function Thoughts({ setSubCount, viewStyle, shouldBlurAll }) {
 			.then((json) => {
 				let children = json.data.children;
 				setPostsData(children);
-				setSubCount(children[0].data.subreddit_subscribers);
 				let newLinks = children.map((child) => child.data.permalink);
 				setPermaLinks(new Set(newLinks));
 				// if we set the data before we have the data the other components try to render using the data which results in errors.
@@ -108,7 +107,6 @@ export default function Thoughts({ setSubCount, viewStyle, shouldBlurAll }) {
 			// ? ok so its because of react router. https://stackoverflow.com/questions/33431319/prevent-component-be-unmounted-with-react-router/38477462, https://stackoverflow.com/questions/45917133/react-router-never-unmount-a-component-on-a-route-once-mounted-even-if-route-c#:~:text=20-,React%2Drouter%3A%20never%20unmount%20a%20component%20on%20a%20route%20once,mounted%2C%20even%20if%20route%20change&text=Where%20basically%20each%20component%20is%20mounted%2Funmounted%20on%20route%20change.
 			// ? is it tho idk shit.
 			// setPostsData([]);
-			setSubCount(null);
 		};
 	}, [subreddit, isExact]);
 
@@ -155,7 +153,6 @@ export default function Thoughts({ setSubCount, viewStyle, shouldBlurAll }) {
 				);
 
 				setPostsData(c[0].data.children); // HERE IS THE ERROR.
-				setSubCount(c[0].data.children[0].data.subreddit_subscribers);
 				setPermaLinks(new Set([link]));
 				alert("triggered");
 				// it doesnt load the posts coz of the 1st line in useEffect.

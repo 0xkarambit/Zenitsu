@@ -2,7 +2,12 @@
 	--primary: #edf6f9;
 	/* --primary: #0a0d12; */
 	--dark: #edf6f9;
+	--text: #1c1412;
 	/* --dark: #030304; */
+	--white:#fff;
+	/*dark mode styles*/
+	--bg: #1d1f21;
+	--fg: #C5C8C6;
 }
 
 *,
@@ -10,7 +15,7 @@
 *::before {
 	padding: 0px 0px;
 	margin: none;
-	color: #1c1412;
+	color: var(--text);
 	/* box-sizing: border-box; */
 }
 
@@ -18,14 +23,14 @@ html,
 body {
 	/* background-color: rgba(10, 13, 18, 0.8); */
 	/* background-color: var(--primary); */
-	background-color: #fff;
+	background-color: var(--primary);
 	font: Ariel;
 	margin: none;
 	padding: 0px 0px;
 }
 
 body ::selection {
-	background-color: #d19c2f23;
+	background-color: #ffaa00c2;
 	text-decoration: underline;
 }
 

@@ -42,12 +42,11 @@ function App() {
 					<Home />
 				</Route>
 				<Route path="/:subreddit">
-					<Header subCount={subCount} />
+					<Header />
 					<div className="container">
 						{/*<Sidebar />*/}
 						<Thoughts
 							{...{
-								setSubCount,
 								viewStyle,
 								shouldBlurAll
 							}}
