@@ -3,7 +3,7 @@ header {
 	align-items: center;
 	/* justify-content: left; */
 	/* for the site-in-development notice */
-	justify-content: space-between;
+	justify-content: flex-start;
 	background-color: #fcc1a7;
 	color: white;
 	font-size: 2em;

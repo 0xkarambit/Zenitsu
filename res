@@ -137,3 +137,14 @@ some a half sized : http://localhost:3000/https://www.reddit.com/r/quotes/commen
 some take all the space : http://localhost:3000/https://www.reddit.com/r/quotes/comments/n8vuz5/before_you_marry_a_person_you_should_first_make/
 
 are the videos even working ?? and images are lagging too right ??!
+
+
+video not working: http://localhost:3000/memes/https://www.reddit.com/r/memes/comments/n9wg5r/its_high_noon/
+
+triggered only get popped up if FocusView is reloaded but not if we go back to the same page, from another sub.
+image gallery not working : https://www.reddit.com/r/Pictures/comments/nbvy1u/gary_breckheimer_the_transition_from_fashion_to/
+image src changings while scrolling are not snappy.
+while scrolling focus on the post. to scroll up. 
+do different subs do spoiler info differently ? https://www.reddit.com/r/pics/comments/nbzqeh/behind_the_scenes_of_king_kong/
+
+submitting a sub-sel with no change makes you lose the forward history !!.

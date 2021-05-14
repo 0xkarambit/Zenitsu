@@ -1,30 +1,86 @@
 .home {
-	display: flex;
-	justify-content: center;
-	align-items: center;
-
+	display: grid;
+	grid-template-columns: 8fr 10fr;
+	/* height: 100%; */
 	text-align: center;
 	font-family: Arial, Helvetica, sans-serif;
 	/* border: 2px solid black; */
-	min-height: 60vh;
+	/* height: 100vh; */
 	overflow: none;
 }
 
+/* just a placeholder until i perfect my home page design */
+.home {
+	grid-template-columns: 1fr;
+}
+
+.left {
+	/* backgroud would be a overmagnified UI image */
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	/* border: 2px solid salmon; */
+	text-align: center;
+}
+
 .box {
-	width: 500px;
-	height: 150px;
-	background-color: burlywood;
-	padding: 20px;
+	/* width: 500px;s; */
+	/* background-color: burlywood; */
+
+	/* border: 2px solid salmon; */
 	border-radius: 10px;
 }
 
-.home > h1 {
-	margin: 0px;
-	padding: 0px;
+.box p {
+	font-size: 1.5em;
 }
 
+.box > .banner {
+	margin: 2em;
+	padding: 2em;
+}
+
+h1 {
+	font-size: 4vw;
+}
+
+.right {
+	color: #ff6701 !important;
+	height: 100%;
+	/* background-color: #ffc288; */
+	font-size: 1.4em;
+	color: green !important;
+	text-align: left;
+	/* border: 2px solid salmon; */
+}
+
+.right h2 {
+	color: #02475e;
+	/* 02475e */
+}
+.right {
+	color: #687980;
+	/* 02475e */
+}
+
+li:hover {
+	text-decoration: 2px solid underline #333;
+}
+
+.content {
+	margin-left: 20px;
+}
+
+/* temp css */
+/* just a placeholder until i perfect my home page design */
 .selector {
-	font-size: 28px;
-	width: 40%;
-	margin: auto;
+	/* background-color: khaki; */
+	margin-top: 2px;
+	border: 2px solid black;
+	font-size: 1.4em;
+	width: auto;
+}
+
+.home p {
+	margin: 12px;
 }

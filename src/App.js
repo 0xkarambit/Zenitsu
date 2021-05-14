@@ -14,7 +14,6 @@ function App() {
 	// {match:{params:{subName}}}
 	console.log(m?.params?.postUrl);
 	// const [subreddit, setSubreddit] = useState("showerthoughts");
-	const previousSubreddit = useRef();
 	const [subCount, setSubCount] = useState();
 	const [viewStyle, setViewStyle] = useState(false);
 	const [shouldBlurAll, setShouldBlurAll] = useState(true);
@@ -43,15 +42,11 @@ function App() {
 					<Home />
 				</Route>
 				<Route path="/:subreddit">
-					<Header
-						previousSubreddit={previousSubreddit}
-						subCount={subCount}
-					/>
+					<Header subCount={subCount} />
 					<div className="container">
-						<Sidebar />
+						{/*<Sidebar />*/}
 						<Thoughts
 							{...{
-								previousSubreddit,
 								setSubCount,
 								viewStyle,
 								shouldBlurAll

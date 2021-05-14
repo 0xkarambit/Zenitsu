@@ -18,17 +18,13 @@ import "./thoughts.css";
 import Post from "./Post.js";
 import FocusView from "./FocusView.js";
 
-export default function Thoughts({
-	previousSubreddit,
-	setSubCount,
-	viewStyle,
-	shouldBlurAll
-}) {
+export default function Thoughts({ setSubCount, viewStyle, shouldBlurAll }) {
 	// the displayMode gets set to $TESTINGMODE after every subreddit change.
 	const match = useRouteMatch("/:subreddit");
 	const { subreddit } = match.params;
 	const history = useHistory();
-	// const location = useLocation();
+	const location = useLocation();
+	const isExact = match.isExact; // for when back button is press after reloading FocusView and the posts dont get loaded.
 
 	const TESTINGMODE = "stack";
 	const [afterCode, setAfterCode] = useState("");
@@ -39,12 +35,58 @@ export default function Thoughts({
 	const [permaLinks, setPermaLinks] = React.useState(new Set());
 	// comments will be loaded by children components.
 	const [comments, setComments] = React.useState([]);
+	// const [haveListing, setHaveListings] = useState(false);
 
-	//  # dont return null keep it pending for watching history, atoms for implementing the shortcuts in a single place
+	const loadListings = (sub) => {
+		const url = `https://www.reddit.com/r/${sub}.json`;
+		fetch(url)
+			.then((res) => {
+				if (res.status === 200) return res.json();
+				// ok so the try-catch cant catch errors thrown in these callbacks hmmm.
+				else if (res.status === 403) throw Error("private");
+				else if (res.status === 404) throw Error("Not Found");
+			})
+			.then((json) => {
+				let children = json.data.children;
+				setPostsData(children);
+				setSubCount(children[0].data.subreddit_subscribers);
+				let newLinks = children.map((child) => child.data.permalink);
+				setPermaLinks(new Set(newLinks));
+				// if we set the data before we have the data the other components try to render using the data which results in errors.
+				setDisplayMode("stack");
+				setDataReceived(true);
+				setAfterCode(json.data.after);
+			})
+			.catch((e) => {
+				// todo: add msg for community doesnt exist 404
+				if (e.message === "private") {
+					alert("cannot browse private community");
+				} else if (e.message === "Not Found") {
+					alert("no such community exists");
+				} else {
+					// Failed to fetch ? huhhh
+					// ok i get it when it doesnt find a sub that matches the one in url, it gets redirected to search.
+					console.log(e.message);
+				}
+				// but now it makes a new request to get listings each time we enter the wrong sub
+				history.goBack();
+			});
+	};
+	// setTimeout(() => {
+	// 	console.log({ haveListing });
+	// }, 5000);
 	// fetching the data on mount;
 	React.useEffect(() => {
+		// ? THIS doesn't get triggered if we get back from a Single page post load. coz sub has not changed and component has not remounted.
+		// ? wait use post unmount.
 		// to avoid fetching all listings of a subreddit when the user only intends to view one. SINGLE PAGE LOAD
-		if (!match.isExact) return null;
+		if (!match.isExact) {
+			// console.log("NOT EXACT NOT ");
+			// console.log({ match });
+			// console.log({ subreddit });
+			// console.log({ location });
+			return null;
+		}
 		// const url = "https://www.reddit.com/r/Showerthoughts/top/?t=month";
 		// by default .json at the end pulls the hot listings
 		// is this try-catch useless lol.
@@ -53,46 +95,22 @@ export default function Thoughts({
 		}, 5000);
 		try {
 			// how do i load the top listings !!??
-			const url = `https://www.reddit.com/r/${subreddit}.json`;
-			fetch(url)
-				.then((res) => {
-					if (res.status === 200) return res.json();
-					// ok so the try-catch cant catch errors thrown in these callbacks hmmm.
-					else if (res.status === 403) throw Error("private");
-					else if (res.status === 404) throw Error("Not Found");
-				})
-				.then((json) => {
-					let children = json.data.children;
-					setPostsData(children);
-					setSubCount(children[0].data.subreddit_subscribers);
-					let newLinks = children.map(
-						(child) => child.data.permalink
-					);
-					setPermaLinks(new Set(newLinks));
-					// if we set the data before we have the data the other components try to render using the data which results in errors.
-					setDisplayMode("stack");
-					setDataReceived(true);
-					setAfterCode(json.data.after);
-				})
-				.catch((e) => {
-					// todo: add msg for community doesnt exist 404
-					if (e.message === "private") {
-						alert("cannot browse private community");
-					} else if (e.message === "Not Found") {
-						alert("no such community exists");
-					}
-					// ? replace history coz NONONONONOO just back;
-					history.goBack();
-					// setSubreddit(previousSubreddit.current);
-				});
+			loadListings(subreddit);
 		} catch (e) {
+			alert("useEffect failed");
 			console.log(e);
 		}
 		return () => {
-			setPostsData([]);
+			// idont think this function get called ever now.
+			// too bad i would have put setHaveListings(false) in here.
+			// ? wait i see this console.log so it means that this component gets unMounted on every sub change ?
+			// ? and also on Focus post View wow why.
+			// ? ok so its because of react router. https://stackoverflow.com/questions/33431319/prevent-component-be-unmounted-with-react-router/38477462, https://stackoverflow.com/questions/45917133/react-router-never-unmount-a-component-on-a-route-once-mounted-even-if-route-c#:~:text=20-,React%2Drouter%3A%20never%20unmount%20a%20component%20on%20a%20route%20once,mounted%2C%20even%20if%20route%20change&text=Where%20basically%20each%20component%20is%20mounted%2Funmounted%20on%20route%20change.
+			// ? is it tho idk shit.
+			// setPostsData([]);
 			setSubCount(null);
 		};
-	}, [subreddit]);
+	}, [subreddit, isExact]);
 
 	const findComment = (link) =>
 		comments.filter(
@@ -194,7 +212,10 @@ export default function Thoughts({
 				<Route exact path="/:subreddit">
 					{dataReceived && (
 						<>
-							<StackGrid columnWidth={300}>
+							<StackGrid
+								monitorImagesLoaded={true}
+								columnWidth={300}
+							>
 								{postsData.map((post, i) => (
 									<Link
 										to={`/${subreddit}/https://www.reddit.com${post.data.permalink}`}

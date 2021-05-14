@@ -1,6 +1,11 @@
 import { useHotkeys } from "react-hotkeys-hook";
 import { useEffect, useState, useCallback } from "react";
-import { useLocation, useParams, useRouteMatch } from "react-router-dom";
+import {
+	useHistory,
+	useLocation,
+	useParams,
+	useRouteMatch
+} from "react-router-dom";
 import Post from "./Post.js";
 import Comment from "./Comment.js";
 
@@ -11,6 +16,7 @@ const FocusView = ({
 	viewStyle,
 	shouldBlurAll
 }) => {
+	const history = useHistory();
 	const [currentPost, setCurrentPost] = useState(initPostNo);
 	const [currentComments, setCurrentComments] = useState([]); // {url:[url], comments: obj `children[]]`}
 	const currentPostData = postsData[currentPost]?.data;
@@ -52,13 +58,14 @@ const FocusView = ({
 			setCurrentPost((currentPost) => {
 				if (currentPost === postsData.length - 1) return currentPost;
 				else {
+					let c = currentPost + 1;
 					setCurrentComments([]);
-					if (
-						!unBlurred[currentPost + 1] &&
-						postsData[currentPost + 1]?.data?.over_18
-					)
+					if (!unBlurred[c] && postsData[c]?.data?.over_18)
 						shouldBlurAll && setBlur(true);
-					return ++currentPost;
+					history.replace(
+						`/${subreddit}/https://www.reddit.com${postsData[c].data.permalink}`
+					);
+					return c;
 				}
 			});
 		},
@@ -75,16 +82,17 @@ const FocusView = ({
 				if (currentPost === 0) {
 					return 0;
 				} else {
+					let c = currentPost - 1;
 					setCurrentComments([]);
 					// why is next log true for every one. ? couldnt get memoised deblurring to work.
 					// not switching.. not changing even on ctrl + b on another post.
-					console.log({ b: !unBlurred[currentPost - 1] });
-					if (
-						!unBlurred[currentPost - 1] &&
-						postsData[currentPost - 1]?.data?.over_18
-					)
+					console.log({ b: !unBlurred[c] });
+					if (!unBlurred[c] && postsData[c]?.data?.over_18)
 						shouldBlurAll && setBlur(true);
-					return --currentPost;
+					history.replace(
+						`/${subreddit}/https://www.reddit.com${postsData[c].data.permalink}`
+					);
+					return c;
 				}
 			});
 		}
@@ -111,6 +119,11 @@ const FocusView = ({
 				setBlur(shouldBlurAll && data.over_18);
 			}
 		});
+		// I HAVE GONE THROUGH A LOT OF TROUBLE FOR THIS UNREAL PROBLEM
+		// IG I;;LL JUST STORE THE STATE AND RE USE IT IN CASE OF A REFRESH.
+		// BUT THEN HOW DO YOU KNOW IF YOY SHOULD USE LOCALSTATE OR REQUEST NEW ???
+		// ? WELL NOW I GUESS ITS A BAD IDEA, JUST USE ANOTHER USESTATE FOR THE SUBREDDIT NAME.
+		// ? AND SET IT WHEN THIS UNMOUNTS.
 	}, [currentPost]);
 
 	if (currentPostData === undefined) {
