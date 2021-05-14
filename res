@@ -162,3 +162,5 @@ checkout:  https://terminal.sexy/
 react-split-pane
 
 should i use a wrapper ? https://www.npmjs.com/package/snoowrap
+
+use: https://www.npmjs.com/package/react-scrollbar

@@ -8,6 +8,18 @@ import {VscColorMode} from "react-icons/vsc";
 
 import "./header.css";
 
+/*
+--primary: #edf6f9;
+--text: #1c1412;
+--bg: #1d1f21;
+--fg: #C5C8C6;
+*/
+const r = document.querySelector(':root');
+const bgLight = "#edf6f9";
+const fgLight = "#1c1412";
+const bgDark = "#1d1f21";
+const fgDark = "#C5C8C6";
+
 export default function Header() {
 	const { subreddit } = useParams();
 	const history = useHistory();
@@ -51,21 +63,16 @@ export default function Header() {
 	// todo: public_description_html vs public_description
 
 	const toggleTheme = () => {
-		/*
-		--primary: #edf6f9;
-		--text: #1c1412;
-		--bg: #1d1f21;
-		--fg: #C5C8C6;
-		*/
-		const r = document.querySelector(':root');
 		const rs = getComputedStyle(r);
-		const [primary, text] = [rs.getPropertyValue('--primary'), rs.getPropertyValue('--text')]
-		if (primary === "#edf6f9" && text === "#1c1412") {		
-			r.style.setProperty('--primary', '#1d1f21');
-			r.style.setProperty('--text', '#C5C8C6');
+		const primary = rs.getPropertyValue('--primary');
+		const text = rs.getPropertyValue('--text');
+
+		if (primary === bgLight && text === fgLight) {		
+			r.style.setProperty('--primary', bgDark);
+			r.style.setProperty('--text', fgDark);
 		} else {
-			r.style.setProperty('--primary', '#edf6f9');
-			r.style.setProperty('--text', '#1c1412');
+			r.style.setProperty('--primary', bgLight);
+			r.style.setProperty('--text', fgLight);
 		}
 	}
 
