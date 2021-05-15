@@ -5,14 +5,23 @@ import { useHotkeys } from "react-hotkeys-hook";
 import "./ImageGallery.css";
 
 // ok this seems harder than i thought.
-const ImageGallery = ({ gallery }) => {
+const ImageGallery = ({ gallery, media_metadata}) => {
 	// would gallery being passed down each time cause a re render and re allocation of [sources] ?
 	// guess we will have to use useMemo.
 	const [n, setN] = useState(0);
 	// https://i.redd.it/<id goes here>.png | .jpg | get format too. CANT | so is it always jpg ????
 	const sources = gallery.map(
-		(img) => `https://i.redd.it/${img.media_id}.jpg`
+		// todo: check "media_metadata"
+		/* -> media_metadata -> id -> status [valid], e , m*/
+		(img) => {
+			let format = media_metadata[img.media_id]?.m
+			format = format.slice(format.indexOf("/") + 1);
+			// alert(format);
+			// (img) => `https://i.redd.it/${img.media_id}.jpg` 
+			return `https://preview.redd.it/${img.media_id}.${format}`;
+		}
 	);
+	console.error(sources);
 
 	// if (!Array.isArray(slides) || slides.length <= 0) {
 	//   return null;

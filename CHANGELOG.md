@@ -1,3 +1,4 @@
 ## CHANGELOG
 
-1. posts that have been seen now have lower opacity.
+1. removed tab focus on stackView links (post view links dont work correctly rn).
+2. removed img gallery and added url instead.

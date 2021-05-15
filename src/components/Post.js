@@ -28,6 +28,7 @@ export default function Post({
 	domain,
 	is_gallery,
 	gallery_data,
+	media_metadata,
 	displayMode = "stack",
 	shouldBlur,
 	setBlur,
@@ -127,9 +128,10 @@ export default function Post({
 			)}
 			{(() => {
 				if (displayMode === "focus") {
-					if (is_gallery === true) {
-						return <ImageGallery gallery={gallery} />;
-					}
+					{/*todo: disabled for some time
+						if (is_gallery === true) {
+											return <ImageGallery gallery={gallery} media_metadata={media_metadata}/>;
+										}*/}
 					if (post_hint === "image") {
 						return (
 							<img
@@ -163,17 +165,17 @@ export default function Post({
 					} else if (post_hint === "rich:video") {
 						return <ReactPlayer url={url} controls pip />;
 					} else {
-						if (post_hint === "link") {
+						if (post_hint === "link" || is_gallery === true) {
 							return (
 								<div className="incomprehensible_post_hint">
-									{/*<span className="domain">{domain}</span> DOESNT LOOK GOOD RIGHT NOW SHOW AFTER REDESIGN*/}
+									{/*<span className="domain">{domain}</span> DOESNT LOOK GOOD RIGHT NOW SHOW AFTER REDESIGN todo: SHOULD I USE url_overridden_by_dest or url ?*/}
 									<span className="url">
 										<a
 											href={url}
 											target="_blank"
 											rel="noreferrer"
 										>
-											{url}
+											{url_overridden_by_dest}
 										</a>
 									</span>
 								</div>
@@ -211,7 +213,7 @@ export default function Post({
 			 		--oh ya it did work i had a syntax error url : permalink
 			 idea: hmm check for png / jpg / gif / mp4 etc at end (for video its v.reddit.... no mp4)
 			 idea: can we get image with "thumbnail" ?*/}
-			<a href={link}>{link}</a>
+			<a href={link} tabindex={displayMode === "focus" ? 1: -1}>{link}</a>
 		</div>
 	);
 	// score, total_awards_received

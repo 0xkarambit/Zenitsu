@@ -171,3 +171,19 @@ no cant do
 focus on last Viewed Card. and start slideshow from last viewed card. 
 and dim cards that have been viewed.
 why does Thoughts get remounted each time i click on a post.
+
+
+why is this blurred ??? http://localhost:3000/stardustcrusaders/https://www.reddit.com/r/StardustCrusaders/comments/ncslzh/i_got_a_dio_figure_for_16_dollars_but_couldnt/
+
+videos dont switch when scrolling ??? w ! also videos only work for r/stardustcrusaders
+check if img has been deleted
+
+ok wtf deleted or not ? http://localhost:3000/stardustcrusaders/https://www.reddit.com/r/StardustCrusaders/comments/ncn9rz/part_6_style_baoh_made_by_me_ref/
+
+remap shift + p to <- and shift + n to -> key.
+https://golden-layout.com/
+
+scrollbar: https://css-tricks.com/almanac/properties/s/scrollbar/
+
+untill we fix the gallery situation we can just render a link to the gallery.
+should i use url_overridden_by_dest for all links rendered ?

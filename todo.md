@@ -147,3 +147,16 @@ tippy
 popper
 git log --pretty=online --graph --decorate --all
 https://www.reddit.com/dev/api/
+
+
+todo
+
+sidebar
+thoughts navigation
+opt
+video debugging.
+https://stackoverflow.com/questions/457070/how-do-i-disable-tabs-for-a-tag
+README update
+LICENSE
+ss update
+profile pic update
