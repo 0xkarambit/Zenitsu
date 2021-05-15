@@ -160,3 +160,6 @@ README update
 LICENSE
 ss update
 profile pic update
+
+change theme doesnt work on the first try
+use tabIndex to focus comments.

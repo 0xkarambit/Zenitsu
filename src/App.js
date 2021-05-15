@@ -25,7 +25,7 @@ function App() {
 	});
 
 	// scroll to top
-	useHotkeys("g g", () => {
+	useHotkeys("g", () => {
 		document.querySelector("#root").scrollIntoView();
 	});
 

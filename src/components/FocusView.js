@@ -1,5 +1,5 @@
 import { useHotkeys } from "react-hotkeys-hook";
-import { useEffect, useState, useCallback } from "react";
+import { useEffect, useState, useCallback, useRef } from "react";
 import {
 	useHistory,
 	useLocation,
@@ -29,6 +29,8 @@ const FocusView = ({
 	// alert(currentPostData?.over_18);
 	// alert(shouldBlur); // undefined on single post load.
 	const [unBlurred, setUnBlurred] = useState({});
+
+	setInterval(()=>console.log(post), 1000);
 
 	useHotkeys("ctrl + b", () => {
 		setBlur((b) => !b);
@@ -65,6 +67,7 @@ const FocusView = ({
 					setCurrentComments([]);
 					if (!unBlurred[c] && postsData[c]?.data?.over_18)
 						shouldBlurAll && setBlur(true);
+					document.querySelector("#root").scrollIntoView();
 					history.replace(
 						`/${subreddit}/https://www.reddit.com${postsData[c].data.permalink}`
 					);
@@ -92,6 +95,7 @@ const FocusView = ({
 					console.log({ b: !unBlurred[c] });
 					if (!unBlurred[c] && postsData[c]?.data?.over_18)
 						shouldBlurAll && setBlur(true);
+					document.querySelector("#root").scrollIntoView();
 					history.replace(
 						`/${subreddit}/https://www.reddit.com${postsData[c].data.permalink}`
 					);
