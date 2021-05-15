@@ -189,3 +189,5 @@ untill we fix the gallery situation we can just render a link to the gallery.
 should i use url_overridden_by_dest for all links rendered ?
 
 not cool: http://localhost:3000/showerthoughts/https://www.reddit.com/r/Showerthoughts/comments/ncn56i/if_vampires_announced_themselves_to_the_world/
+
+video not working: http://localhost:3000/wholesome/https://www.reddit.com/r/wholesome/comments/ncyc11/3/

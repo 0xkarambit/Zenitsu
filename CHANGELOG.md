@@ -1,3 +1,3 @@
 ## CHANGELOG
 
-1. smooth scrolling.
+1. added github repo link & info icon.

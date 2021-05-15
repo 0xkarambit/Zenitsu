@@ -163,3 +163,10 @@ profile pic update
 
 change theme doesnt work on the first try
 use tabIndex to focus comments.
+doing animation in React.
+enhancing the comments section.
+add github icon.
+work on the home page.
+add info/credit/about the creator & usage section somewhere.
+
+add ctrl + / shortcut to show all shortcuts.

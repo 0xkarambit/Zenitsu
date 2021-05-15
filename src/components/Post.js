@@ -213,7 +213,7 @@ export default function Post({
 			 		--oh ya it did work i had a syntax error url : permalink
 			 idea: hmm check for png / jpg / gif / mp4 etc at end (for video its v.reddit.... no mp4)
 			 idea: can we get image with "thumbnail" ?*/}
-			<a href={link} tabindex={displayMode === "focus" ? 1: -1}>{link}</a>
+			<a href={link} target="_blank" rel="noreferrer" tabindex={displayMode === "focus" ? 1: -1}>{link}</a>
 		</div>
 	);
 	// score, total_awards_received

@@ -1,12 +1,14 @@
 import React, { useEffect, useRef, useState } from "react";
-import { useHistory, useParams } from "react-router-dom";
+import { useHistory, useParams, Link} from "react-router-dom";
 import { useHotkeys } from "react-hotkeys-hook";
 
 import { makeFriendly } from "./../utils/num.js";
 
-import {VscColorMode} from "react-icons/vsc";
+import {VscColorMode, VscInfo, VscGithubInverted} from "react-icons/vsc";
 
 import "./header.css";
+
+const repoLink = "https://github.com/HarshitJoshi9152/showerthoughts";
 
 /*
 --primary: #edf6f9;
@@ -20,6 +22,12 @@ const bgLight = "#edf6f9";
 const fgLight = "#1c1412";
 const bgDark = "#1d1f21";
 const fgDark = "#C5C8C6";
+
+const iconStyle = {
+		width: "32px",
+		height: "32px",
+		margin: "0px 5px 0px 5px"
+	};
 
 export default function Header() {
 	const { subreddit } = useParams();
@@ -68,14 +76,21 @@ export default function Header() {
 		const primary = rs.getPropertyValue('--primary');
 		const text = rs.getPropertyValue('--text');
 
+		// alert(primary);
+		// alert(text);
+
 		// todo: why does this not work on the first try ?
-		if (primary === bgLight && text === fgLight) {		
+		if (primary === bgLight && text === fgLight) {
 			r.style.setProperty('--primary', bgDark);
 			r.style.setProperty('--text', fgDark);
 		} else {
 			r.style.setProperty('--primary', bgLight);
 			r.style.setProperty('--text', fgLight);
 		}
+	}
+
+	const toggleInfo = () => {
+		alert("niuce")
 	}
 
 	useHotkeys("t", toggleTheme);
@@ -119,8 +134,16 @@ export default function Header() {
 					></SubredditSelect>
 				)}
 			</span>
-			<span className="theme-switch">
-				<VscColorMode onClick={toggleTheme}/>
+			<span className="right">
+				<span className="theme-switch">
+					<VscColorMode style={iconStyle} onClick={toggleTheme}/>
+				</span>
+				<span className="info">
+					<VscInfo style={iconStyle} onClick={toggleInfo}/>
+				</span>
+				<a href={repoLink} target="_blank" rel="noreferrer" className="repo-link">
+					<VscGithubInverted style={iconStyle} title={repoLink}/>
+				</a>
 			</span>
 		</header>
 	);
