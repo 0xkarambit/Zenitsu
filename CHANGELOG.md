@@ -1,3 +1,3 @@
 ## CHANGELOG
 
-1. build fix.
+1. smooth scrolling.

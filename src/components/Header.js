@@ -68,6 +68,7 @@ export default function Header() {
 		const primary = rs.getPropertyValue('--primary');
 		const text = rs.getPropertyValue('--text');
 
+		// todo: why does this not work on the first try ?
 		if (primary === bgLight && text === fgLight) {		
 			r.style.setProperty('--primary', bgDark);
 			r.style.setProperty('--text', fgDark);

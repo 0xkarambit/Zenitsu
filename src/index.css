@@ -32,6 +32,7 @@ body {
 	font: Ariel;
 	margin: none;
 	padding: 0px 0px;
+	scroll-behavior: smooth;
 }
 
 body ::selection {
