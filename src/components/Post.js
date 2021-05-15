@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useMemo, useState, useEffect, useRef } from "react";
 import Award from "./Award.js";
 
 import ReactPlayer from "react-player";
@@ -36,7 +36,10 @@ export default function Post({
 	viewStyle,
 	loadMorePosts = false,
 	postsLoader = false,
-	shouldBlurAll = true
+	shouldBlurAll = true,
+	opened = false,
+	setPostsSeen,
+	setLastSeen
 }) {
 	// moved to the bottom hooks were getting in the way lol.
 	// if (postsLoader) {
@@ -53,17 +56,46 @@ export default function Post({
 	const timeCreated = +`${created_utc}000`;
 	// idk if we should really be using useMemo here or not.
 	const gallery = useMemo(() => gallery_data?.items, [gallery_data]);
+	// idk if its useful or not rn.
+	const p = useRef();
+	// const seen = postsSeen.has(permalink) ? "seen" : "";
+	// todo: cleanup => set Last post to this index, and mark as seen on mount.
+	// ok wwait does the post even get unmounted ??? NO i guess it only gets re rendered with new props.
+	// so lets watch for props that may change.
+
+	useEffect(() => {
+		if (displayMode === "focus") {
+			// maybe i shouldnt replace it with postsSeen
+			if(!opened) {
+				setPostsSeen(seen => new Set([...seen, permalink]))
+			}
+			// todo: last seen this is not working
+			// return () => {
+			// 	// set as last seen. oh ya its undefined in FocusView.
+			// 	console.log("INDEXS IS :");
+			// 	console.log({index})
+			// 	setLastSeen(index)
+			// }
+		}
+	}, [permalink])
+
+	
+	// OH YES I GOT IT MOVE OPENED TO PROPS.
+	// wont work because it gets unmounted when we change view.
+	const c = ((displayMode ==="focus") ? "post" : (opened ? "seen post" : "post"));
+	console.log(c);
 	return postsLoader ? (
 		<div className="post">
 			<button onClick={loadMorePosts}>loadMorePosts</button>
 		</div>
 	) : (
 		<div
-			className="post"
+			className={c}
 			onClick={() => {
 				expandView(index);
 			}}
 			data-view-vert={displayMode === "stack" ? null : viewStyle}
+			ref={p}
 		>
 			<p className="author">{`u/${author}`}</p>
 			<h2 className="title">

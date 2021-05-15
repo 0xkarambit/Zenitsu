@@ -167,3 +167,7 @@ use: https://www.npmjs.com/package/react-scrollbar
 
 when subreddit is changed, the previous posts are shown for some time until new posts are loaded.
 no cant do
+
+focus on last Viewed Card. and start slideshow from last viewed card. 
+and dim cards that have been viewed.
+why does Thoughts get remounted each time i click on a post.

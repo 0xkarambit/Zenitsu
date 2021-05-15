@@ -13,6 +13,7 @@ import "./header.css";
 --text: #1c1412;
 --bg: #1d1f21;
 --fg: #C5C8C6;
+todo: add seen var switch
 */
 const r = document.querySelector(':root');
 const bgLight = "#edf6f9";

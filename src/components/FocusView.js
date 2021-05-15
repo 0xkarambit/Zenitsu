@@ -14,7 +14,10 @@ const FocusView = ({
 	getComments,
 	initPostNo = 0,
 	viewStyle,
-	shouldBlurAll
+	shouldBlurAll,
+	postsSeen,
+	setPostsSeen,
+	setLastSeen
 }) => {
 	const history = useHistory();
 	const [currentPost, setCurrentPost] = useState(initPostNo);
@@ -139,6 +142,10 @@ const FocusView = ({
 				setBlur={setBlur}
 				viewStyle={viewStyle}
 				shouldBlurAll={shouldBlurAll}
+				postsSeen={postsSeen}
+				setPostsSeen={setPostsSeen}
+				setLastSeen={setLastSeen}
+				index={currentPost}
 			/>
 			<div className="comments">
 				{/*<Comments/>*/}

@@ -62,3 +62,7 @@ input {
 .desc {
 	font-size: 0.5em;
 }
+
+.theme-switch {
+	cursor: pointer;
+}

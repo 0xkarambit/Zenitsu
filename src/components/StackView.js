@@ -1,4 +1,5 @@
 
+import {useRef, useEffect} from "react";
 import {
 	Link,
 	useParams,
@@ -8,19 +9,29 @@ import StackGrid from "react-stack-grid";
 import Post from "./Post.js";
 import { useHotkeys } from "react-hotkeys-hook";
 
-const StackView = ({postsData, loadMorePosts, expandView, shouldBlurAll}) => {
+const StackView = ({postsData, loadMorePosts, expandView, shouldBlurAll, postsSeen, lastSeen}) => {
 
 	const {subreddit} = useParams();
 	const history = useHistory()
+	const grid = useRef();
+	console.log({lastSeen})
 	useHotkeys("s", () => {
-		history.push(`/${subreddit}/https://www.reddit.com${postsData[0].data.permalink}`);
-	})
+		// todo: set last seen 
+		history.push(`/${subreddit}/https://www.reddit.com${postsData[lastSeen].data.permalink}`);
+	}, {}, [lastSeen])
+
+	useEffect(()=>{
+		setTimeout(() => {
+			console.log(grid);
+		}, 1000);
+	}, [])
 
 	return (
 		<>
 			<StackGrid
 				monitorImagesLoaded={true}
 				columnWidth={300}
+				ref={grid}
 			>
 				{postsData.map((post, i) => (
 					<Link
@@ -33,6 +44,7 @@ const StackView = ({postsData, loadMorePosts, expandView, shouldBlurAll}) => {
 							{...post.data}
 							expandView={expandView}
 							shouldBlurAll={shouldBlurAll}
+							opened={postsSeen.has(post.data.permalink)}
 						></Post>
 					</Link>
 				))}

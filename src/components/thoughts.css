@@ -7,6 +7,10 @@
 	/* overflow: auto; */ /*this is useful but not usable in vertmode*/
 }
 
+.seen {
+	opacity: 0.7;
+}
+
 .post {
 	font-size: 20px;
 	padding: 5px;

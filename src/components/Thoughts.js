@@ -37,6 +37,8 @@ export default function Thoughts({ viewStyle, shouldBlurAll }) {
 	// comments will be loaded by children components.
 	const [comments, setComments] = React.useState([]);
 	// const [haveListing, setHaveListings] = useState(false);
+	const [postsSeen, setPostsSeen] = React.useState(new Set());
+	const [lastSeen, setLastSeen] = React.useState(0);
 
 	const loadListings = (sub) => {
 		const url = `https://www.reddit.com/r/${sub}.json`;
@@ -208,7 +210,7 @@ export default function Thoughts({ viewStyle, shouldBlurAll }) {
 			{/*should we add a powerbar here to control the view styles etc ?? */}
 			<Switch>
 				<Route exact path="/:subreddit">
-					{dataReceived && <StackView {...{postsData, loadMorePosts, expandView, shouldBlurAll}}></StackView>}
+					{dataReceived && <StackView {...{postsData, loadMorePosts, expandView, shouldBlurAll, postsSeen, lastSeen}}></StackView>}
 				</Route>
 				{/*alternatively use useRouteMatch.url or what idk rn */}
 				<Route path={`/${subreddit}/:permalink`}>
@@ -218,6 +220,8 @@ export default function Thoughts({ viewStyle, shouldBlurAll }) {
 						initPostNo={initPostNo}
 						viewStyle={viewStyle}
 						shouldBlurAll={shouldBlurAll}
+						setPostsSeen={setPostsSeen}
+						setLastSeen={setLastSeen}
 					/>
 				</Route>
 			</Switch>
