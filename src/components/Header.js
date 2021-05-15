@@ -39,7 +39,7 @@ export default function Header() {
 	const [desc, setDesc] = useState();
 	const img = useRef();
 
-	useHotkeys("s", toggleSelectMenu);
+	useHotkeys("shift + p", toggleSelectMenu);
 
 	// get the info about the subreddit. do when sub changes.
 	useEffect(() => {

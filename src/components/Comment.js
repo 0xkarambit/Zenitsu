@@ -1,7 +1,7 @@
 import LoadMoreComments from "./LoadMoreComments.js";
 import "./Comment.css";
 
-import arrowUp from "./../assets/icons/arrow-up.svg";
+import {BiUpvote} from "react-icons/bi"
 import Award from "./Award.js";
 
 import { makeFriendly, elapsedTime } from "./../utils/num.js";
@@ -46,12 +46,10 @@ const Comment = ({
 				{/*<ProfilePic id={data.author}></ProfilePic>*/}
 				<span className="userID">{`u/${data.author}`}</span>
 				<span className="score">
-					<img
+					<BiUpvote
 						alt="arrow-up"
-						src={arrowUp}
 						style={icon}
-						className="arrow"
-					></img>
+						className="arrow" />
 					{makeFriendly(data.score)}
 				</span>
 				<span className="time-posted">{elapsedTime(timeCreated)}</span>

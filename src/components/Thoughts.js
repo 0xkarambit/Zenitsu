@@ -17,6 +17,7 @@ import "./thoughts.css";
 // components
 import Post from "./Post.js";
 import FocusView from "./FocusView.js";
+import StackView from "./StackView.js";
 
 export default function Thoughts({ viewStyle, shouldBlurAll }) {
 	// the displayMode gets set to $TESTINGMODE after every subreddit change.
@@ -207,33 +208,7 @@ export default function Thoughts({ viewStyle, shouldBlurAll }) {
 			{/*should we add a powerbar here to control the view styles etc ?? */}
 			<Switch>
 				<Route exact path="/:subreddit">
-					{dataReceived && (
-						<>
-							<StackGrid
-								monitorImagesLoaded={true}
-								columnWidth={300}
-							>
-								{postsData.map((post, i) => (
-									<Link
-										to={`/${subreddit}/https://www.reddit.com${post.data.permalink}`}
-										style={{ textDecoration: "none" }}
-									>
-										<Post
-											key={i}
-											index={i}
-											{...post.data}
-											expandView={expandView}
-											shouldBlurAll={shouldBlurAll}
-										></Post>
-									</Link>
-								))}
-							</StackGrid>
-							<Post
-								loadMorePosts={loadMorePosts}
-								postsLoader={true}
-							></Post>
-						</>
-					)}
+					{dataReceived && <StackView {...{postsData, loadMorePosts, expandView, shouldBlurAll}}></StackView>}
 				</Route>
 				{/*alternatively use useRouteMatch.url or what idk rn */}
 				<Route path={`/${subreddit}/:permalink`}>
@@ -249,13 +224,3 @@ export default function Thoughts({ viewStyle, shouldBlurAll }) {
 		</div>
 	);
 }
-
-// {
-// 	data.replies.data.children.map((replyData) => {
-// 		// replyData is a standard comment Obj
-// 		if (replyData.kind == "more") return null;
-// 		// todo: return a <load more/> component;
-// 		return <Comment data={replyData.data} ml={ml + 2}></Comment>;
-// 		// {data.replies && <Comment data={data.replies.data.children}></Comment>}
-// 	});
-// }

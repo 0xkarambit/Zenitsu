@@ -15,7 +15,7 @@
 .score {
 	margin: 4px;
 	font-size: 0.5em;
-	color: black;
+	color: var(--text);
 }
 
 .time-posted {
