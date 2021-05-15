@@ -1,3 +1,3 @@
 ## CHANGELOG
 
-1. get scrolled to top when scrolling posts now.
+1. build fix.

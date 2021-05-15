@@ -30,8 +30,6 @@ const FocusView = ({
 	// alert(shouldBlur); // undefined on single post load.
 	const [unBlurred, setUnBlurred] = useState({});
 
-	setInterval(()=>console.log(post), 1000);
-
 	useHotkeys("ctrl + b", () => {
 		setBlur((b) => !b);
 		setUnBlurred((b) => {
