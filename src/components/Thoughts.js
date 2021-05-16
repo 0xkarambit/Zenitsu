@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 // import Speech from "react-speech";
+import { useHotkeys } from "react-hotkeys-hook";
 import StackGrid from "react-stack-grid";
 import {
 	Switch,
@@ -39,6 +40,8 @@ export default function Thoughts({ viewStyle, shouldBlurAll }) {
 	// const [haveListing, setHaveListings] = useState(false);
 	const [postsSeen, setPostsSeen] = React.useState(new Set());
 	const [lastSeen, setLastSeen] = React.useState(0);
+
+	// useHotKeys("backspace", () => history.goBack());
 
 	const loadListings = (sub) => {
 		const url = `https://www.reddit.com/r/${sub}.json`;

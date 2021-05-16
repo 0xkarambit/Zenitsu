@@ -226,3 +226,6 @@ opacity vs background-color: transparent;
 ----------------------------
 
 add local stoarage and theme selection and changing. 
+
+main point:
+refactoring, better scrolling/slideshow, styling, better code patterns
