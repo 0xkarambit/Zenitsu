@@ -53,7 +53,6 @@ const Comment = ({
 	// 	date: +`${data.created_utc}000`,
 	// 	ago: elapsedTime(+`${data.created_utc}000`)
 	// });
-	console.log({color: randomColor()})
 	// onClick={() => com.current.setAttribute("style", "display:none")}
 	return (
 		// using key as [commentObj]data.id idk how the id is used in reddit tho.

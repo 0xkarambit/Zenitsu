@@ -37,7 +37,25 @@ body {
 
 body ::selection {
 	background-color: #ffaa00c2;
-	text-decoration: underline;
+	text-decoration: underline solid #ffaa00;
+}
+
+body::-webkit-scrollbar {
+	width: 8px;               /* width of the entire scrollbar */
+}
+
+body::-webkit-scrollbar-track {
+	background: var(--primary);        /* color of the tracking area */
+}
+
+body::-webkit-scrollbar-thumb {
+ 	/*--text color is not accessible in light theme*/
+  	background-color: var(--text);    /* color of the scroll thumb */
+  	/*filter: opacity(0.5);*/
+	/*opacity: 0.5*/ /*doesnt work for us*/
+	/*background-color: transparent;*/ /*hides it completely*/
+	/*border-radius: 20px;*/       /* roundness of the scroll thumb */
+	/*border: 3px solid orange;*/  /* creates padding around scroll thumb */
 }
 
 .container {

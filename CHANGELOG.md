@@ -1,3 +1,4 @@
 ## CHANGELOG
 
-1. added progressively darker border-left on comment div.
+1. build error fix.
+2. styled the scrollbar.

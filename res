@@ -213,3 +213,16 @@ add media type and external domain tags.
 
 Gallery study
 http://localhost:3000/stardustcrusaders/https://www.reddit.com/r/StardustCrusaders/comments/ndpmux/i_drew_iggy_on_paper_d_oc/
+
+pref: allow user to specify his own color for comment thread lines, random, use progressively darker shades
+
+----------------------
+lot of things to learn in css
+
+attr cant use colors
+positionings, overflow, sticky cant work with flex parent and certial overflow values sometimes
+
+opacity vs background-color: transparent;
+----------------------------
+
+add local stoarage and theme selection and changing. 
