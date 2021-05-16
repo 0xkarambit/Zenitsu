@@ -97,7 +97,7 @@
 
 .comment {
 	/*using attr with colors doesnt work because it always returns a string?*/
-	border-left: 2px solid var(--color, grey);
+	border-left: 1px solid var(--color, grey);
 	/* margin-left: 20px; */
 	/* OMG USING THIS MADE THE GAPS in thread lines disappear !!! */
 	overflow: hidden;

@@ -1,5 +1,7 @@
 import {useRef} from "react";
-import randomColor from "randomcolor";
+// import randomColor from "randomcolor";
+import palx from "palx";
+
 import LoadMoreComments from "./LoadMoreComments.js";
 import "./Comment.css";
 
@@ -10,13 +12,19 @@ import { makeFriendly, elapsedTime } from "./../utils/num.js";
 import { convertHTMLEntity } from "./../utils/htmlparsing.js";
 // import ProfilePic from "./ProfilePic.js";
 
+// returns  each with 10 colors
+const colors = palx("grey");
+// to get darker colors earlier.
+colors.gray = colors.gray.slice(4);
+
 const Comment = ({
 	data,
 	ml = 0,
 	topLevel = false,
 	getComments,
 	perma_link,
-	setCurrentComments
+	setCurrentComments,
+	level=0
 }) => {
 	const icon = {
 		width: "16px",
@@ -31,9 +39,11 @@ const Comment = ({
 	const marginLeft = {
 		marginLeft: `${14}px`
 	};
+	let c = colors.gray[level > colors.gray.length - 1? colors.gray.length - 1 : level]
+	console.log(c)
 	const commentMarginLeft = {
 		marginLeft: `${14}px`,
-		"--color": randomColor()
+		"--color": c
 	};
 	let className = topLevel ? "toplevel-comment" : "comment";
 	let timeCreated = +`${data.created_utc}000`;
@@ -99,6 +109,7 @@ const Comment = ({
 								ml={ml + mlinc}
 								key={replyData.data.id}
 								getComments={getComments}
+								level={level+1}
 								{...{
 									id: replyData.id,
 									perma_link,

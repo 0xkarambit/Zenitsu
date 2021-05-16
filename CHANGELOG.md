@@ -1,3 +1,3 @@
 ## CHANGELOG
 
-1. added border coloring for comments.
+1. added progressively darker border-left on comment div.
