@@ -170,3 +170,31 @@ work on the home page.
 add info/credit/about the creator & usage section somewhere.
 
 add ctrl + / shortcut to show all shortcuts.
+
+
+
+make profile on buy me a coffee
+
+parsing markdown
+controlled comments 
+popup sections -> info, ctrl + /
+home page
+git repo
+theme switch fix
+
+loadMore comments 
+
+loadMorePosts button map to m;
+
+link button
+... buttons menu when screen space is less.
+
+add colors in comments side borders.https://github.com/c0bra/color-scheme-js#light
+& new grid.
+
+also refactor the code and use better patterns to get things done.
+
+how does rdddeck handle r/all
+https://www.reddit.com/r/popular/about.json
+
+react color palette generation script

@@ -3,6 +3,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { useHistory, useParams, Link} from "react-router-dom";
 import { useHotkeys } from "react-hotkeys-hook";
 import Loader from "react-loader";
+import {Img} from 'react-image';
 
 import {VscColorMode, VscInfo, VscGithubInverted, VscAccount, VscSettingsGear} from "react-icons/vsc";
 
@@ -113,11 +114,17 @@ export default function Header() {
 			.catch((e) => {
 				console.log("Header", e.message);
 				if(e.message === "Not Found") {
-					img.current.setAttribute("src", "setting a bad src on purpose to trigger the onError handler to hide the broken img");
+					// 
 				};
 			})
 		return () => {
+			// reset on sub change
 			setLoaded(false);
+			setDesc("");
+			setSubCount(null);
+			setActiveCount(null);
+			// do i really need to do this ? not really tho
+			// setImgSrc("");
 		}
 	}, [subreddit]);
 	// todo: public_description_html vs public_description
@@ -133,51 +140,7 @@ export default function Header() {
 			{/*welcome to The Open Source reddit client focused on browsing{" "}*/}
 			<span>
 				<span onClick={toggleSelectMenu} title={desc}>
-					{/*(()=>{
-						if(!loaded) {
-							return <Loader
-								        loaded={loaded}
-								        lines={7}
-								        length={10}
-								        width={5}
-								        radius={3}
-								        corners={1}
-								        rotate={0}
-								        direction={1}
-								        color="#000"
-								        speed={1}
-								        trail={60}
-								        shadow={false}
-								        hwaccel={false}
-								        className="spinner"
-								        scale={1.0}
-								        loadedClassName="loadedContent"
-								    />
-						}
-						else {
-							return <img
-										src={imgSrc}
-										alt="subreddit logo"
-										width="50px"
-										height="50px"
-										ref={img}
-										onError={()=>img.current.setAttribute("style", "display: none;")}
-										onLoad={()=>img.current.setAttribute("style", "display: inline-block;")}
-									/>
-						}
-					})()*/}
-					<img
-						src={imgSrc}
-						alt="subreddit logo"
-						width="50px"
-						height="50px"
-						ref={img}
-						onError={()=>{
-							alert("erro")
-							img.current.setAttribute("style", "display: none;")
-						}}
-						onLoad={()=>img.current.setAttribute("style", "display: inline-block;")}
-					/>
+					{loaded && <Img className="sub-icon" src={imgSrc} />}
 					<p className="banner">r/{subreddit}</p>
 				</span>
 				{![null, NaN, undefined].some((v) =>
