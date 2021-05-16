@@ -198,3 +198,5 @@ how does rdddeck handle r/all
 https://www.reddit.com/r/popular/about.json
 
 react color palette generation script
+
+read the souce code & history and make a list of stuff learnt, and make notes.

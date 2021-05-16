@@ -1,5 +1,5 @@
 import React, { useRef, useState } from "react";
-import { useLocation, useRouteMatch, Route, Switch } from "react-router-dom";
+import { useLocation, useHistory, useRouteMatch, Route, Switch } from "react-router-dom";
 import { useHotkeys } from "react-hotkeys-hook";
 
 import Header from "./components/Header.js";
@@ -13,6 +13,7 @@ function App() {
 	let m = useRouteMatch("/:postUrl");
 	// {match:{params:{subName}}}
 	console.log(m?.params?.postUrl);
+	const history = useHistory();
 	// const [subreddit, setSubreddit] = useState("showerthoughts");
 	const [subCount, setSubCount] = useState();
 	const [viewStyle, setViewStyle] = useState(false);
@@ -28,6 +29,8 @@ function App() {
 	useHotkeys("g", () => {
 		document.querySelector("#root").scrollIntoView();
 	});
+	
+	// useHotKeys("backspace", () => history.goBack());
 
 	// switch to vert split view style
 	useHotkeys("ctrl + v", () => {
@@ -35,6 +38,7 @@ function App() {
 		setViewStyle((vs) => !vs);
 	});
 
+	
 	return (
 		<div className="App">
 			<Switch>
@@ -58,4 +62,4 @@ function App() {
 	);
 }
 
-export default App;
+	export default App;

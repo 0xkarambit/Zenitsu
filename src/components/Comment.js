@@ -1,5 +1,5 @@
 import {useRef} from "react";
-
+import randomColor from "randomcolor";
 import LoadMoreComments from "./LoadMoreComments.js";
 import "./Comment.css";
 
@@ -32,7 +32,8 @@ const Comment = ({
 		marginLeft: `${14}px`
 	};
 	const commentMarginLeft = {
-		marginLeft: `${14}px`
+		marginLeft: `${14}px`,
+		"--color": randomColor()
 	};
 	let className = topLevel ? "toplevel-comment" : "comment";
 	let timeCreated = +`${data.created_utc}000`;
@@ -42,7 +43,7 @@ const Comment = ({
 	// 	date: +`${data.created_utc}000`,
 	// 	ago: elapsedTime(+`${data.created_utc}000`)
 	// });
-	
+	console.log({color: randomColor()})
 	// onClick={() => com.current.setAttribute("style", "display:none")}
 	return (
 		// using key as [commentObj]data.id idk how the id is used in reddit tho.

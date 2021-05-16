@@ -207,3 +207,9 @@ popular
 holup
 memes
 all
+wholesome
+
+add media type and external domain tags.
+
+Gallery study
+http://localhost:3000/stardustcrusaders/https://www.reddit.com/r/StardustCrusaders/comments/ndpmux/i_drew_iggy_on_paper_d_oc/
