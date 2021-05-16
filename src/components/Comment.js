@@ -1,3 +1,5 @@
+import {useRef} from "react";
+
 import LoadMoreComments from "./LoadMoreComments.js";
 import "./Comment.css";
 
@@ -34,11 +36,14 @@ const Comment = ({
 	};
 	let className = topLevel ? "toplevel-comment" : "comment";
 	let timeCreated = +`${data.created_utc}000`;
+	const com = useRef();
 	// console.log({
 	// 	name: data.author,
 	// 	date: +`${data.created_utc}000`,
 	// 	ago: elapsedTime(+`${data.created_utc}000`)
 	// });
+	
+	// onClick={() => com.current.setAttribute("style", "display:none")}
 	return (
 		// using key as [commentObj]data.id idk how the id is used in reddit tho.
 		<div className={className} style={commentMarginLeft}>
@@ -65,7 +70,7 @@ const Comment = ({
 					)}
 				</span>
 			</p>
-			<div>
+			<div ref={com}>
 				<p
 					className="comment-text"
 					style={marginLeft}

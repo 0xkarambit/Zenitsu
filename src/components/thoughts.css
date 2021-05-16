@@ -99,3 +99,13 @@
 .url > a {
 	color: blue;
 }
+
+.reddit-post-link {
+	/*border: 2px solid #106ba3;*/
+	padding: 2px;
+	border-radius: 4px;
+	text-decoration: none;
+	color: #106ba3;
+	position: relative;
+	top:3px;
+}

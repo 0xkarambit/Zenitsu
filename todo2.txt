@@ -1,0 +1,17 @@
+https://github.com/geohot/corona
+
+make profile on buy me a coffee
+
+parsing markdown
+controlled comments 
+popup sections -> info, ctrl + /
+home page
+git repo
+theme switch fix
+
+loadMore comments 
+
+loadMorePosts button map to m;
+
+link button
+... buttons menu when screen space is less.

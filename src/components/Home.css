@@ -1,7 +1,6 @@
 .home {
-	display: grid;
-	grid-template-columns: 8fr 10fr;
-	/* height: 100%; */
+	/*display: grid;*/
+	/*grid-template-columns: 8fr 10fr;*/
 	text-align: center;
 	font-family: Arial, Helvetica, sans-serif;
 	/* border: 2px solid black; */
@@ -28,21 +27,25 @@
 	/* background-color: burlywood; */
 
 	/* border: 2px solid salmon; */
+	/*text-align: center;*/
 	border-radius: 10px;
 }
-
-.box p {
-	font-size: 1.5em;
-}
-
 .box > .banner {
 	margin: 2em;
 	padding: 2em;
 }
 
-h1 {
+.home h1 {
 	font-size: 4vw;
+	margin-block-start: 0.2em;
+    margin-block-end: 0.2em;
 }
+
+.home p {
+	margin: 12px;
+	font-size: 1.5em;
+}
+
 
 .right {
 	color: #ff6701 !important;
@@ -79,8 +82,4 @@ li:hover {
 	border: 2px solid black;
 	font-size: 1.4em;
 	width: auto;
-}
-
-.home p {
-	margin: 12px;
 }

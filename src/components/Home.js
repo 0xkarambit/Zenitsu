@@ -23,7 +23,7 @@ const Home = (props) => {
 			<div className="home">
 				<div className="box">
 					<div className="banner">
-						<h1>Kanji</h1>
+						<h1>Jotaro</h1>
 						<p>faster, cleaner, better!</p>
 						<p>Select a subreddit to browse</p>
 						<input

@@ -1,10 +1,11 @@
+// https://avatars.githubusercontent.com/HarshitJoshi9152
 import React, { useEffect, useRef, useState } from "react";
 import { useHistory, useParams, Link} from "react-router-dom";
 import { useHotkeys } from "react-hotkeys-hook";
 
 import { makeFriendly } from "./../utils/num.js";
 
-import {VscColorMode, VscInfo, VscGithubInverted} from "react-icons/vsc";
+import {VscColorMode, VscInfo, VscGithubInverted, VscAccount, VscSettingsGear} from "react-icons/vsc";
 
 import "./header.css";
 
@@ -26,8 +27,37 @@ const fgDark = "#C5C8C6";
 const iconStyle = {
 		width: "32px",
 		height: "32px",
-		margin: "0px 5px 0px 5px"
-	};
+		margin: "0px 8px 0px 8px"
+};
+
+const toggleTheme = () => {
+		const rs = getComputedStyle(r);
+		const primary = rs.getPropertyValue('--primary');
+		const text = rs.getPropertyValue('--text');
+
+		// alert(primary);
+		// alert(text);
+
+		// todo: why does this not work on the first try ?
+		if (primary === bgLight && text === fgLight) {
+			// even tho it seems to be true (not actually) this doesnt seem to be triggered
+			r.style.setProperty('--primary', bgDark);
+			r.style.setProperty('--text', fgDark);
+		} else {
+			// for 1st try because it is in light mode by default.
+			// todo: wont work after customisations tho lol
+			r.style.setProperty('--primary', bgLight);
+			r.style.setProperty('--text', fgLight);
+		}
+		// else if (primary === bgDark && text === fgDark){
+		// 	r.style.setProperty('--primary', bgLight);
+		// 	r.style.setProperty('--text', fgLight);
+		// } 
+}
+
+// for 1st try it doesnt work, but it does after that so.
+// todo: wont work after customisations tho lol
+toggleTheme()
 
 export default function Header() {
 	const { subreddit } = useParams();
@@ -49,11 +79,10 @@ export default function Header() {
 	const img = useRef();
 
 	useHotkeys("shift + p", toggleSelectMenu);
-
+	// why cant i use this here ?
+	// useHotKeys("ctrl + /", () => alert("show all keyboard shortcuts"))
 	// get the info about the subreddit. do when sub changes.
 	useEffect(() => {
-		// reset img display because some subreddit's icons may not load.
-		img.current.setAttribute("style", "display: none;")
 		// sub_info: https://www.reddit.com/dev/api/#GET_r_{subreddit}_about
 		// data.public_description, header_img, allow_galleries, wiki_enabled, active_user_count, icon_img
 		// allow_videos, submission_type, created, spoilers_enabled, over18
@@ -71,24 +100,6 @@ export default function Header() {
 	}, [subreddit]);
 	// todo: public_description_html vs public_description
 
-	const toggleTheme = () => {
-		const rs = getComputedStyle(r);
-		const primary = rs.getPropertyValue('--primary');
-		const text = rs.getPropertyValue('--text');
-
-		// alert(primary);
-		// alert(text);
-
-		// todo: why does this not work on the first try ?
-		if (primary === bgLight && text === fgLight) {
-			r.style.setProperty('--primary', bgDark);
-			r.style.setProperty('--text', fgDark);
-		} else {
-			r.style.setProperty('--primary', bgLight);
-			r.style.setProperty('--text', fgLight);
-		}
-	}
-
 	const toggleInfo = () => {
 		alert("niuce")
 	}
@@ -105,8 +116,8 @@ export default function Header() {
 						alt="subreddit logo"
 						width="50px"
 						height="50px"
-						style={{display:"none"}}
 						ref={img}
+						onError={()=>img.current.setAttribute("style", "display: none;")}
 						onLoad={()=>img.current.setAttribute("style", "display: inline-block;")}
 					/>
 					<p className="banner">r/{subreddit}</p>
@@ -135,6 +146,8 @@ export default function Header() {
 				)}
 			</span>
 			<span className="right">
+				<VscAccount style={iconStyle} title="Login"/>
+				<VscSettingsGear style={iconStyle} title="Login"/>
 				<span className="theme-switch">
 					<VscColorMode style={iconStyle} onClick={toggleTheme}/>
 				</span>

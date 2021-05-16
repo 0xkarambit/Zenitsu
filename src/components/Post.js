@@ -8,6 +8,8 @@ import ImageGallery from "./ImageGallery.js";
 import { makeFriendly, elapsedTime } from "./../utils/num.js";
 import { convertHTMLEntity } from "./../utils/htmlparsing.js";
 
+import {BiLinkExternal} from "react-icons/bi"
+
 export default function Post({
 	title,
 	selftext_html, // todo: post desc needs markdown too...
@@ -197,7 +199,8 @@ export default function Post({
 				<span title={score} style={{ margin: "0px 5px 0px 5px" }}>
 					{makeFriendly(score)}{" "}
 				</span>
-				{elapsedTime(timeCreated)} awards:{" "}
+				{elapsedTime(timeCreated)}
+				<a className="reddit-post-link" href={link} target="_blank" rel="noreferrer" tabindex={displayMode === "focus" ? 1: -1}><BiLinkExternal title="view post on reddit" /></a>
 				{all_awardings.map(({ name, description, icon_url, count }) => {
 					return (
 						<Award {...{ name, description, icon_url, count }} />
@@ -213,7 +216,6 @@ export default function Post({
 			 		--oh ya it did work i had a syntax error url : permalink
 			 idea: hmm check for png / jpg / gif / mp4 etc at end (for video its v.reddit.... no mp4)
 			 idea: can we get image with "thumbnail" ?*/}
-			<a href={link} target="_blank" rel="noreferrer" tabindex={displayMode === "focus" ? 1: -1}>{link}</a>
 		</div>
 	);
 	// score, total_awards_received

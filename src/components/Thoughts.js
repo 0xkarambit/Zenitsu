@@ -74,10 +74,6 @@ export default function Thoughts({ viewStyle, shouldBlurAll }) {
 				history.goBack();
 			});
 	};
-	// setTimeout(() => {
-	// 	console.log({ haveListing });
-	// }, 5000);
-	// fetching the data on mount;
 	React.useEffect(() => {
 		// ? THIS doesn't get triggered if we get back from a Single page post load. coz sub has not changed and component has not remounted.
 		// ? wait use post unmount.
