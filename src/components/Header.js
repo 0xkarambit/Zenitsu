@@ -2,11 +2,11 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useHistory, useParams, Link} from "react-router-dom";
 import { useHotkeys } from "react-hotkeys-hook";
-
-import { makeFriendly } from "./../utils/num.js";
+import Loader from "react-loader";
 
 import {VscColorMode, VscInfo, VscGithubInverted, VscAccount, VscSettingsGear} from "react-icons/vsc";
 
+import { makeFriendly } from "./../utils/num.js";
 import "./header.css";
 
 const repoLink = "https://github.com/HarshitJoshi9152/showerthoughts";
@@ -69,6 +69,10 @@ export default function Header() {
 	const sel_subreddit = (sub) => {
 		closeSelectMenu();
 		// sub includes "r/"
+		if (subreddit === sub.slice(2)) {
+			alert("same sub wont change history")
+			return null;
+		}
 		history.push("/" + sub.slice(2));
 	};
 
@@ -77,7 +81,7 @@ export default function Header() {
 	const [active, setActiveCount] = useState();
 	const [desc, setDesc] = useState();
 	const img = useRef();
-
+	const [loaded, setLoaded] = useState(false);
 	useHotkeys("shift + p", toggleSelectMenu);
 	// why cant i use this here ?
 	// useHotKeys("ctrl + /", () => alert("show all keyboard shortcuts"))
@@ -87,7 +91,15 @@ export default function Header() {
 		// data.public_description, header_img, allow_galleries, wiki_enabled, active_user_count, icon_img
 		// allow_videos, submission_type, created, spoilers_enabled, over18
 		fetch(`https://www.reddit.com/r/${subreddit}/about.json`)
-			.then((res) => res.json())
+			.then((res) => {
+				if (!res.ok) {
+					// {data} is undefined in this case.
+					throw Error("Not Found");
+				}
+				else {
+					return res.json()
+				}
+			})
 			.then(({ data }) => {
 				// sometimes there is no icon_img
 				// shit 403 on data.community_icon
@@ -95,8 +107,18 @@ export default function Header() {
 				setSubCount(data?.subscribers);
 				setActiveCount(data?.active_user_count);
 				setDesc(data?.public_description)
+				setLoaded(true);
 				// todo: dont show the icon if we cant load it.
-			});
+			})
+			.catch((e) => {
+				console.log("Header", e.message);
+				if(e.message === "Not Found") {
+					img.current.setAttribute("src", "setting a bad src on purpose to trigger the onError handler to hide the broken img");
+				};
+			})
+		return () => {
+			setLoaded(false);
+		}
 	}, [subreddit]);
 	// todo: public_description_html vs public_description
 
@@ -111,13 +133,49 @@ export default function Header() {
 			{/*welcome to The Open Source reddit client focused on browsing{" "}*/}
 			<span>
 				<span onClick={toggleSelectMenu} title={desc}>
+					{/*(()=>{
+						if(!loaded) {
+							return <Loader
+								        loaded={loaded}
+								        lines={7}
+								        length={10}
+								        width={5}
+								        radius={3}
+								        corners={1}
+								        rotate={0}
+								        direction={1}
+								        color="#000"
+								        speed={1}
+								        trail={60}
+								        shadow={false}
+								        hwaccel={false}
+								        className="spinner"
+								        scale={1.0}
+								        loadedClassName="loadedContent"
+								    />
+						}
+						else {
+							return <img
+										src={imgSrc}
+										alt="subreddit logo"
+										width="50px"
+										height="50px"
+										ref={img}
+										onError={()=>img.current.setAttribute("style", "display: none;")}
+										onLoad={()=>img.current.setAttribute("style", "display: inline-block;")}
+									/>
+						}
+					})()*/}
 					<img
 						src={imgSrc}
 						alt="subreddit logo"
 						width="50px"
 						height="50px"
 						ref={img}
-						onError={()=>img.current.setAttribute("style", "display: none;")}
+						onError={()=>{
+							alert("erro")
+							img.current.setAttribute("style", "display: none;")
+						}}
 						onLoad={()=>img.current.setAttribute("style", "display: inline-block;")}
 					/>
 					<p className="banner">r/{subreddit}</p>

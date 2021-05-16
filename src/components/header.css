@@ -66,3 +66,7 @@ input {
 .theme-switch {
 	cursor: pointer;
 }
+
+.spinner {
+	display: inline;
+}

@@ -46,7 +46,7 @@ const Comment = ({
 	// onClick={() => com.current.setAttribute("style", "display:none")}
 	return (
 		// using key as [commentObj]data.id idk how the id is used in reddit tho.
-		<div className={className} style={commentMarginLeft}>
+		<div className={className} style={commentMarginLeft} tabIndex={topLevel ? 1 : -1}>
 			<p style={marginLeft} className="comment-details">
 				{/*<ProfilePic id={data.author}></ProfilePic>*/}
 				<span className="userID">{`u/${data.author}`}</span>
