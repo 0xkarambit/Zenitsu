@@ -40,7 +40,6 @@ const Comment = ({
 		marginLeft: `${14}px`
 	};
 	let c = colors.gray[level > colors.gray.length - 1? colors.gray.length - 1 : level]
-	console.log(c)
 	const commentMarginLeft = {
 		marginLeft: `${14}px`,
 		"--color": c
@@ -65,7 +64,8 @@ const Comment = ({
 						alt="arrow-up"
 						style={icon}
 						className="arrow" />
-					{makeFriendly(data.score)}
+					{/*data.score == 1 means that its hidden*/}
+					{data.score > 1 && makeFriendly(data.score)}
 				</span>
 				<span className="time-posted">{elapsedTime(timeCreated)}</span>
 				<span className="awards">
@@ -93,10 +93,10 @@ const Comment = ({
 							return (
 								<LoadMoreComments
 									{...{
-										id: replyData.id,
 										getComments,
 										perma_link,
-										setCurrentComments
+										setCurrentComments,
+										data: replyData.data
 									}}
 								/>
 							);

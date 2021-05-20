@@ -70,11 +70,14 @@ export default function Header() {
 	const sel_subreddit = (sub) => {
 		closeSelectMenu();
 		// sub includes "r/"
-		if (subreddit === sub.slice(2)) {
-			alert("same sub wont change history")
-			return null;
-		}
-		history.push("/" + sub.slice(2));
+		// but i do have to trigger the FORCED RENRENDER
+		// if (subreddit === sub.slice(2)) {
+		// 	alert("same sub wont change history")
+		// 	return null;
+		// }
+		/*OK THIS IS BAD WE ARE LETTING THE APP INCREASE THE HISTORY LENGTH
+		SO THAT WE CAN RE-RENDER AND THEN WE WILL HAVE TO POP THE HISTORY*/
+		history.push("/" + sub.slice(2), {prevSub: subreddit});
 	};
 
 	const [imgSrc, setImgSrc] = useState(null);
@@ -83,7 +86,7 @@ export default function Header() {
 	const [desc, setDesc] = useState();
 	const img = useRef();
 	const [loaded, setLoaded] = useState(false);
-	useHotkeys("shift + p", toggleSelectMenu);
+	useHotkeys("/", toggleSelectMenu);
 	// why cant i use this here ?
 	// useHotKeys("ctrl + /", () => alert("show all keyboard shortcuts"))
 	// get the info about the subreddit. do when sub changes.
@@ -139,7 +142,7 @@ export default function Header() {
 		<header>
 			{/*welcome to The Open Source reddit client focused on browsing{" "}*/}
 			<span>
-				<span onClick={toggleSelectMenu} title={desc}>
+				<span onClick={() => history.push("/" + subreddit)} title={desc}>
 					{loaded && <Img className="sub-icon" src={imgSrc} />}
 					<p className="banner">r/{subreddit}</p>
 				</span>
@@ -147,12 +150,12 @@ export default function Header() {
 					Object.is(subCount, v)
 				) && (
 					<>
-					<p className="members" title={subCount}>
-						{makeFriendly(subCount)} members
-					</p>
-					<p className="members" title={active}>
-						{makeFriendly(active)} active
-					</p>
+						<p className="members" title={subCount}>
+							{makeFriendly(subCount)} members
+						</p>
+						<p className="members" title={active}>
+							{makeFriendly(active)} active
+						</p>
 					</>
 				)}
 				{/*<span className="desc">

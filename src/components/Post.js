@@ -53,7 +53,7 @@ export default function Post({
 	// 	);
 	// }
 	const link = `https://www.reddit.com${permalink}`;
-	const badThumbnails = ["", "self", "spoiler"];
+	const badThumbnails = ["", "self", "spoiler", "default"];
 	// const imageUrl = preview.images[0].resolutions[] // these urls dont work restricted BUT url will work here
 	// todo: oh there can be multiple photos
 	const timeCreated = +`${created_utc}000`;

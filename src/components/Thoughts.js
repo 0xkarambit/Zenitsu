@@ -20,6 +20,11 @@ import Post from "./Post.js";
 import FocusView from "./FocusView.js";
 import StackView from "./StackView.js";
 
+function useForceUpdate(){
+    const [value, setValue] = useState(0); // integer state
+    return () => setValue(value => value + 1); // update the state to force render
+}
+
 export default function Thoughts({ viewStyle, shouldBlurAll }) {
 	// the displayMode gets set to $TESTINGMODE after every subreddit change.
 	const match = useRouteMatch("/:subreddit");
@@ -27,6 +32,8 @@ export default function Thoughts({ viewStyle, shouldBlurAll }) {
 	const history = useHistory();
 	const location = useLocation();
 	const isExact = match.isExact; // for when back button is press after reloading FocusView and the posts dont get loaded.
+
+	const forceUpdate = useForceUpdate();
 
 	const TESTINGMODE = "stack";
 	const [afterCode, setAfterCode] = useState("");
@@ -80,12 +87,21 @@ export default function Thoughts({ viewStyle, shouldBlurAll }) {
 	React.useEffect(() => {
 		// ? THIS doesn't get triggered if we get back from a Single page post load. coz sub has not changed and component has not remounted.
 		// ? wait use post unmount.
+		/*
+		// console.log(history);
+		if(location.state?.prevSub === subreddit) {
+			// cause a re-render and pop the history.
+			forceUpdate();
+			alert("history"); // why dont i see this ?
+			return null;
+			// history.goBack(); // wont it result in an INFINITE LOOP ?
+			// but what if i change history length.
+			// useReplace with Rerender state arg, but then back wont work later on from focusView....
+			// still same problem with prev approach.
+		}
+		*/
 		// to avoid fetching all listings of a subreddit when the user only intends to view one. SINGLE PAGE LOAD
 		if (!match.isExact) {
-			// console.log("NOT EXACT NOT ");
-			// console.log({ match });
-			// console.log({ subreddit });
-			// console.log({ location });
 			return null;
 		}
 		// const url = "https://www.reddit.com/r/Showerthoughts/top/?t=month";

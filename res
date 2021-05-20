@@ -229,3 +229,15 @@ add local stoarage and theme selection and changing.
 
 main point:
 refactoring, better scrolling/slideshow, styling, better code patterns
+
+
+https://www.reddit.com/r/redditdev/comments/2ou686/loading_more_comments_using_apimorechildren/
+https://www.reddit.com/dev/api/#GET_api_morechildren
+
+searches entire reddit ? -> https://www.reddit.com/r/redditdev/search.json?q=comments
+
+appplication only Oauth
+
+
+WILL I HAVE TO LEARN OAUTH for this ????
+https://github.com/reddit-archive/reddit/wiki/OAuth2#application-only-oauth
