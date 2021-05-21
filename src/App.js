@@ -1,12 +1,15 @@
 import React, { useRef, useState } from "react";
 import { useLocation, useHistory, useRouteMatch, Route, Switch } from "react-router-dom";
 import { useHotkeys } from "react-hotkeys-hook";
+import { atom, Provider } from 'jotai'
 
 import Header from "./components/Header.js";
 import Sidebar from "./components/Sidebar.js";
 import Thoughts from "./components/Thoughts.js";
 
 import Home from "./components/Home.js";
+
+// const renderAtom = atom(false);
 
 function App() {
 	// app should show sub selection page or home page on /
@@ -40,25 +43,27 @@ function App() {
 
 	
 	return (
-		<div className="App">
-			<Switch>
-				<Route exact path="/">
-					<Home />
-				</Route>
-				<Route path="/:subreddit">
-					<Header />
-					<div className="container">
-						{/*<Sidebar />*/}
-						<Thoughts
-							{...{
-								viewStyle,
-								shouldBlurAll
-							}}
-						/>
-					</div>
-				</Route>
-			</Switch>
-		</div>
+		<Provider>
+			<div className="App">
+				<Switch>
+					<Route exact path="/">
+						<Home />
+					</Route>
+					<Route path="/:subreddit">
+						<Header />
+						<div className="container">
+							{/*<Sidebar />*/}
+							<Thoughts
+								{...{
+									viewStyle,
+									shouldBlurAll
+								}}
+							/>
+						</div>
+					</Route>
+				</Switch>
+			</div>
+		</Provider>
 	);
 }
 

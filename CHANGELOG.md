@@ -1,5 +1,6 @@
 ## CHANGELOG
 
-1. changed select subreddit shortcut to "/".
-2. added "default" to list of badThumbnails.
-3. on clicking the sub banner you go the the sub's listings.
+1. bug fix.
+2. ackward images fixed using max-w,-h and only using width.
+3. fixed not being able to fix overlap in react-grid on same sub selection.
+4. tried to use Jotai.

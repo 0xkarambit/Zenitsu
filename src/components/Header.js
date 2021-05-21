@@ -1,9 +1,11 @@
 // https://avatars.githubusercontent.com/HarshitJoshi9152
 import React, { useEffect, useRef, useState } from "react";
-import { useHistory, useParams, Link} from "react-router-dom";
+import { useHistory, useParams, Link, useRouteMatch} from "react-router-dom";
 import { useHotkeys } from "react-hotkeys-hook";
 import Loader from "react-loader";
 import {Img} from 'react-image';
+
+import { atom, useAtom } from 'jotai'
 
 import {VscColorMode, VscInfo, VscGithubInverted, VscAccount, VscSettingsGear} from "react-icons/vsc";
 
@@ -63,21 +65,24 @@ toggleTheme()
 export default function Header() {
 	const { subreddit } = useParams();
 	const history = useHistory();
+	const match = useRouteMatch();
 	const [selectMenuOpen, setSelectMenuState] = useState(false);
 	const toggleSelectMenu = () => setSelectMenuState(!selectMenuOpen);
 	const closeSelectMenu = () => setSelectMenuState(false);
 
 	const sel_subreddit = (sub) => {
 		closeSelectMenu();
+		
+		if (subreddit === sub.slice(2)) {
+			// wtf is this all that had to be done ???? wtf wow
+			// and it doesnt even call another posts fetch and fixed the bad overlapping wow
+			history.replace(`/${subreddit}`);
+			return null;
+		}
+
 		// sub includes "r/"
-		// but i do have to trigger the FORCED RENRENDER
-		// if (subreddit === sub.slice(2)) {
-		// 	alert("same sub wont change history")
-		// 	return null;
-		// }
-		/*OK THIS IS BAD WE ARE LETTING THE APP INCREASE THE HISTORY LENGTH
-		SO THAT WE CAN RE-RENDER AND THEN WE WILL HAVE TO POP THE HISTORY*/
 		history.push("/" + sub.slice(2), {prevSub: subreddit});
+		// todo: get rid of the slice use the input value margin left we saw on stackOverflow the other day.
 	};
 
 	const [imgSrc, setImgSrc] = useState(null);
@@ -142,7 +147,10 @@ export default function Header() {
 		<header>
 			{/*welcome to The Open Source reddit client focused on browsing{" "}*/}
 			<span>
-				<span onClick={() => history.push("/" + subreddit)} title={desc}>
+				<span onClick={() => {
+					if(!match.isExact)
+						history.push("/" + subreddit)
+				}} title={desc}>
 					{loaded && <Img className="sub-icon" src={imgSrc} />}
 					<p className="banner">r/{subreddit}</p>
 				</span>

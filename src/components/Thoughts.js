@@ -20,10 +20,6 @@ import Post from "./Post.js";
 import FocusView from "./FocusView.js";
 import StackView from "./StackView.js";
 
-function useForceUpdate(){
-    const [value, setValue] = useState(0); // integer state
-    return () => setValue(value => value + 1); // update the state to force render
-}
 
 export default function Thoughts({ viewStyle, shouldBlurAll }) {
 	// the displayMode gets set to $TESTINGMODE after every subreddit change.
@@ -33,7 +29,7 @@ export default function Thoughts({ viewStyle, shouldBlurAll }) {
 	const location = useLocation();
 	const isExact = match.isExact; // for when back button is press after reloading FocusView and the posts dont get loaded.
 
-	const forceUpdate = useForceUpdate();
+	// const forceUpdate = useForceUpdate();
 
 	const TESTINGMODE = "stack";
 	const [afterCode, setAfterCode] = useState("");
@@ -85,21 +81,9 @@ export default function Thoughts({ viewStyle, shouldBlurAll }) {
 			});
 	};
 	React.useEffect(() => {
-		// ? THIS doesn't get triggered if we get back from a Single page post load. coz sub has not changed and component has not remounted.
-		// ? wait use post unmount.
-		/*
-		// console.log(history);
 		if(location.state?.prevSub === subreddit) {
-			// cause a re-render and pop the history.
-			forceUpdate();
-			alert("history"); // why dont i see this ?
 			return null;
-			// history.goBack(); // wont it result in an INFINITE LOOP ?
-			// but what if i change history length.
-			// useReplace with Rerender state arg, but then back wont work later on from focusView....
-			// still same problem with prev approach.
 		}
-		*/
 		// to avoid fetching all listings of a subreddit when the user only intends to view one. SINGLE PAGE LOAD
 		if (!match.isExact) {
 			return null;
@@ -108,7 +92,7 @@ export default function Thoughts({ viewStyle, shouldBlurAll }) {
 		// by default .json at the end pulls the hot listings
 		// is this try-catch useless lol.
 		setTimeout(() => {
-			console.log("USE EFFECT CALLLEEDDDDD");
+			alert("USE EFFECT CALLLEEDDDDD");
 		}, 5000);
 		try {
 			// how do i load the top listings !!??
@@ -125,6 +109,7 @@ export default function Thoughts({ viewStyle, shouldBlurAll }) {
 			// ? ok so its because of react router. https://stackoverflow.com/questions/33431319/prevent-component-be-unmounted-with-react-router/38477462, https://stackoverflow.com/questions/45917133/react-router-never-unmount-a-component-on-a-route-once-mounted-even-if-route-c#:~:text=20-,React%2Drouter%3A%20never%20unmount%20a%20component%20on%20a%20route%20once,mounted%2C%20even%20if%20route%20change&text=Where%20basically%20each%20component%20is%20mounted%2Funmounted%20on%20route%20change.
 			// ? is it tho idk shit.
 			// setPostsData([]);
+			// wait what sub shouldnt have to change when we move the FocusView check react-router-dom docs for this
 		};
 	}, [subreddit, isExact]);
 

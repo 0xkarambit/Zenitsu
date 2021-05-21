@@ -56,6 +56,7 @@ export default function Post({
 	const badThumbnails = ["", "self", "spoiler", "default"];
 	// const imageUrl = preview.images[0].resolutions[] // these urls dont work restricted BUT url will work here
 	// todo: oh there can be multiple photos
+	const imgWidth = preview?.images[0]?.source?.width;
 	const timeCreated = +`${created_utc}000`;
 	// idk if we should really be using useMemo here or not.
 	const gallery = useMemo(() => gallery_data?.items, [gallery_data]);
@@ -137,12 +138,11 @@ export default function Post({
 					if (post_hint === "image") {
 						return (
 							<img
-								height="400px"
-								width="400px"
+								width={imgWidth}
 								src={url}
 								alt="thumbnail"
 								style={{ objectFit: "contain" }}
-								className={shouldBlur ? "blur" : ""}
+								className={shouldBlur ? "blur post-img" : "post-img"}
 								onClick={() => {
 									setBlur(false); // we have to reset it on change, ok keep an array of this.
 								}}

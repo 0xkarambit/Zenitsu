@@ -109,3 +109,11 @@
 	position: relative;
 	top:3px;
 }
+
+/*POST.JS*/
+
+.post-img {
+	max-width: 400px;
+	max-height: 400px;
+	padding: 0.5em 0em;
+}
