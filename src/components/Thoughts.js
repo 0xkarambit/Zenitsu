@@ -91,9 +91,6 @@ export default function Thoughts({ viewStyle, shouldBlurAll }) {
 		// const url = "https://www.reddit.com/r/Showerthoughts/top/?t=month";
 		// by default .json at the end pulls the hot listings
 		// is this try-catch useless lol.
-		setTimeout(() => {
-			alert("USE EFFECT CALLLEEDDDDD");
-		}, 5000);
 		try {
 			// how do i load the top listings !!??
 			loadListings(subreddit);
@@ -109,8 +106,18 @@ export default function Thoughts({ viewStyle, shouldBlurAll }) {
 			// ? ok so its because of react router. https://stackoverflow.com/questions/33431319/prevent-component-be-unmounted-with-react-router/38477462, https://stackoverflow.com/questions/45917133/react-router-never-unmount-a-component-on-a-route-once-mounted-even-if-route-c#:~:text=20-,React%2Drouter%3A%20never%20unmount%20a%20component%20on%20a%20route%20once,mounted%2C%20even%20if%20route%20change&text=Where%20basically%20each%20component%20is%20mounted%2Funmounted%20on%20route%20change.
 			// ? is it tho idk shit.
 			// setPostsData([]);
+			// EITHER DUE TO SUB CHANGE OR ISEXACT CHANGE SO IF ITS AN ISEXACT CHANGE WE SHOULD NOT CLEAR
+			// THE LISTINGS. IF THE URL IS NOT EXACT CURRENTLY exact then its focus mode.
+			// wait is this memoised ????
+			// if (isExact) { // ! added for memoisation concerns
+			// 	setPostsData([]);
+			// }
+			// alert("cleaning posts")
+			// will we still have to deal with the grid-overlapping if the clearing data works ?
 			// wait what sub shouldnt have to change when we move the FocusView check react-router-dom docs for this
 		};
+	// ok so i got it putting isExact in the dependency array was the fix to listings not being loaded
+	// after single post load -> history.goBack(), but now it 
 	}, [subreddit, isExact]);
 
 	const findComment = (link) =>
@@ -157,7 +164,6 @@ export default function Thoughts({ viewStyle, shouldBlurAll }) {
 
 				setPostsData(c[0].data.children); // HERE IS THE ERROR.
 				setPermaLinks(new Set([link]));
-				alert("triggered");
 				// it doesnt load the posts coz of the 1st line in useEffect.
 				//? it will take it automatically from the url
 				// setSubreddit(c[0].data.children[0].data.subreddit);

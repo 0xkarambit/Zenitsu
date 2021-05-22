@@ -5,7 +5,7 @@ import { useHistory, Link } from "react-router-dom";
 import "./Home.css";
 
 const Home = (props) => {
-	const [sub, setSub] = useState("showerthoughts");
+	const [sub, setSub] = useState("all");
 	const history = useHistory();
 	const input = useRef();
 
@@ -23,7 +23,7 @@ const Home = (props) => {
 			<div className="home">
 				<div className="box">
 					<div className="banner">
-						<h1>Jotaro</h1>
+						<h1>Zenitsu</h1>
 						<p>faster, cleaner, better!</p>
 						<p>Select a subreddit to browse</p>
 						<input

@@ -74,9 +74,11 @@ export default function Header() {
 		closeSelectMenu();
 		
 		if (subreddit === sub.slice(2)) {
+			// maybe hisroy.goBack(); idk1
 			// wtf is this all that had to be done ???? wtf wow
 			// and it doesnt even call another posts fetch and fixed the bad overlapping wow
-			history.replace(`/${subreddit}`);
+			alert("smae sub ewont change a thing lol");
+			// history.replace(`/${subreddit}`);
 			return null;
 		}
 

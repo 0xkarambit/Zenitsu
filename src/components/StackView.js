@@ -16,12 +16,17 @@ const StackView = ({postsData, loadMorePosts, expandView, shouldBlurAll, postsSe
 	const history = useHistory()
 	const grid = useRef();
 
-	function useForceUpdate(){
-	    const [value, setValue] = useState(0); // integer state
-	    return () => setValue(value => value + 1); // update the state to force render
-	}
+	useEffect(() => {
+		// resizeGrid();
+		if (grid) {
+		// ok never use ref.current in an if condition.
+			setTimeout(() => {
+			  	// this doesnt actually work lol. all this hardwork is in vain. MAYBE IT DOES !!
+			    grid.current?.updateLayout()
+			}, 2500) // 3000 ms is a guess lol.
+		}
+	}, [subreddit]); // todo: use in thought.js too
 
-	const forceUpdate = useForceUpdate();
 
 	useHotkeys("s", () => {
 		// todo: set last seen 
@@ -33,11 +38,12 @@ const StackView = ({postsData, loadMorePosts, expandView, shouldBlurAll, postsSe
 			<StackGrid
 				monitorImagesLoaded={true}
 				columnWidth={300}
-				ref={grid}
+				gridRef={r => grid.current = r}
 			>
 				{postsData.map((post, i) => (
 					<Link
-						to={`/${subreddit}/https://www.reddit.com${post.data.permalink}`}
+						// to={`/${subreddit}/https://www.reddit.com${post.data.permalink}`}
+						to={location => `${location.pathname}/https://www.reddit.com${post.data.permalink}`}
 						style={{ textDecoration: "none" }}
 					>
 						<Post

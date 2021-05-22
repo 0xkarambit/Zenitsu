@@ -241,3 +241,12 @@ appplication only Oauth
 
 WILL I HAVE TO LEARN OAUTH for this ????
 https://github.com/reddit-archive/reddit/wiki/OAuth2#application-only-oauth
+
+WE NEED ANIMATIONS/TRANSITIONS NOW 
+implement image lighthouse.
+do all videoposts have media_embed ?
+change img src to ""
+
+why does sub have to change when we go from url/subname/posturl -> url/subname ??????
+
+IMG MODE -> show title and user on hover.
