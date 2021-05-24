@@ -139,6 +139,7 @@ const FocusView = ({
 			<Post
 				// this returns a div with class "post"
 				{...currentPostData}
+				data={currentPostData}
 				displayMode={"focus"}
 				shouldBlur={shouldBlur}
 				setBlur={setBlur}

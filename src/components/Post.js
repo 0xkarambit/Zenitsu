@@ -42,7 +42,8 @@ export default function Post({
 	shouldBlurAll = true,
 	opened = false,
 	setPostsSeen,
-	setLastSeen
+	setLastSeen,
+	data
 }) {
 	// moved to the bottom hooks were getting in the way lol.
 	// if (postsLoader) {
@@ -66,6 +67,10 @@ export default function Post({
 	// todo: cleanup => set Last post to this index, and mark as seen on mount.
 	// ok wwait does the post even get unmounted ??? NO i guess it only gets re rendered with new props.
 	// so lets watch for props that may change.
+
+	if(post_hint?.includes("video")) {
+		console.log(data);
+	}
 
 	useEffect(() => {
 		if (displayMode === "focus") {

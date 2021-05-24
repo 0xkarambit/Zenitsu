@@ -250,3 +250,5 @@ change img src to ""
 why does sub have to change when we go from url/subname/posturl -> url/subname ??????
 
 IMG MODE -> show title and user on hover.
+
+can i use the router auto scroll for FocusView lol ??

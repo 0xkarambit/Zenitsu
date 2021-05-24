@@ -200,3 +200,11 @@ https://www.reddit.com/r/popular/about.json
 react color palette generation script
 
 read the souce code & history and make a list of stuff learnt, and make notes.
+
+
+4 Major todos:
+
+adding a state management lib with data persistence.
+adding firebase hosting.
+adding OAuth support.
+buying a domain name.

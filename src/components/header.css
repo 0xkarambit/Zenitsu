@@ -46,6 +46,7 @@ p {
 .sub-sel > input {
 	background-color: #222;
 	color: whitesmoke;
+	width: 100%;
 }
 
 /*fix the input style*/
@@ -73,6 +74,6 @@ input {
 
 .sub-icon {
 	border-radius: 10px;
-	width:50px;
-	height:50px;
+	width: 50px;
+	height: 50px;
 }

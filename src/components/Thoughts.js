@@ -45,7 +45,6 @@ export default function Thoughts({ viewStyle, shouldBlurAll }) {
 	const [lastSeen, setLastSeen] = React.useState(0);
 
 	// useHotKeys("backspace", () => history.goBack());
-
 	const loadListings = (sub) => {
 		const url = `https://www.reddit.com/r/${sub}.json`;
 		fetch(url)
@@ -79,15 +78,18 @@ export default function Thoughts({ viewStyle, shouldBlurAll }) {
 				// but now it makes a new request to get listings each time we enter the wrong sub
 				history.goBack();
 			});
+
 	};
 	React.useEffect(() => {
-		if(location.state?.prevSub === subreddit) {
-			return null;
-		}
+		// TODO: USE PERSISTENCE LIBRARY.
 		// to avoid fetching all listings of a subreddit when the user only intends to view one. SINGLE PAGE LOAD
 		if (!match.isExact) {
 			return null;
 		}
+
+		// if(postsData?.length > 2) {
+		// 	return null;
+		// }
 		// const url = "https://www.reddit.com/r/Showerthoughts/top/?t=month";
 		// by default .json at the end pulls the hot listings
 		// is this try-catch useless lol.

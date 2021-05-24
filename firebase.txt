@@ -1,0 +1,8 @@
+firebase login
+firebase init
+	hosting
+	emulator
+firebase deploy
+
+firebase serve || firebase emulators:start
+
