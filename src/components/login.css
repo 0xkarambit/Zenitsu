@@ -50,3 +50,7 @@ button {
 .contain > span {
 	justify-content: space-around;
 }
+
+input:focus:not([type="checkbox"]) {
+	outline: 0px;
+}

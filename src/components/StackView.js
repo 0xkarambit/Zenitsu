@@ -50,7 +50,7 @@ const StackView = ({
 					<Link
 						// to={`/${subreddit}/https://www.reddit.com${post.data.permalink}`}
 						to={(location) =>
-							`${location.pathname}/https://www.reddit.com${post.data.permalink}`
+							`${location.pathname}https://www.reddit.com${post.data.permalink}`
 						}
 						style={{ textDecoration: "none" }}
 					>

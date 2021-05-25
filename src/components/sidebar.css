@@ -28,7 +28,3 @@ SearchBar SearchBar > input:placeholder-shown {
 	border: none;
 	text-align: center;
 }
-
-input:focus :not([type="checkbox"]) {
-	outline: none;
-}

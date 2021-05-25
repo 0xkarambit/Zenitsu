@@ -1,4 +1,4 @@
 ## CHANGELOG
 
-1. changed sub postion in url path.
-2. added not found page.
+1. fixed input tag outlines.
+2. fixed FocusView not working when posts were clicked.

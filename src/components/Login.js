@@ -144,6 +144,9 @@ const LoginPopup = ({ setHide }) => {
 							type="checkbox"
 							name="remember_me"
 							checked={remember_me}
+							onKeyDown={(e) =>
+								e.key === "Enter" && toggleChecked()
+							}
 						/>
 						<label htmlFor="remmember_me">Remember me</label>
 					</span>
