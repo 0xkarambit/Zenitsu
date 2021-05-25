@@ -87,7 +87,7 @@ export default function Header() {
 		}
 
 		// sub includes "r/"
-		history.push("/" + sub.slice(2), { prevSub: subreddit });
+		history.push("/r/" + sub.slice(2));
 		// todo: get rid of the slice use the input value margin left we saw on stackOverflow the other day.
 	};
 
@@ -158,7 +158,7 @@ export default function Header() {
 			<span>
 				<span
 					onClick={() => {
-						if (!match.isExact) history.push("/" + subreddit);
+						if (!match.isExact) history.push("/r/" + subreddit);
 					}}
 					title={desc}
 				>

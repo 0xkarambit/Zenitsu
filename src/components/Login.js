@@ -9,7 +9,8 @@ import "./login.css";
 const iconStyle = {
 	width: "32px",
 	height: "32px",
-	margin: "0px 8px 0px 8px"
+	margin: "0px 8px 0px 8px",
+	cursor: "pointer"
 };
 
 const LoginButton = ({ loggedIn, setLoggedIn }) => {

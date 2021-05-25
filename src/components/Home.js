@@ -32,7 +32,7 @@ const Home = (props) => {
 							placeholder="Subreddit"
 							value={sub}
 							onKeyDown={(e) =>
-								e.key === "Enter" && history.push(sub)
+								e.key === "Enter" && history.push(`r/${sub}`)
 							}
 							onChange={changed}
 							ref={input}

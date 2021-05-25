@@ -22,7 +22,8 @@ import StackView from "./StackView.js";
 
 export default function Thoughts({ viewStyle, shouldBlurAll }) {
 	// the displayMode gets set to $TESTINGMODE after every subreddit change.
-	const match = useRouteMatch("/:subreddit");
+	const match = useRouteMatch("/r/:subreddit");
+	let { url } = match;
 	const { subreddit } = match.params;
 	const history = useHistory();
 	const location = useLocation();
@@ -189,7 +190,7 @@ export default function Thoughts({ viewStyle, shouldBlurAll }) {
 		>
 			{/*should we add a powerbar here to control the view styles etc ?? */}
 			<Switch>
-				<Route exact path="/:subreddit">
+				<Route exact path={`/r/:subreddit`}>
 					{dataReceived && (
 						<StackView
 							{...{
@@ -204,7 +205,7 @@ export default function Thoughts({ viewStyle, shouldBlurAll }) {
 					)}
 				</Route>
 				{/*alternatively use useRouteMatch.url or what idk rn */}
-				<Route path={`/${subreddit}/:permalink`}>
+				<Route path={`/r/:subreddit/:permalink`}>
 					<FocusView
 						postsData={postsData}
 						getComments={getComments}

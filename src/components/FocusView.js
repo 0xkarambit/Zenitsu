@@ -43,11 +43,11 @@ const FocusView = ({
 	// we will load the post and comments and until the post has been loaded the currentPostData will be "undefined".
 	const {
 		params: { subreddit }
-	} = useRouteMatch("/:subreddit");
+	} = useRouteMatch("/r/:subreddit");
 
 	let permalink = currentPostData?.permalink
 		? `https://www.reddit.com${currentPostData.permalink}`
-		: window.location.pathname.replace(`/${subreddit}/`, "");
+		: window.location.pathname.replace(`/r/${subreddit}/`, "");
 
 	// const location = useLocation();
 	// console.log({ location });
@@ -67,7 +67,7 @@ const FocusView = ({
 						shouldBlurAll && setBlur(true);
 					document.querySelector("#root").scrollIntoView();
 					history.replace(
-						`/${subreddit}/https://www.reddit.com${postsData[c].data.permalink}`
+						`/r/${subreddit}/https://www.reddit.com${postsData[c].data.permalink}`
 					);
 					return c;
 				}
@@ -95,7 +95,7 @@ const FocusView = ({
 						shouldBlurAll && setBlur(true);
 					document.querySelector("#root").scrollIntoView();
 					history.replace(
-						`/${subreddit}/https://www.reddit.com${postsData[c].data.permalink}`
+						`/r/${subreddit}/https://www.reddit.com${postsData[c].data.permalink}`
 					);
 					return c;
 				}

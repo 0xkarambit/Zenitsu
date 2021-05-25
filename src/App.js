@@ -12,6 +12,7 @@ import { atom, Provider } from "jotai";
 import Header from "./components/Header.js";
 import Sidebar from "./components/Sidebar.js";
 import Thoughts from "./components/Thoughts.js";
+import NotFound from "./NotFound.js";
 
 import Home from "./components/Home.js";
 
@@ -19,7 +20,7 @@ import Home from "./components/Home.js";
 
 function App() {
 	// app should show sub selection page or home page on /
-	let m = useRouteMatch("/:postUrl");
+	let m = useRouteMatch("/r/:sub/:postUrl");
 	// {match:{params:{subName}}}
 	console.log(m?.params?.postUrl);
 	const history = useHistory();
@@ -54,7 +55,7 @@ function App() {
 					<Route exact path="/">
 						<Home />
 					</Route>
-					<Route path="/:subreddit">
+					<Route path="/r/:subreddit">
 						<Header />
 						<div className="container">
 							{/*<Sidebar />*/}
@@ -65,6 +66,9 @@ function App() {
 								}}
 							/>
 						</div>
+					</Route>
+					<Route>
+						<NotFound />
 					</Route>
 				</Switch>
 			</div>
