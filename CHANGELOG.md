@@ -1,4 +1,5 @@
 ## CHANGELOG
 
-1. Refactored Header component.
-2. added login popup UI.
+1. added forgot pass link and remember me button.
+2. removed outline on focused inputs.
+3. fixed css problems.

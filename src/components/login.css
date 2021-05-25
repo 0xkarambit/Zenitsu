@@ -3,17 +3,18 @@
 	top: 10%;
 	z-index: 100;
 
-	/* width: 20%; */
+	width: min-content;
+	text-align: center;
+
 	background-color: rgb(77, 75, 75);
 	border: 2px solid black;
 	font-size: 20px !important;
-	text-align: center;
 	border-radius: 10px;
 	/* border-bottom-left-radius: 10px;
 	border-bottom-right-radius: 10px; */
 }
 
-.login-popup > h2 {
+.login-popup h2 {
 	color: #c5c8c6 !important;
 	font-size: 1.5em;
 	margin-block-start: 0.23em;
@@ -21,15 +22,31 @@
 	font-weight: normal;
 }
 
-.login-popup > input,
+.login-popup input,
 button {
-	width: 90%;
 	margin: 7px;
 	border-radius: 10px;
 	color: black !important;
 }
 
-.login-popup > button {
-	width: auto;
+.login-popup button {
 	padding: 0px 10px;
+}
+
+.remember_me > * {
+	cursor: pointer;
+}
+
+.remember_me > input {
+	width: 20px;
+	height: 20px;
+}
+
+.contain {
+	width: 100%;
+	text-align: center;
+}
+
+.contain > span {
+	justify-content: space-around;
 }
