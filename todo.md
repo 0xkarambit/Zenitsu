@@ -148,7 +148,6 @@ popper
 git log --pretty=online --graph --decorate --all
 https://www.reddit.com/dev/api/
 
-
 todo
 
 sidebar
@@ -171,18 +170,16 @@ add info/credit/about the creator & usage section somewhere.
 
 add ctrl + / shortcut to show all shortcuts.
 
-
-
 make profile on buy me a coffee
 
 parsing markdown
-controlled comments 
+controlled comments
 popup sections -> info, ctrl + /
 home page
 git repo
 theme switch fix
 
-loadMore comments 
+loadMore comments
 
 loadMorePosts button map to m;
 
@@ -201,10 +198,8 @@ react color palette generation script
 
 read the souce code & history and make a list of stuff learnt, and make notes.
 
-
 4 Major todos:
 
 adding a state management lib with data persistence.
-adding firebase hosting.
 adding OAuth support.
 buying a domain name.

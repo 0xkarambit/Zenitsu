@@ -49,9 +49,7 @@ const StackView = ({
 				{postsData.map((post, i) => (
 					<Link
 						// to={`/${subreddit}/https://www.reddit.com${post.data.permalink}`}
-						to={(location) =>
-							`${location.pathname}https://www.reddit.com${post.data.permalink}`
-						}
+						to={`/r/${subreddit}/https://www.reddit.com${post.data.permalink}`}
 						style={{ textDecoration: "none" }}
 					>
 						<Post
