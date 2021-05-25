@@ -11,7 +11,7 @@ audio has a durationchange Event
 todo: find a way to figure out if its a direct load then mute the audio.
 */
 
-const VideoPlayer = ({ videoUrl, audioUrl, poster }) => {
+const VideoPlayer = ({ videoUrl, audioUrl, poster, width, is_gif }) => {
 	const [autoPlay, setAutoPlay] = useState(true);
 	const [shouldPreLoad, setShouldPreLoad] = useState(false);
 	const videoPlayer = useRef();
@@ -39,14 +39,14 @@ const VideoPlayer = ({ videoUrl, audioUrl, poster }) => {
 	return (
 		<>
 			<video
-				height="400px"
-				width="600px"
+				// height="400px"
+				width={width}
 				ref={videoPlayer}
 				className="video-player"
 				autoPlay={autoPlay}
 				poster={poster}
 				preload={shouldPreLoad}
-				loop
+				loop={is_gif}
 				controls
 				onPlay={play}
 				onPause={pause}

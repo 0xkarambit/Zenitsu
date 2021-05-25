@@ -108,7 +108,7 @@ const LoginPopup = ({ setHide }) => {
 	};
 
 	return (
-		<div class="login-popup" ref={popup}>
+		<div className="login-popup" ref={popup}>
 			<div className="contain">
 				<h2>Sign In</h2>
 				<input

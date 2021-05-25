@@ -1,5 +1,4 @@
 ## CHANGELOG
 
-1. added forgot pass link and remember me button.
-2. removed outline on focused inputs.
-3. fixed css problems.
+1. fixed refetching after pressing back in focusview mode.
+2. worked on not found page.

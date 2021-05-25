@@ -7,7 +7,8 @@ const LoadMoreComments = ({
 	const load = () => {
 		console.log(data.id);
 		return null;
-		let url = "https://www.reddit.com" + perma_link + "/" + data.id + ".json";
+		let url =
+			"https://www.reddit.com" + perma_link + "/" + data.id + ".json";
 		getComments(url).then((comObj) => {
 			if (comObj === 1) {
 				alert("likely fetch request went wrong");
@@ -19,9 +20,9 @@ const LoadMoreComments = ({
 	};
 	return (
 		// todo: show how many to load
-		<button class="comments-loader" onClick={load}>
-			{/*load more comments */}{data.id}{" "}
-			{data.name}
+		<button className="comments-loader" onClick={load}>
+			{/*load more comments */}
+			{data.id} {data.name}
 		</button>
 	);
 };

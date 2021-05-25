@@ -8,7 +8,7 @@ import ImageGallery from "./ImageGallery.js";
 import { makeFriendly, elapsedTime } from "./../utils/num.js";
 import { convertHTMLEntity } from "./../utils/htmlparsing.js";
 
-import {BiLinkExternal} from "react-icons/bi"
+import { BiLinkExternal } from "react-icons/bi";
 
 export default function Post({
 	title,
@@ -31,6 +31,7 @@ export default function Post({
 	is_gallery,
 	gallery_data,
 	media_metadata,
+	secure_media,
 	displayMode = "stack",
 	shouldBlur,
 	setBlur,
@@ -56,6 +57,8 @@ export default function Post({
 	const link = `https://www.reddit.com${permalink}`;
 	const badThumbnails = ["", "self", "spoiler", "default"];
 	// const imageUrl = preview.images[0].resolutions[] // these urls dont work restricted BUT url will work here
+	const width = secure_media?.reddit_video?.width;
+	const is_gif = secure_media?.reddit_video?.is_gif;
 	// todo: oh there can be multiple photos
 	const imgWidth = preview?.images[0]?.source?.width;
 	const timeCreated = +`${created_utc}000`;
@@ -68,15 +71,15 @@ export default function Post({
 	// ok wwait does the post even get unmounted ??? NO i guess it only gets re rendered with new props.
 	// so lets watch for props that may change.
 
-	if(post_hint?.includes("video")) {
+	if (post_hint?.includes("video")) {
 		console.log(data);
 	}
 
 	useEffect(() => {
 		if (displayMode === "focus") {
 			// maybe i shouldnt replace it with postsSeen
-			if(!opened) {
-				setPostsSeen(seen => new Set([...seen, permalink]))
+			if (!opened) {
+				setPostsSeen((seen) => new Set([...seen, permalink]));
 			}
 			// todo: last seen this is not working
 			// return () => {
@@ -86,12 +89,11 @@ export default function Post({
 			// 	setLastSeen(index)
 			// }
 		}
-	}, [permalink])
+	}, [permalink]);
 
-	
 	// OH YES I GOT IT MOVE OPENED TO PROPS.
 	// wont work because it gets unmounted when we change view.
-	const c = ((displayMode ==="focus") ? "post" : (opened ? "seen post" : "post"));
+	const c = displayMode === "focus" ? "post" : opened ? "seen post" : "post";
 	console.log(c);
 	return postsLoader ? (
 		<div className="post">
@@ -136,10 +138,12 @@ export default function Post({
 			)}
 			{(() => {
 				if (displayMode === "focus") {
-					{/*todo: disabled for some time
+					{
+						/*todo: disabled for some time
 						if (is_gallery === true) {
 											return <ImageGallery gallery={gallery} media_metadata={media_metadata}/>;
-										}*/}
+										}*/
+					}
 					if (post_hint === "image") {
 						return (
 							<img
@@ -147,7 +151,9 @@ export default function Post({
 								src={url}
 								alt="thumbnail"
 								style={{ objectFit: "contain" }}
-								className={shouldBlur ? "blur post-img" : "post-img"}
+								className={
+									shouldBlur ? "blur post-img" : "post-img"
+								}
 								onClick={() => {
 									setBlur(false); // we have to reset it on change, ok keep an array of this.
 								}}
@@ -167,10 +173,20 @@ export default function Post({
 								}
 								poster={thumbnail}
 								blur={false}
+								loop={is_gif}
+								width={width}
 							/>
 						);
 					} else if (post_hint === "rich:video") {
-						return <ReactPlayer url={url} controls pip />;
+						return (
+							<ReactPlayer
+								width={width}
+								url={url}
+								controls
+								pip
+								autoplay={is_gif}
+							/>
+						);
 					} else {
 						if (post_hint === "link" || is_gallery === true) {
 							return (
@@ -205,7 +221,15 @@ export default function Post({
 					{makeFriendly(score)}{" "}
 				</span>
 				{elapsedTime(timeCreated)}
-				<a className="reddit-post-link" href={link} target="_blank" rel="noreferrer" tabindex={displayMode === "focus" ? 1: -1}><BiLinkExternal title="view post on reddit" /></a>
+				<a
+					className="reddit-post-link"
+					href={link}
+					target="_blank"
+					rel="noreferrer"
+					tabindex={displayMode === "focus" ? 1 : -1}
+				>
+					<BiLinkExternal title="view post on reddit" />
+				</a>
 				{all_awardings.map(({ name, description, icon_url, count }) => {
 					return (
 						<Award {...{ name, description, icon_url, count }} />

@@ -1,7 +1,13 @@
 import React, { useRef, useState } from "react";
-import { useLocation, useHistory, useRouteMatch, Route, Switch } from "react-router-dom";
+import {
+	useLocation,
+	useHistory,
+	useRouteMatch,
+	Route,
+	Switch
+} from "react-router-dom";
 import { useHotkeys } from "react-hotkeys-hook";
-import { atom, Provider } from 'jotai'
+import { atom, Provider } from "jotai";
 
 import Header from "./components/Header.js";
 import Sidebar from "./components/Sidebar.js";
@@ -32,7 +38,7 @@ function App() {
 	useHotkeys("g", () => {
 		document.querySelector("#root").scrollIntoView();
 	});
-	
+
 	// useHotKeys("backspace", () => history.goBack());
 
 	// switch to vert split view style
@@ -41,7 +47,6 @@ function App() {
 		setViewStyle((vs) => !vs);
 	});
 
-	
 	return (
 		<Provider>
 			<div className="App">
@@ -67,4 +72,4 @@ function App() {
 	);
 }
 
-	export default App;
+export default App;

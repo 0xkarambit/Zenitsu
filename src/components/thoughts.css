@@ -24,6 +24,8 @@
 	/* the screen get an ugly horizontal scrollbar if i dont use overflow: auto, and if i do use it i cant use sticky */
 	display: flex;
 	justify-content: center;
+	/* display: grid;
+	grid-template-columns: 1fr 1fr; */
 }
 
 .post[data-view-vert="true"] {
@@ -107,7 +109,7 @@
 	text-decoration: none;
 	color: #106ba3;
 	position: relative;
-	top:3px;
+	top: 3px;
 }
 
 /*POST.JS*/
