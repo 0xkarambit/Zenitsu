@@ -10,6 +10,8 @@ import { convertHTMLEntity } from "./../utils/htmlparsing.js";
 
 import { BiLinkExternal } from "react-icons/bi";
 
+import "./Post.css";
+
 export default function Post({
 	title,
 	selftext_html, // todo: post desc needs markdown too...
@@ -117,14 +119,14 @@ export default function Post({
 					<span className="spoiler">SPOILER</span>
 				)}
 			</h2>
-			<p
+			<div
 				className="postbody"
 				dangerouslySetInnerHTML={
 					displayMode === "stack"
 						? { __html: selftext.slice(0, 200) }
 						: convertHTMLEntity(selftext)
 				}
-			></p>
+			></div>
 			{/* IMAGE imlementaion region */}
 			{displayMode === "stack" && !badThumbnails.includes(thumbnail) && (
 				<img

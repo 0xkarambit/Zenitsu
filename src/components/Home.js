@@ -27,12 +27,16 @@ const Home = (props) => {
 						<p>faster, cleaner, better!</p>
 						<p>Select a subreddit to browse</p>
 						<input
+							required
 							type="text"
 							className="selector"
-							placeholder="Subreddit"
+							placeholder="subreddit"
 							value={sub}
 							onKeyDown={(e) =>
-								e.key === "Enter" && history.push(`r/${sub}`)
+								// i might have to use react-hook-forms
+								e.key === "Enter" &&
+								sub !== "" &&
+								history.push(`r/${sub}`)
 							}
 							onChange={changed}
 							ref={input}

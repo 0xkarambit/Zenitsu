@@ -25,7 +25,7 @@ log(map);
 let row = 0;
 let col = 0;
 
-let rLen = getHeight();
+let rLen = getHeight(); // pass col to get rows in this column
 let cLen = getWidth();
 
 log(map[row % rLen][col % cLen]);

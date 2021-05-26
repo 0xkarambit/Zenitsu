@@ -203,3 +203,23 @@ read the souce code & history and make a list of stuff learnt, and make notes.
 adding a state management lib with data persistence.
 adding OAuth support.
 buying a domain name.
+
+-------------------------------------------------------------------
+
+url permalink fix
+landing page design
+look out about snoowrap
+
+maybe add search option ? & filter posts by flair tags ?
+& look at other reddit clients.
+custom wallpaper ?
+
+settings
+	font-size selection ?
+	ONOPEN:	default sub selection
+
+Zustand
+
+markdown parsing | bookmarked post + reddit post to markdown git repo.
+
+BIG ONE: fix theming

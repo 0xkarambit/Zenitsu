@@ -1,4 +1,3 @@
-
 function parse(body_html) {
 	// nope we need something better
 	let map = {
@@ -125,9 +124,16 @@ function convertHTMLEntity(text) {
 		span.innerHTML = entity;
 		return span.innerText;
 	});
-	return { __html: parsed };
+
+	let out = parsed
+		.split("\n")
+		.map((d) => `<p class="post-body-p">${d}</p>`)
+		.join("");
+	console.log({ out });
+
+	return { __html: out };
 }
 
 module.exports = {
 	convertHTMLEntity
-}
+};

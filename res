@@ -252,3 +252,10 @@ why does sub have to change when we go from url/subname/posturl -> url/subname ?
 IMG MODE -> show title and user on hover.
 
 can i use the router auto scroll for FocusView lol ??
+
+<!-- error log
+http://localhost:3000/r/netflix -> http://localhost:3000/r/netflix/https://www.reddit.com/r/netflix/comments/mxm3re/rnetflix_discord_server/ -> http://localhost:3000/r/nosleep
+
+now go all the way back content wont change !.
+we need to fix it !
+ -->

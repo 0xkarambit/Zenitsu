@@ -62,15 +62,17 @@ const forgotPassLink = "https://www.reddit.com/password";
 
 const LoginPopup = ({ setHide }) => {
 	// used to focus on username input field and to close popup on outside click.
-	const popup = useRef();
+	const [popup, userInput] = [useRef(), useRef()];
 
 	useHotkeys("Escape", () => {
+		userInput.current.blur();
 		setHide(true);
 	});
 
 	const watchEsc = (e) => (e.key === "Escape" ? setHide(true) : null);
 
 	useEffect(() => {
+		userInput.current.focus(); // focusing on the form
 		const watch = (e) => {
 			// we need to check path otherwise clickin a child also hides the popup.
 			!e.path.includes(popup.current) && setHide(true);
@@ -118,6 +120,7 @@ const LoginPopup = ({ setHide }) => {
 					name="username"
 					placeholder="username"
 					onKeyDown={watchEsc}
+					ref={userInput}
 					onChange={onChange}
 					value={username}
 				/>{" "}

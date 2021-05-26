@@ -43,6 +43,7 @@ export default function Thoughts({ viewStyle, shouldBlurAll }) {
 	// const [haveListing, setHaveListings] = useState(false);
 	const [postsSeen, setPostsSeen] = React.useState(new Set());
 	const [lastSeen, setLastSeen] = React.useState(0);
+	const [initPostNo, setInitPostNo] = useState(0);
 
 	// useHotKeys("backspace", () => history.goBack());
 	const loadListings = (sub) => {
@@ -83,6 +84,7 @@ export default function Thoughts({ viewStyle, shouldBlurAll }) {
 		// TODO: USE PERSISTENCE LIBRARY.
 		// to avoid fetching all listings of a subreddit when the user only intends to view one. SINGLE PAGE LOAD
 		if (!match.isExact) return null;
+		setInitPostNo(0); // to fix the weird initPostNo not being reset when opened with click
 		try {
 			// how do i load the top listings !!??
 			loadListings(subreddit);
@@ -177,7 +179,6 @@ export default function Thoughts({ viewStyle, shouldBlurAll }) {
 			});
 	}
 
-	const [initPostNo, setInitPostNo] = useState(0);
 	const expandView = (postNo) => {
 		setInitPostNo(+postNo);
 		setDisplayMode("focus");
