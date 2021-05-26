@@ -103,6 +103,7 @@ export default function Post({
 		<div
 			className={c}
 			onClick={() => {
+				// yes this must be responsible for the opening on click
 				expandView(index);
 			}}
 			data-view-vert={displayMode === "stack" ? null : viewStyle}

@@ -1,3 +1,4 @@
 ## CHANGELOG
 
-1. fixed FocusView not working when posts were clicked. ya again.
+1. fixed StackView current tab navigation not working.
+2. now using autofocus on login user input instead of using a ref.

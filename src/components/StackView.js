@@ -17,12 +17,12 @@ const StackView = ({
 	const grid = useRef();
 
 	useEffect(() => {
-		// resizeGrid();
 		if (grid) {
 			// ok never use ref.current in an if condition.
 			setTimeout(() => {
 				// this doesnt actually work lol. all this hardwork is in vain. MAYBE IT DOES !!
 				grid.current?.updateLayout();
+				// make a map of the layout elements and then use.
 			}, 2500); // 3000 ms is a guess lol.
 		}
 	}, [subreddit]); // todo: use in thought.js too
@@ -39,6 +39,13 @@ const StackView = ({
 		[lastSeen]
 	);
 
+	useHotkeys("m", () => {
+		// onLayout prop on StackGrid
+		// i can calculate the ColCount using the width of each GridItem and gutter and total width available.
+		console.log(grid.current);
+		console.log(grid.current.grid.items[".1"].node);
+	});
+
 	return (
 		<>
 			<StackGrid
@@ -51,6 +58,7 @@ const StackView = ({
 						// to={`/${subreddit}/https://www.reddit.com${post.data.permalink}`}
 						to={`/r/${subreddit}/https://www.reddit.com${post.data.permalink}`}
 						style={{ textDecoration: "none" }}
+						onClick={() => expandView(i)}
 					>
 						<Post
 							key={i}
