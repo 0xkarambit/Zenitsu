@@ -13,3 +13,8 @@
 .post-body-p > a {
 	color: blue !important;
 }
+
+.details > span {
+	display: flex;
+	align-items: center;
+}

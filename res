@@ -208,6 +208,10 @@ holup
 memes
 all
 wholesome
+stardustcrusaders
+nba
+pics
+WritingPrompts
 
 add media type and external domain tags.
 
@@ -269,4 +273,18 @@ https://showerthoughts-8wps.onrender.com/r/popular/https://www.reddit.com/r/next
 https://www.reddit.com/r/learnprogramming/comments/3np4hr/how_can_a_programmer_learn_design/
 
 doesnt scroll up automatically when posts are opened through clicks
+
+FLAIR !!!
+https://www.reddit.com/r/Superstonk/comments/nm83eb/a_house_of_cards_parts_i_ii_iii_in_pdf/
+
+gfm test:
+https://www.reddit.com/r/nba/comments/nl8xgv/post_game_thread_the_dallas_mavericks_take_a_20/
+
+thank god this is open source this parsed the markdown always perfectly
+https://github.com/joemccann/dillinger
+
+images still dont load in markdown.
+
+more to test on
+https://www.reddit.com/r/WritingPrompts/comments/ncjxdm/wp_youre_immortal_the_only_problem_is_youve_lived/
  -->

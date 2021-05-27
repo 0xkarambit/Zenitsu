@@ -1,22 +1,20 @@
 import { useMemo, useState, useEffect, useRef } from "react";
 // https://github.com/remarkjs/react-markdown
 import ReactMarkdown from "react-markdown";
-import Award from "./Award.js";
+import gfm from "remark-gfm";
 
 import ReactPlayer from "react-player";
 import VideoPlayer from "./VideoPlayer.js";
 import ImageGallery from "./ImageGallery.js";
+import Award from "./Award.js";
 
 import { makeFriendly, elapsedTime } from "./../utils/num.js";
-import {
-	convertHTMLEntity,
-	convertHTMLEntityV2
-} from "./../utils/htmlparsing.js";
+import { convertHTMLEntityV2 } from "./../utils/htmlparsing.js";
 
 import { BiLinkExternal } from "react-icons/bi";
+import { BiUpvote } from "react-icons/bi";
 
 import "./Post.css";
-import { RedditContent } from "snoowrap";
 
 export default function Post({
 	title,
@@ -81,6 +79,7 @@ export default function Post({
 
 	const markdownList = useMemo(() => {
 		if (!selftext) return null;
+		console.log({ selftext });
 		let c = displayMode === "focus" ? Infinity : 200;
 		// return convertHTMLEntityV2(selftext).map((v) => {
 		// 	return <ReactMarkdown className="post-body-p">{v}</ReactMarkdown>
@@ -90,13 +89,16 @@ export default function Post({
 		for (let line of convertHTMLEntityV2(selftext)) {
 			c = c - line.length;
 			if (c < 0) break;
-			let elm = <ReactMarkdown className={cl_name}>{line}</ReactMarkdown>;
+			let elm = (
+				// i think adding a classname make it not work properly
+				// <ReactMarkdown remarkPlugins={[gfm]} className={cl_name}>
+				<ReactMarkdown remarkPlugins={[gfm]}>{line}</ReactMarkdown>
+			);
 			l.push(elm);
 		}
 		return l;
 	}, [selftext, displayMode]);
 
-	console.log({ markdownList, author });
 	// https://www.reddit.com/r/Superstonk/comments/nlwqyv/house_of_cards_part_3/
 
 	if (post_hint?.includes("video")) {
@@ -230,17 +232,18 @@ export default function Post({
 			{/* score: {score} {total_awards_received} {num_comments}
 				{created_utc} */}
 			<span className="details">
-				score: {/*todo: add icon here */}
 				<span title={score} style={{ margin: "0px 5px 0px 5px" }}>
+					<BiUpvote></BiUpvote>
 					{makeFriendly(score)}{" "}
 				</span>
-				{elapsedTime(timeCreated)}
+				<p>{elapsedTime(timeCreated)}</p>
 				<a
 					className="reddit-post-link"
 					href={link}
 					target="_blank"
 					rel="noreferrer"
-					tabindex={displayMode === "focus" ? 1 : -1}
+					tabindex={displayMode === "focus" ? 0 : -1}
+					// todo: fix this when pressing tab the focused <a> doesnt get highlighted with outline
 				>
 					<BiLinkExternal title="view post on reddit" />
 				</a>
@@ -253,12 +256,6 @@ export default function Post({
 			{/* <div className="speech">
 				<Speech stop={true} pause={true} resume={true} text={title} />
 			</div> */}
-			{/*todo: OK so the url here that we consider the link to comments is the image link ends in png
-			 in r/mechanicalkeyboards but in r/showerthoughts $url is a link to the post comments
-			 FIX: instead use permalink [nope didnt work] sometimes it does lol
-			 		--oh ya it did work i had a syntax error url : permalink
-			 idea: hmm check for png / jpg / gif / mp4 etc at end (for video its v.reddit.... no mp4)
-			 idea: can we get image with "thumbnail" ?*/}
 		</div>
 	);
 	// score, total_awards_received

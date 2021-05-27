@@ -15,7 +15,11 @@
 	font-size: 20px;
 	padding: 5px;
 	margin: 5px;
-	overflow: hidden;
+	/* overflow: hidden; */
+	/* Note: In contrast to word-break, overflow-wrap will only create a break if an entire word cannot be placed on its own line without overflowing. */
+	word-wrap: break-word;
+	/* idk if the next line is really benefitial or not */
+	overflow-wrap: break-word;
 }
 
 .viewarea[data-view-vert="true"] {
@@ -49,7 +53,9 @@
 .details {
 	display: flex;
 	align-items: center;
-	/* justify-content: center; */
+	justify-content: flex-start;
+	/* * yes flex wrap fixed it !! */
+	flex-wrap: wrap;
 }
 
 .title {
