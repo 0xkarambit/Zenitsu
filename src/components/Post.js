@@ -1,4 +1,5 @@
 import { useMemo, useState, useEffect, useRef } from "react";
+// https://github.com/remarkjs/react-markdown
 import ReactMarkdown from "react-markdown";
 import Award from "./Award.js";
 
@@ -78,6 +79,26 @@ export default function Post({
 	// ok wwait does the post even get unmounted ??? NO i guess it only gets re rendered with new props.
 	// so lets watch for props that may change.
 
+	const markdownList = useMemo(() => {
+		if (!selftext) return null;
+		let c = displayMode === "focus" ? Infinity : 200;
+		// return convertHTMLEntityV2(selftext).map((v) => {
+		// 	return <ReactMarkdown className="post-body-p">{v}</ReactMarkdown>
+		// });
+		let cl_name = displayMode === "focus" ? "post-body-p" : "";
+		let l = [];
+		for (let line of convertHTMLEntityV2(selftext)) {
+			c = c - line.length;
+			if (c < 0) break;
+			let elm = <ReactMarkdown className={cl_name}>{line}</ReactMarkdown>;
+			l.push(elm);
+		}
+		return l;
+	}, [selftext, displayMode]);
+
+	console.log({ markdownList, author });
+	// https://www.reddit.com/r/Superstonk/comments/nlwqyv/house_of_cards_part_3/
+
 	if (post_hint?.includes("video")) {
 		console.log(data);
 	}
@@ -94,7 +115,6 @@ export default function Post({
 	// OH YES I GOT IT MOVE OPENED TO PROPS.
 	// wont work because it gets unmounted when we change view.
 	const c = displayMode === "focus" ? "post" : opened ? "seen post" : "post";
-	console.log(c);
 	return postsLoader ? (
 		<div className="post">
 			<button onClick={loadMorePosts}>loadMorePosts</button>
@@ -117,34 +137,7 @@ export default function Post({
 					<span className="spoiler">SPOILER</span>
 				)}
 			</h2>
-			{(() => {
-				if (displayMode === "stack") {
-					return (
-						<div
-							className="postbody"
-							dangerouslySetInnerHTML={{
-								__html: convertHTMLEntity(
-									selftext.slice(0, 200)
-								).__html
-							}}
-						/>
-					);
-				} else {
-					console.log(convertHTMLEntityV2(selftext));
-					return (
-						<div className="postbody">
-							{convertHTMLEntityV2(selftext).map((value) => {
-								return (
-									<ReactMarkdown
-										className="post-body-p"
-										children={value}
-									></ReactMarkdown>
-								);
-							})}
-						</div>
-					);
-				}
-			})()}
+			<div className="postbody">{markdownList}</div>
 			{/* IMAGE imlementaion region */}
 			{displayMode === "stack" && !badThumbnails.includes(thumbnail) && (
 				<img

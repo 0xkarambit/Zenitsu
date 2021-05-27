@@ -262,4 +262,11 @@ we need to fix it !
 
 r/popular bug -> select a post.
 also css is bad
+
+adjust this
+https://showerthoughts-8wps.onrender.com/r/popular/https://www.reddit.com/r/nextfuckinglevel/comments/nm5jvb/the_good_people_at_rtoastme_recommended_me_to_put/
+
+https://www.reddit.com/r/learnprogramming/comments/3np4hr/how_can_a_programmer_learn_design/
+
+doesnt scroll up automatically when posts are opened through clicks
  -->

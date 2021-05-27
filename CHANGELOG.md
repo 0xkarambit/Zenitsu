@@ -1,3 +1,3 @@
 ## CHANGELOG
 
-1. added partial markdown support for postbody.
+1. extended markdown to StackView mode (idk about performance tho).
