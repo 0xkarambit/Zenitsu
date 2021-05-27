@@ -1,4 +1,5 @@
 import { useMemo, useState, useEffect, useRef } from "react";
+import ReactMarkdown from "react-markdown";
 import Award from "./Award.js";
 
 import ReactPlayer from "react-player";
@@ -6,11 +7,15 @@ import VideoPlayer from "./VideoPlayer.js";
 import ImageGallery from "./ImageGallery.js";
 
 import { makeFriendly, elapsedTime } from "./../utils/num.js";
-import { convertHTMLEntity } from "./../utils/htmlparsing.js";
+import {
+	convertHTMLEntity,
+	convertHTMLEntityV2
+} from "./../utils/htmlparsing.js";
 
 import { BiLinkExternal } from "react-icons/bi";
 
 import "./Post.css";
+import { RedditContent } from "snoowrap";
 
 export default function Post({
 	title,
@@ -83,13 +88,6 @@ export default function Post({
 			if (!opened) {
 				setPostsSeen((seen) => new Set([...seen, permalink]));
 			}
-			// todo: last seen this is not working
-			// return () => {
-			// 	// set as last seen. oh ya its undefined in FocusView.
-			// 	console.log("INDEXS IS :");
-			// 	console.log({index})
-			// 	setLastSeen(index)
-			// }
 		}
 	}, [permalink]);
 
@@ -119,14 +117,34 @@ export default function Post({
 					<span className="spoiler">SPOILER</span>
 				)}
 			</h2>
-			<div
-				className="postbody"
-				dangerouslySetInnerHTML={
-					displayMode === "stack"
-						? { __html: selftext.slice(0, 200) }
-						: convertHTMLEntity(selftext)
+			{(() => {
+				if (displayMode === "stack") {
+					return (
+						<div
+							className="postbody"
+							dangerouslySetInnerHTML={{
+								__html: convertHTMLEntity(
+									selftext.slice(0, 200)
+								).__html
+							}}
+						/>
+					);
+				} else {
+					console.log(convertHTMLEntityV2(selftext));
+					return (
+						<div className="postbody">
+							{convertHTMLEntityV2(selftext).map((value) => {
+								return (
+									<ReactMarkdown
+										className="post-body-p"
+										children={value}
+									></ReactMarkdown>
+								);
+							})}
+						</div>
+					);
 				}
-			></div>
+			})()}
 			{/* IMAGE imlementaion region */}
 			{displayMode === "stack" && !badThumbnails.includes(thumbnail) && (
 				<img

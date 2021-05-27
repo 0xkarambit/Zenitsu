@@ -114,7 +114,6 @@ const LoginPopup = ({ setHide }) => {
 				<h2>Sign In</h2>
 				<input
 					// what are autoCorrect, autoComplete, autoSave
-					autoFocus
 					type="text"
 					className="username"
 					name="username"

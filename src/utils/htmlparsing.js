@@ -116,6 +116,22 @@ function parse(body_html) {
 }
 
 // wow https://stackoverflow.com/questions/5796718/html-entity-decode
+function convertHTMLEntityV2(text) {
+	// not sure about performace
+	const span = document.createElement("span");
+
+	let parsed = text.replace(/&[#A-Za-z0-9]+;/gi, (entity, position, text) => {
+		span.innerHTML = entity;
+		return span.innerText;
+	});
+
+	const out = parsed.split("\n");
+	// .map((d) => `<p class="post-body-p">${d}</p>`);
+	// .join("");
+	return out;
+	// return { __html: out };
+}
+
 function convertHTMLEntity(text) {
 	// not sure about performace
 	const span = document.createElement("span");
@@ -125,15 +141,16 @@ function convertHTMLEntity(text) {
 		return span.innerText;
 	});
 
-	let out = parsed
+	const out = parsed
 		.split("\n")
-		.map((d) => `<p class="post-body-p">${d}</p>`)
+		// i shouldnt assign the class here, it messes with the comments lol
+		.map((d) => `<p>${d}</p>`)
 		.join("");
-	console.log({ out });
 
 	return { __html: out };
 }
 
 module.exports = {
+	convertHTMLEntityV2,
 	convertHTMLEntity
 };

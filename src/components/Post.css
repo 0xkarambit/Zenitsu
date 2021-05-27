@@ -9,3 +9,7 @@
 	/* NAH THE FONT STUFF SHOULD BE A PREFERENCE */
 	/* font-weight: 600; */
 }
+
+.post-body-p > a {
+	color: blue !important;
+}

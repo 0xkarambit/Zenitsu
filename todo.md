@@ -204,7 +204,7 @@ adding a state management lib with data persistence.
 adding OAuth support.
 buying a domain name.
 
--------------------------------------------------------------------
+---
 
 url permalink fix
 landing page design
@@ -215,11 +215,15 @@ maybe add search option ? & filter posts by flair tags ?
 custom wallpaper ?
 
 settings
-	font-size selection ?
-	ONOPEN:	default sub selection
+font-size selection ?
+ONOPEN: default sub selection
 
 Zustand
 
 markdown parsing | bookmarked post + reddit post to markdown git repo.
 
 BIG ONE: fix theming
+
+fix post body css and comments too
+make r/popular browseable
+https://www.reddit.com/r/Superstonk/comments/nlwqyv/house_of_cards_part_3/

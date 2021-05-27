@@ -258,4 +258,8 @@ http://localhost:3000/r/netflix -> http://localhost:3000/r/netflix/https://www.r
 
 now go all the way back content wont change !.
 we need to fix it !
+
+
+r/popular bug -> select a post.
+also css is bad
  -->
