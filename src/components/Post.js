@@ -282,14 +282,22 @@ export default function Post({
 					<BiLinkExternal title="view post on reddit" />
 				</a>
 			</span>
-			{/*? .fs-15 temporary fix for the inconsistent font size */}
-			<span className="awards fs-15">
-				{all_awardings.map(({ name, description, icon_url, count }) => {
-					return (
-						<Award {...{ name, description, icon_url, count }} />
-					);
-				})}
-			</span>
+			{/*? .fs-15 temporary fix for the inconsistent font size 
+				& all_awardings.length > 0 checked to avoid rendering <span>
+			*/}
+			{all_awardings.length > 0 && (
+				<span className="awards fs-15">
+					{all_awardings.map(
+						({ name, description, icon_url, count }) => {
+							return (
+								<Award
+									{...{ name, description, icon_url, count }}
+								/>
+							);
+						}
+					)}
+				</span>
+			)}
 			{/* <div className="speech">
 				<Speech stop={true} pause={true} resume={true} text={title} />
 			</div> */}

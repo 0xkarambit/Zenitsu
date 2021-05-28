@@ -1,3 +1,3 @@
 ## CHANGELOG
 
-1. moved post upvote icon 1px up.
+1. post award span wont be rendered if there are no awards.
