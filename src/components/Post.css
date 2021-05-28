@@ -19,6 +19,13 @@
 	align-items: center;
 }
 
+/* upvote arrow icon seemed a bit down on careful observation */
+.upvote-icon {
+	position: relative;
+	top: -1.5px;
+}
+
+/* markdown styles */
 table,
 td,
 th {

@@ -267,7 +267,7 @@ export default function Post({
 				{created_utc} */}
 			<span className="details">
 				<span title={score} style={{ margin: "0px 5px 0px 5px" }}>
-					<BiUpvote></BiUpvote>
+					<BiUpvote className="upvote-icon"></BiUpvote>
 					{makeFriendly(score)}{" "}
 				</span>
 				<p>{elapsedTime(timeCreated)}</p>
