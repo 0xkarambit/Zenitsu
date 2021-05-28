@@ -35,3 +35,8 @@ table {
 	border: 2px solid var(--text);
 	margin: 15px 0px;
 }
+
+/* small icon , count fix */
+.fs-15 {
+	font-size: 1.5em;
+}

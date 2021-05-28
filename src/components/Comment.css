@@ -37,7 +37,8 @@
 
 .award {
 	/* for the award count in POST details */
-	font-size: 1.5em;
+	/* ! next line causes inconsistency in awards tooltip font-size */
+	/* font-size: 1.5em; */
 	font-weight: 600;
 	/**/
 	margin: 4px;
@@ -70,10 +71,11 @@
 	/* positioning */
 	position: absolute;
 	z-index: 1;
-	bottom: 100%;
-	left: 60%;
-	margin-left: -950%; /*idk why but it works lol*/
-	margin-bottom: 10px;
+	transform: translateY(-50%) translateX(-50%);
+	margin-bottom: 2em;
+	/* not fully opaque when over seen posts */
+	/* todo: what is {coin_symbol} in desc */
+	/* ! what we cant hover over reply awards ?*/
 }
 .text {
 	padding: 20px;

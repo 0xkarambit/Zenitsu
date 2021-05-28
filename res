@@ -298,4 +298,8 @@ https://www.reddit.com/r/nba/comments/nmm5ng/ja_morant_on_utah_jazz_banning_thre
 
 bad readablility:
 http://localhost:3000/r/WritingPrompts/https://www.reddit.com/r/WritingPrompts/comments/nmefmh/tt_theme_thursday_utopia/
+
+/* not fully opaque when over seen posts */
+/* todo: what is {coin_symbol} in desc */
+/* ! what we cant hover over reply awards ?*/
  -->
