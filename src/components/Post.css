@@ -18,3 +18,20 @@
 	display: flex;
 	align-items: center;
 }
+
+table,
+td,
+th {
+	border: 1px solid var(--text);
+	border-collapse: collapse;
+	padding: 2px;
+	/* todo add column width and wordwrap & wordwrap2 ?
+	*/
+	/* ? should this be a preference */
+	/* text-align: center !important; */
+}
+
+table {
+	border: 2px solid var(--text);
+	margin: 15px 0px;
+}

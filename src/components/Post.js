@@ -2,6 +2,7 @@ import { useMemo, useState, useEffect, useRef } from "react";
 // https://github.com/remarkjs/react-markdown
 import ReactMarkdown from "react-markdown";
 import gfm from "remark-gfm";
+import MarkdownIt from "markdown-it";
 
 import ReactPlayer from "react-player";
 import VideoPlayer from "./VideoPlayer.js";
@@ -9,12 +10,23 @@ import ImageGallery from "./ImageGallery.js";
 import Award from "./Award.js";
 
 import { makeFriendly, elapsedTime } from "./../utils/num.js";
-import { convertHTMLEntityV2 } from "./../utils/htmlparsing.js";
+import {
+	convertHTMLEntityV2,
+	convertHTMLEntityORG
+} from "./../utils/htmlparsing.js";
 
 import { BiLinkExternal } from "react-icons/bi";
 import { BiUpvote } from "react-icons/bi";
 
 import "./Post.css";
+
+/*todo: should i give option to user to switch markdown libraries */
+
+const md = new MarkdownIt();
+
+function filterSelftext(txt) {
+	return txt.replace(/&nbsp;|| /, "");
+}
 
 export default function Post({
 	title,
@@ -78,7 +90,7 @@ export default function Post({
 	// so lets watch for props that may change.
 
 	const markdownList = useMemo(() => {
-		if (!selftext) return null;
+		if (!selftext || displayMode === "focus") return null;
 		console.log({ selftext });
 		let c = displayMode === "focus" ? Infinity : 200;
 		// return convertHTMLEntityV2(selftext).map((v) => {
@@ -127,6 +139,7 @@ export default function Post({
 			onClick={() => {
 				// yes this must be responsible for the opening on click
 				expandView(index);
+				// document.querySelector("#root").scrollIntoView();
 			}}
 			data-view-vert={displayMode === "stack" ? null : viewStyle}
 			ref={p}
@@ -139,7 +152,23 @@ export default function Post({
 					<span className="spoiler">SPOILER</span>
 				)}
 			</h2>
-			<div className="postbody">{markdownList}</div>
+			{/*todo: should i give option to user to switch markdown libraries 
+				? currently using a combo of both, but we dont render tables in stackView mode.
+			*/}
+			{displayMode === "focus" ? (
+				<div
+					className="postbody"
+					dangerouslySetInnerHTML={{
+						// ! wait does selftext not contain characters to escape ?
+						// todo >!113 to 84!< marks spoiler !!;
+						__html: md.render(
+							filterSelftext(convertHTMLEntityORG(selftext))
+						)
+					}}
+				/>
+			) : (
+				<div className="postbody">{markdownList}</div>
+			)}
 			{/* IMAGE imlementaion region */}
 			{displayMode === "stack" && !badThumbnails.includes(thumbnail) && (
 				<img
@@ -220,7 +249,12 @@ export default function Post({
 								</div>
 							);
 						}
-						if (![undefined, "url", "link"].includes(post_hint)) {
+						if (
+							![undefined, "url", "link", "self"].includes(
+								post_hint
+							)
+						) {
+							// self post, meaning it doesn't link outside of reddit. It can also be called a 'text post'. check is_self on obj
 							alert(post_hint); // wtf is a link lol check rerendering problem
 							alert(url); // wtf is a link lol check rerendering problem
 							// so now i gotta find the file type from the extension ?

@@ -126,10 +126,23 @@ function convertHTMLEntityV2(text) {
 	});
 
 	const out = parsed.split("\n");
+	// const out = parsed.split("\n").filter((s) => !["&nbsp;", " "].includes(s));
 	// .map((d) => `<p class="post-body-p">${d}</p>`);
 	// .join("");
 	return out;
 	// return { __html: out };
+}
+
+function convertHTMLEntityORG(text) {
+	// not sure about performace
+	const span = document.createElement("span");
+
+	let parsed = text.replace(/&[#A-Za-z0-9]+;/gi, (entity, position, text) => {
+		span.innerHTML = entity;
+		return span.innerText;
+	});
+
+	return parsed;
 }
 
 function convertHTMLEntity(text) {
@@ -152,5 +165,6 @@ function convertHTMLEntity(text) {
 
 module.exports = {
 	convertHTMLEntityV2,
-	convertHTMLEntity
+	convertHTMLEntity,
+	convertHTMLEntityORG
 };

@@ -212,6 +212,8 @@ stardustcrusaders
 nba
 pics
 WritingPrompts
+unexpected
+interestingasfuck
 
 add media type and external domain tags.
 
@@ -287,4 +289,13 @@ images still dont load in markdown.
 
 more to test on
 https://www.reddit.com/r/WritingPrompts/comments/ncjxdm/wp_youre_immortal_the_only_problem_is_youve_lived/
+
+zenitsu: 
+http://localhost:3000/r/nba/https://www.reddit.com/r/nba/comments/nmm5ng/ja_morant_on_utah_jazz_banning_three_fans_for/
+reddit:
+https://www.reddit.com/r/nba/comments/nmm5ng/ja_morant_on_utah_jazz_banning_three_fans_for/
+ 
+
+bad readablility:
+http://localhost:3000/r/WritingPrompts/https://www.reddit.com/r/WritingPrompts/comments/nmefmh/tt_theme_thursday_utopia/
  -->

@@ -1,8 +1,6 @@
 ## CHANGELOG
 
-1. styled blockquote, h1
-2. tried to add gfm, gfm couldn’t style tables to full extent.
-3. added word-wrap: break-word to keep text from getting clipped in StackView mode.
-4. added flex-wraping to keep awards from getting clipped in StackView mode.
-5. added Return Home link on not found page.
-6. added upvote icon for posts.
+1. using markdown it for postbody in focus mode for tables support.
+2. using react-markdown for postbody in StackView mode.
+3. styled table to make tables from markdown look better.
+4. removed the annoying alert box on self posts.
