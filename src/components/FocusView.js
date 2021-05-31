@@ -36,7 +36,7 @@ const FocusView = ({
 	const toggleViewStyle = useViewStyleStore((state) => state.toggleViewStyle);
 
 	// switch to vert split view style
-	useHotkeys("shift + v", () => toggleViewStyle());
+	useHotkeys("v", () => toggleViewStyle());
 
 	useHotkeys("ctrl + b", () => {
 		setBlur((b) => !b);

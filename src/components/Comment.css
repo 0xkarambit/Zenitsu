@@ -102,6 +102,18 @@
 	margin-bottom: 20px;
 }
 
+/* ? this decides the horizontal text spread !! */
+/* to fix ugly horizontal scrollbar */
+[data-view-vert="false"] .comments {
+	max-width: 98vw;
+}
+
+[data-view-vert="true"] .comments {
+	/* 98% of 2/3 coz thats the value in grid-template-columns: ;*/
+	max-width: calc(2 / 3 * 98vw);
+}
+
+/* OMG I FIXED IT */
 .comment {
 	/*using attr with colors doesnt work because it always returns a string?*/
 	border-left: 2px solid var(--color, grey);

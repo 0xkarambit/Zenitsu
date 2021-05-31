@@ -32,15 +32,12 @@
 	/* display: flex;
 	justify-content: center; */
 	display: grid;
-	/* grid-template-columns: 1fr 2fr; */
-	grid-template-columns: min-content 2fr;
+	/* todo: ask discord for this */
+	grid-template-columns: 1fr 2fr;
+	/* grid-template-columns: min-content 2fr; */
 	/* grid-template-columns: minmax(min-content, 1fr) 2fr; */
 	/* with grid it seems better than flexbox but current video/img implementation doesnt go with it */
 	/* todo: fix video and images, add specific space  */
-	/* 
-		use .isExact 
-		pass setFOcusMode to focusView only.
-	*/
 }
 
 .post[data-view-vert="true"] {
