@@ -227,3 +227,9 @@ BIG ONE: fix theming
 fix post body css and comments too
 make r/popular browseable
 https://www.reddit.com/r/Superstonk/comments/nlwqyv/house_of_cards_part_3/
+
+support this in vert-split mode
+http://localhost:3000/r/godofwar/https://www.reddit.com/r/GodofWar/comments/nolzzx/game_is_so_smooth_now_as_if_i_am_going_with_a_hot/
+
+post layout in vert-split mode should be a bit different
+show upvotes on the top etc

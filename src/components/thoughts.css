@@ -26,10 +26,13 @@
 	/* TO CHANGE LAYOUT TO VERTICAL SPLIT ONE */
 	/* just a few problems the awards dont all get displayed in vert split layout on the post */
 	/* the screen get an ugly horizontal scrollbar if i dont use overflow: auto, and if i do use it i cant use sticky */
-	display: flex;
-	justify-content: center;
-	/* display: grid;
-	grid-template-columns: 1fr 1fr; */
+
+	/* display: flex;
+	justify-content: center; */
+	display: grid;
+	grid-template-columns: 1fr 2fr;
+	/* with grid it seems better than flexbox but current video/img implementation doesnt go with it */
+	/* todo: fix video and images, add specific space  */
 }
 
 .post[data-view-vert="true"] {
@@ -41,6 +44,7 @@
 	/* border-radius: 20px; */
 	/* ok its not working in flex, IN THE ONLY MODE I WANT IT TO WORK LOL */
 	align-self: flex-start; /*OOOOOMMMMMGGGGG THIS FIXES IT https://stackoverflow.com/questions/44446671/my-position-sticky-element-isnt-sticky-when-using-flexbox*/
+	/* overflow: scroll; */
 }
 
 .author {

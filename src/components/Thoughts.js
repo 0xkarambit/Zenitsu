@@ -46,9 +46,9 @@ export default function Thoughts({ viewStyle, shouldBlurAll }) {
 	const [initPostNo, setInitPostNo] = useState(0);
 
 	// useHotKeys("backspace", () => history.goBack());
-	const loadListings = (sub) => {
+	const loadListings = (sub, signal) => {
 		const url = `https://www.reddit.com/r/${sub}.json`;
-		fetch(url)
+		fetch(url, { signal })
 			.then((res) => {
 				if (res.status === 200) return res.json();
 				// ok so the try-catch cant catch errors thrown in these callbacks hmmm.
@@ -85,14 +85,22 @@ export default function Thoughts({ viewStyle, shouldBlurAll }) {
 		// to avoid fetching all listings of a subreddit when the user only intends to view one. SINGLE PAGE LOAD
 		if (!match.isExact) return null;
 		setInitPostNo(0); // to fix the weird initPostNo not being reset when opened with click
+		// setup AbortController
+		const controller = new AbortController();
+		// signal to pass to fetch
+		const signal = controller.signal;
 		try {
 			// how do i load the top listings !!??
-			loadListings(subreddit);
+			loadListings(subreddit, signal);
 		} catch (e) {
 			alert("useEffect failed");
 			console.log(e);
 		}
-		return () => {};
+		return () => {
+			// alert("sub changed!");
+			// not working rightnow i guess..
+			controller.abort();
+		};
 		// ok so i got it putting isExact in the dependency array was the fix to listings not being loaded
 		// after single post load -> history.goBack(), but now it
 	}, [subreddit]);
@@ -157,12 +165,13 @@ export default function Thoughts({ viewStyle, shouldBlurAll }) {
 			console.log(e);
 			console.log(e.stack);
 			alert(postUrl);
-			debugger;
+			debugger; // could be that there is no such post on subreddit? // http://localhost:3000/r/superstonks/http://reddit.com/r/Superstonk/comments/nlwqyv/house_of_cards_part_3/
 			return 1;
 		}
 	};
 
 	function loadMorePosts() {
+		alert("loadingMore");
 		if (["", null].includes(afterCode)) return null;
 		const url = `https://www.reddit.com/r/${subreddit}.json?after=${afterCode}`;
 		fetch(url)
@@ -187,7 +196,7 @@ export default function Thoughts({ viewStyle, shouldBlurAll }) {
 	return (
 		<div
 			className="viewarea"
-			data-view-vert={displayMode === "stack" ? null : viewStyle}
+			data-view-vert={displayMode === "focus" ? viewStyle : false}
 		>
 			{/*should we add a powerbar here to control the view styles etc ?? */}
 			<Switch>
@@ -200,7 +209,8 @@ export default function Thoughts({ viewStyle, shouldBlurAll }) {
 								expandView,
 								shouldBlurAll,
 								postsSeen,
-								lastSeen
+								lastSeen,
+								setDisplayMode
 							}}
 						></StackView>
 					)}

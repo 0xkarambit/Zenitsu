@@ -35,12 +35,12 @@ function App() {
 		setShouldBlurAll((b) => !b);
 	});
 
+	useHotkeys("backspace", () => history.goBack());
+
 	// scroll to top
 	useHotkeys("g", () => {
 		document.querySelector("#root").scrollIntoView();
 	});
-
-	// useHotKeys("backspace", () => history.goBack());
 
 	// switch to vert split view style
 	useHotkeys("ctrl + v", () => {

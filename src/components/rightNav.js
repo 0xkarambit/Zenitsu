@@ -34,6 +34,7 @@ const RightNav = ({ toggleTheme, toggleInfo, loggedIn, setLoggedIn }) => {
 				target="_blank"
 				rel="noreferrer"
 				className="repo-link"
+				tabIndex="-1"
 			>
 				<VscGithubInverted style={iconStyle} title={repoLink} />
 			</a>

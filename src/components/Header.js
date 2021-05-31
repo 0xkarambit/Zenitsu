@@ -81,13 +81,13 @@ export default function Header() {
 	const sel_subreddit = (sub) => {
 		closeSelectMenu();
 
-		if (subreddit === sub.slice(2)) {
+		if (subreddit === sub.slice(2).toLowerCase()) {
 			// history.replace(`/${subreddit}`); // note: wont cause useEffect to run if param is in dependencies.
 			return null;
 		}
 
 		// sub includes "r/"
-		history.push("/r/" + sub.slice(2));
+		history.push("/r/" + sub.slice(2).toLowerCase());
 		// todo: get rid of the slice use the input value margin left we saw on stackOverflow the other day.
 	};
 

@@ -55,9 +55,7 @@ export default function Post({
 	setBlur,
 	expandView = () => {},
 	index,
-	viewStyle,
-	loadMorePosts = false,
-	postsLoader = false,
+	viewStyle,	
 	shouldBlurAll = true,
 	opened = false,
 	setPostsSeen,
@@ -129,11 +127,7 @@ export default function Post({
 	// OH YES I GOT IT MOVE OPENED TO PROPS.
 	// wont work because it gets unmounted when we change view.
 	const c = displayMode === "focus" ? "post" : opened ? "seen post" : "post";
-	return postsLoader ? (
-		<div className="post">
-			<button onClick={loadMorePosts}>loadMorePosts</button>
-		</div>
-	) : (
+	return (
 		<div
 			className={c}
 			onClick={() => {

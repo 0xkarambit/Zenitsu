@@ -117,7 +117,7 @@ const FocusView = ({
 		result.then(({ comObj, data }) => {
 			// todo we need better error handling lol.
 			if (comObj === 1) alert("likely fetch request went wrong");
-			// console.log(comObj);
+			console.log(comObj);
 			setCurrentComments(comObj.comments);
 			// for singel page loads
 			if (shouldBlur === undefined) {

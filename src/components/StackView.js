@@ -2,6 +2,8 @@ import { useState, useRef, useEffect } from "react";
 import { Link, useParams, useHistory } from "react-router-dom";
 import StackGrid from "react-stack-grid";
 import Post from "./Post.js";
+import PostLoader from "./PostLoader.js";
+
 import { useHotkeys } from "react-hotkeys-hook";
 
 const StackView = ({
@@ -10,7 +12,8 @@ const StackView = ({
 	expandView,
 	shouldBlurAll,
 	postsSeen,
-	lastSeen
+	lastSeen,
+	setDisplayMode
 }) => {
 	const { subreddit } = useParams();
 	const history = useHistory();
@@ -34,6 +37,7 @@ const StackView = ({
 			history.push(
 				`/r/${subreddit}/https://www.reddit.com${postsData[lastSeen].data.permalink}`
 			);
+			setDisplayMode("focus");
 		},
 		{},
 		[lastSeen]
@@ -45,6 +49,11 @@ const StackView = ({
 		console.log(grid.current);
 		console.log(grid.current.grid.items[".1"].node);
 	});
+
+	// console.log(rect); getDimensions hook
+	// useLayoutEffect(() => {
+
+	// }, [])
 
 	return (
 		<>
@@ -71,7 +80,7 @@ const StackView = ({
 					</Link>
 				))}
 			</StackGrid>
-			<Post loadMorePosts={loadMorePosts} postsLoader={true}></Post>
+			<PostLoader loadMorePosts={loadMorePosts} />
 		</>
 	);
 };
