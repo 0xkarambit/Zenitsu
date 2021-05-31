@@ -26,7 +26,8 @@ function App() {
 	const history = useHistory();
 	// const [subreddit, setSubreddit] = useState("showerthoughts");
 	const [subCount, setSubCount] = useState();
-	const [viewStyle, setViewStyle] = useState(false);
+	// ! remove me
+	// const [viewStyle, setViewStyle] = useState(false);
 	const [shouldBlurAll, setShouldBlurAll] = useState(true);
 
 	useHotkeys("ctrl + shift + b", (e) => {
@@ -42,12 +43,6 @@ function App() {
 		document.querySelector("#root").scrollIntoView();
 	});
 
-	// switch to vert split view style
-	useHotkeys("ctrl + v", () => {
-		// bad implementation and bad var names actually.
-		setViewStyle((vs) => !vs);
-	});
-
 	return (
 		<Provider>
 			<div className="App">
@@ -61,7 +56,7 @@ function App() {
 							{/*<Sidebar />*/}
 							<Thoughts
 								{...{
-									viewStyle,
+									// viewStyle,
 									shouldBlurAll
 								}}
 							/>

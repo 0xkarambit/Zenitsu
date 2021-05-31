@@ -12,8 +12,7 @@ const StackView = ({
 	expandView,
 	shouldBlurAll,
 	postsSeen,
-	lastSeen,
-	setDisplayMode
+	lastSeen
 }) => {
 	const { subreddit } = useParams();
 	const history = useHistory();
@@ -37,7 +36,6 @@ const StackView = ({
 			history.push(
 				`/r/${subreddit}/https://www.reddit.com${postsData[lastSeen].data.permalink}`
 			);
-			setDisplayMode("focus");
 		},
 		{},
 		[lastSeen]

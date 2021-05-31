@@ -9,6 +9,9 @@ import {
 import Post from "./Post.js";
 import Comment from "./Comment.js";
 
+// stores
+import { useViewStyleStore } from "./../stores/viewStyle.js";
+
 const FocusView = ({
 	postsData,
 	getComments,
@@ -29,6 +32,11 @@ const FocusView = ({
 	// alert(currentPostData?.over_18);
 	// alert(shouldBlur); // undefined on single post load.
 	const [unBlurred, setUnBlurred] = useState({});
+
+	const toggleViewStyle = useViewStyleStore((state) => state.toggleViewStyle);
+
+	// switch to vert split view style
+	useHotkeys("shift + v", () => toggleViewStyle());
 
 	useHotkeys("ctrl + b", () => {
 		setBlur((b) => !b);

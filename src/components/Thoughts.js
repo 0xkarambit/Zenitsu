@@ -20,7 +20,10 @@ import Post from "./Post.js";
 import FocusView from "./FocusView.js";
 import StackView from "./StackView.js";
 
-export default function Thoughts({ viewStyle, shouldBlurAll }) {
+// stores
+import { useViewStyleStore } from "./../stores/viewStyle.js";
+
+export default function Thoughts({ shouldBlurAll }) {
 	// the displayMode gets set to $TESTINGMODE after every subreddit change.
 	const match = useRouteMatch("/r/:subreddit");
 	let { url } = match;
@@ -29,11 +32,11 @@ export default function Thoughts({ viewStyle, shouldBlurAll }) {
 	const location = useLocation();
 	const isExact = match.isExact; // for when back button is press after reloading FocusView and the posts dont get loaded.
 
-	// const forceUpdate = useForceUpdate();
+	const viewStyle = useViewStyleStore((state) => state.viewStyle);
 
 	const TESTINGMODE = "stack";
 	const [afterCode, setAfterCode] = useState("");
-	let [dataReceived, setDataReceived] = useState(false);
+	const [dataReceived, setDataReceived] = useState(false);
 	// const validModes = ["focus", "stack"];
 	const [displayMode, setDisplayMode] = React.useState("");
 	const [postsData, setPostsData] = React.useState([]);
@@ -97,7 +100,11 @@ export default function Thoughts({ viewStyle, shouldBlurAll }) {
 			console.log(e);
 		}
 		return () => {
-			// alert("sub changed!");
+			// why does the sub change when going from StackView to FocusView and then back !!!???
+			/* ? this will have to wwait
+			// to avoid showing previous sub's listings until new listings load.
+			if (isExact) setPostsData([]);
+			*/
 			// not working rightnow i guess..
 			controller.abort();
 		};
@@ -171,7 +178,6 @@ export default function Thoughts({ viewStyle, shouldBlurAll }) {
 	};
 
 	function loadMorePosts() {
-		alert("loadingMore");
 		if (["", null].includes(afterCode)) return null;
 		const url = `https://www.reddit.com/r/${subreddit}.json?after=${afterCode}`;
 		fetch(url)
@@ -196,7 +202,7 @@ export default function Thoughts({ viewStyle, shouldBlurAll }) {
 	return (
 		<div
 			className="viewarea"
-			data-view-vert={displayMode === "focus" ? viewStyle : false}
+			data-view-vert={match.isExact ? false : viewStyle}
 		>
 			{/*should we add a powerbar here to control the view styles etc ?? */}
 			<Switch>
@@ -209,8 +215,7 @@ export default function Thoughts({ viewStyle, shouldBlurAll }) {
 								expandView,
 								shouldBlurAll,
 								postsSeen,
-								lastSeen,
-								setDisplayMode
+								lastSeen
 							}}
 						></StackView>
 					)}
