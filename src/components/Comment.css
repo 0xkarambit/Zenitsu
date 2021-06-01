@@ -178,3 +178,7 @@ blockquote::before {
 	margin-block-start: 0.17em;
 	margin-block-end: 0.17em;
 }
+
+#sortby * {
+	color: #1c1412;
+}

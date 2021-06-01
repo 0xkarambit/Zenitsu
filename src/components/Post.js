@@ -55,7 +55,7 @@ export default function Post({
 	setBlur,
 	expandView = () => {},
 	index,
-	viewStyle,	
+	viewStyle,
 	shouldBlurAll = true,
 	opened = false,
 	setPostsSeen,

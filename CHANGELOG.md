@@ -1,4 +1,6 @@
 ## CHANGELOG
 
-1. fixed .post going outside its dedicated space in vert mode, problem located markdown links.
-2. links color switching according to theme.
+1. added collapse comments option onclick over username.
+2. found bug in convertHTMLEntity.
+3. added dedicated CommentsSection component.
+4. added sort comments dropdown.

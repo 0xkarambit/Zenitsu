@@ -7,10 +7,10 @@ import {
 	useRouteMatch
 } from "react-router-dom";
 import Post from "./Post.js";
-import Comment from "./Comment.js";
 
 // stores
 import { useViewStyleStore } from "./../stores/viewStyle.js";
+import CommentsSection from "./CommentsSection.js";
 
 const FocusView = ({
 	postsData,
@@ -158,32 +158,14 @@ const FocusView = ({
 				setLastSeen={setLastSeen}
 				index={currentPost}
 			/>
-			<div className="comments">
-				{/*<Comments/>*/}
-				<h4
-					className="comments-section-banner"
-					style={{ margin: "12px 0px -2px 12px" }}
-				>
-					Comments {currentPostData.num_comments}
-				</h4>
-				{/*todo: show loading comments banner */}
-				{currentComments &&
-					currentComments.map((commentObj) => {
-						if (commentObj.kind === "more") return null;
-						return (
-							<Comment
-								getComments={getComments}
-								data={commentObj.data}
-								topLevel={true}
-								key={commentObj.data.id}
-								perma_link={
-									currentPostData.perma_link || "permalink"
-								}
-								setCurrentComments={setCurrentComments}
-							/>
-						);
-					})}
-			</div>
+			<CommentsSection
+				{...{
+					getComments,
+					currentPostData,
+					currentComments,
+					setCurrentComments
+				}}
+			></CommentsSection>
 		</>
 	);
 };
