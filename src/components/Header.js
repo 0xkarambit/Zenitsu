@@ -34,6 +34,7 @@ const bgLight = "#edf6f9";
 const fgLight = "#1c1412";
 const bgDark = "#1d1f21";
 const fgDark = "#C5C8C6";
+const linkDark = "#c200c1";
 
 const iconStyle = {
 	width: "32px",
@@ -54,11 +55,13 @@ const toggleTheme = () => {
 		// even tho it seems to be true (not actually) this doesnt seem to be triggered
 		r.style.setProperty("--primary", bgDark);
 		r.style.setProperty("--text", fgDark);
+		r.style.setProperty("--link", linkDark);
 	} else {
 		// for 1st try because it is in light mode by default.
 		// todo: wont work after customisations tho lol
 		r.style.setProperty("--primary", bgLight);
 		r.style.setProperty("--text", fgLight);
+		r.style.setProperty("--link", "blue");
 	}
 	// else if (primary === bgDark && text === fgDark){
 	// 	r.style.setProperty('--primary', bgLight);

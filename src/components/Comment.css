@@ -113,7 +113,12 @@
 	max-width: calc(2 / 3 * 98vw);
 }
 
+[data-view-vert="true"] .post {
+	/* 98% of 1/3 coz thats the value in grid-template-columns: ;*/
+	max-width: calc(1 / 3 * 98vw);
+}
 /* OMG I FIXED IT */
+
 .comment {
 	/*using attr with colors doesnt work because it always returns a string?*/
 	border-left: 2px solid var(--color, grey);
