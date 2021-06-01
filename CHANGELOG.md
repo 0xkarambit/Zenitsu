@@ -1,6 +1,4 @@
 ## CHANGELOG
 
-1. added collapse comments option onclick over username.
-2. found bug in convertHTMLEntity.
-3. added dedicated CommentsSection component.
-4. added sort comments dropdown.
+1. added subnames along with posts for r/all.
+2. i just realised sort by doesnt work because we dont have all the comments lol.

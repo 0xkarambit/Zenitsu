@@ -3,6 +3,7 @@ import { useMemo, useState, useEffect, useRef } from "react";
 import ReactMarkdown from "react-markdown";
 import gfm from "remark-gfm";
 import MarkdownIt from "markdown-it";
+import { useRouteMatch, Link } from "react-router-dom";
 
 import ReactPlayer from "react-player";
 import VideoPlayer from "./VideoPlayer.js";
@@ -29,6 +30,7 @@ function filterSelftext(txt) {
 }
 
 export default function Post({
+	subreddit,
 	title,
 	selftext_html, // todo: post desc needs markdown too...
 	selftext,
@@ -70,6 +72,9 @@ export default function Post({
 	// 		</div>
 	// 	);
 	// }
+	const {
+		params: { sub }
+	} = useRouteMatch("/r/:sub");
 	const link = `https://www.reddit.com${permalink}`;
 	const badThumbnails = ["", "self", "spoiler", "default"];
 	// const imageUrl = preview.images[0].resolutions[] // these urls dont work restricted BUT url will work here
@@ -138,7 +143,18 @@ export default function Post({
 			data-view-vert={displayMode === "stack" ? null : viewStyle}
 			ref={p}
 		>
-			<p className="author">{`u/${author}`}</p>
+			{sub === "all" ? (
+				<p className="author" style={{ fontWeight: 560 }}>
+					<Link to={`/r/${subreddit}`}>{`r/${subreddit}`}</Link>
+					<span style={{ fontWeight: 400 }}>
+						{" "}
+						posted by {`u/${author}`}
+					</span>
+				</p>
+			) : (
+				<p className="author">{`u/${author}`}</p>
+			)}
+
 			<h2 className="title">
 				{title || "title"}
 				{/*TODO: the message in thumbnail could be something else too right ya, browser reddit to know more*/}
