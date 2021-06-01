@@ -1,4 +1,4 @@
 ## CHANGELOG
 
-1. added subnames along with posts for r/all.
-2. i just realised sort by doesnt work because we dont have all the comments lol.
+1. aborting useless fetch requests for comments when user is scrolling in FocusView mode.
+2. made post comments counter a friendly number.

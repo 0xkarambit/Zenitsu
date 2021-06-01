@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { makeFriendly } from "../utils/num.js";
 
 import Comment from "./Comment.js";
 
@@ -17,7 +18,7 @@ const CommentsSection = React.memo(
 						className="comments-section-banner"
 						style={{ margin: "12px 0px -2px 12px" }}
 					>
-						Comments {currentPostData.num_comments}
+						Comments {makeFriendly(currentPostData.num_comments)}
 					</h4>
 					<SortByButton
 						setComments={setComments}

@@ -117,7 +117,7 @@ export default function Thoughts({ shouldBlurAll }) {
 			(val) => `https://www.reddit.com${val.link}.json` === link
 		);
 
-	const getComments = async (postUrl) => {
+	const getComments = async (postUrl, cancelSignal) => {
 		postUrl = `${postUrl}.json`;
 		console.log("URL REQUESTED FOR COMMENTS");
 		console.log(postUrl);
@@ -125,11 +125,14 @@ export default function Thoughts({ shouldBlurAll }) {
 		// todo: FIX: find comment is not working
 		let foundCom = findComment(postUrl);
 		console.log({ foundCom });
-		if (foundCom.length !== 0) return { comObj: foundCom[0] };
+		if (foundCom.length !== 0)
+			return { comObj: foundCom[0], aborted: false };
 
 		// if comments are not in comments fetch them;
 		try {
-			const res = await fetch(postUrl);
+			const res = await fetch(postUrl, {
+				signal: cancelSignal
+			});
 			const c = await res.json();
 			let link = c[0].data.children[0].data.permalink; // | id | subreddit_id | title | permalink | url;
 			// kind: "listing" | "t1" | "t3"
@@ -163,11 +166,17 @@ export default function Thoughts({ shouldBlurAll }) {
 				// banner.current.setAttribute("dangerouslySetInnerHTML", {}); WONT WORK
 				// if subName is null use another state variable for subname set by the getComments def & set true sub on unmount.
 			}
-			return { comObj: comObj, data: c[0].data.children[0].data };
+			return {
+				comObj: comObj,
+				data: c[0].data.children[0].data,
+				aborted: false
+			};
 		} catch (e) {
 			// ok try to know why it failed
 			// wait why did this url even appear here .....
 			// todo: inspect the listings obj
+			if (e.message === "The user aborted a request.")
+				return { aborted: true };
 			console.log("got here");
 			console.log(e);
 			console.log(e.stack);

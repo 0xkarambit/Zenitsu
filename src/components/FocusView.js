@@ -120,9 +120,10 @@ const FocusView = ({
 		// Load Comments
 		// let curl = `${"https://www.reddit.com/r/Showerthoughts/comments/mw2amn/having_to_attend_a_wedding_you_dont_want_to_sucks/"}.json`;
 		// todo: change url to permalink in above line
-		console.log("CALLED USEEFFECT FOCUSVIEW.js line 54");
-		const result = getComments(permalink);
-		result.then(({ comObj, data }) => {
+		let controller = new AbortController();
+		const result = getComments(permalink, controller.signal);
+		result.then(({ comObj, data, aborted }) => {
+			if (aborted) return null;
 			// todo we need better error handling lol.
 			if (comObj === 1) alert("likely fetch request went wrong");
 			console.log(comObj);
@@ -132,6 +133,10 @@ const FocusView = ({
 				setBlur(shouldBlurAll && data.over_18);
 			}
 		});
+		return () => {
+			// abort here yes !
+			controller.abort();
+		};
 		// I HAVE GONE THROUGH A LOT OF TROUBLE FOR THIS UNREAL PROBLEM
 		// IG I;;LL JUST STORE THE STATE AND RE USE IT IN CASE OF A REFRESH.
 		// BUT THEN HOW DO YOU KNOW IF YOY SHOULD USE LOCALSTATE OR REQUEST NEW ???
