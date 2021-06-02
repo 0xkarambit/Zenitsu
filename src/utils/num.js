@@ -22,33 +22,31 @@ function elapsedTime(time) {
 	if (mag / 60 > 1) {
 		mag = mag / 60;
 		prim = "min";
-		// prim = mag >= 2 ? "mins" : "min";
-		// prim=units[]
+		// for hours
+		if (mag / 60 > 1) {
+			mag = mag / 60;
+			prim = "hour";
+			sec = "min";
+			// for days
+			if (mag / 24 > 1) {
+				mag = mag / 24;
+				prim = "day"; // day | days
+				sec = "hour";
+				// for months
+				if (mag / 30 > 1) {
+					mag = mag / 30;
+					prim = "month"; // day | days
+					sec = "day";
+					// for years
+					if (mag / 365 > 1) {
+						mag = mag / 365;
+						prim = "year"; // day | days
+						sec = "month";
+					}
+				}
+			}
+		}
 	} // else return
-	// for hours
-	if (mag / 60 > 1) {
-		mag = mag / 60;
-		prim = "hour";
-		sec = "min";
-	}
-	// for days
-	if (mag / 24 > 1) {
-		mag = mag / 24;
-		prim = "day"; // day | days
-		sec = "hour";
-	}
-	// for months
-	if (mag / 30 > 1) {
-		mag = mag / 30;
-		prim = "month"; // day | days
-		sec = "day";
-	}
-	// for years
-	if (mag / 365 > 1) {
-		mag = mag / 365;
-		prim = "year"; // day | days
-		sec = "month";
-	}
 
 	let afterDot = mag - Math.floor(mag);
 	mag = Math.floor(mag);
