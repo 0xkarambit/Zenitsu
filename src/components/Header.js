@@ -28,43 +28,6 @@ const bgDark = "#1d1f21";
 const fgDark = "#C5C8C6";
 const linkDark = "#c200c1";
 
-const iconStyle = {
-	width: "32px",
-	height: "32px",
-	margin: "0px 8px 0px 8px"
-};
-
-const toggleTheme = () => {
-	const rs = getComputedStyle(r);
-	const primary = rs.getPropertyValue("--primary");
-	const text = rs.getPropertyValue("--text");
-
-	// alert(primary);
-	// alert(text);
-
-	// todo: why does this not work on the first try ?
-	if (primary === bgLight && text === fgLight) {
-		// even tho it seems to be true (not actually) this doesnt seem to be triggered
-		r.style.setProperty("--primary", bgDark);
-		r.style.setProperty("--text", fgDark);
-		r.style.setProperty("--link", linkDark);
-	} else {
-		// for 1st try because it is in light mode by default.
-		// todo: wont work after customisations tho lol
-		r.style.setProperty("--primary", bgLight);
-		r.style.setProperty("--text", fgLight);
-		r.style.setProperty("--link", "blue");
-	}
-	// else if (primary === bgDark && text === fgDark){
-	// 	r.style.setProperty('--primary', bgLight);
-	// 	r.style.setProperty('--text', fgLight);
-	// }
-};
-
-// for 1st try it doesnt work, but it does after that so.
-// todo: wont work after customisations tho lol
-toggleTheme();
-
 export default function Header() {
 	const { subreddit } = useParams();
 	const history = useHistory();
@@ -93,6 +56,25 @@ export default function Header() {
 	const img = useRef();
 	const [loaded, setLoaded] = useState(false);
 	const [askPermissionToBrowse, setAskPermissionToBrowse] = useState(false);
+
+	const [theme, setTheme] = useState(localStorage.getItem("theme") || "dark");
+	useEffect(() => {
+		if (theme === "dark") {
+			r.style.setProperty("--primary", bgDark);
+			r.style.setProperty("--text", fgDark);
+			r.style.setProperty("--link", linkDark);
+		} else if (theme === "light") {
+			r.style.setProperty("--primary", bgLight);
+			r.style.setProperty("--text", fgLight);
+			r.style.setProperty("--link", "blue");
+		}
+		localStorage.setItem("theme", theme);
+	}, [theme]);
+	const toggleTheme = () => {
+		const nextTheme = theme === "dark" ? "light" : "dark";
+		setTheme(nextTheme);
+	};
+	useHotkeys("t", toggleTheme, [theme]);
 
 	// check localStorage or JWT for default value.
 	const [loggedIn, setLoggedIn] = useState(false);
@@ -148,8 +130,6 @@ export default function Header() {
 	const toggleInfo = () => {
 		alert("niuce");
 	};
-
-	useHotkeys("t", toggleTheme);
 
 	if (askPermissionToBrowse) {
 		return <Notice {...{ setAskPermissionToBrowse, subreddit }} />;

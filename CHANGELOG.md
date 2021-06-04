@@ -1,3 +1,3 @@
 ## CHANGELOG
 
-1. added Notice warning for NSFW subs.
+3. better theme switching and localStorage support for theme.
