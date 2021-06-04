@@ -1,3 +1,3 @@
 ## CHANGELOG
 
-3. better theme switching and localStorage support for theme.
+1. images and videos display fixed

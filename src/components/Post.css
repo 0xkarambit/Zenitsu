@@ -25,7 +25,24 @@
 	top: -1.5px;
 }
 
-/* markdown styles */
+/* images and videos display fixed */
+.post-img {
+	/* contain vs cover */
+	/* contain : increases or decreases the size of the image to fill the box whilst preserving its aspect-ratio.
+	 	cover : the image will fill the height and width of its box, once again
+	  maintaining its aspect ratio but often cropping the image in the process. */
+	object-fit: contain;
+	max-width: 100%;
+	max-height: 400px;
+}
+
+.video-player {
+	object-fit: contain;
+	max-width: 100%;
+	max-height: 400px;
+}
+
+/* MARKDOWN STYLE */
 table,
 td,
 th {

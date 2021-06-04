@@ -78,10 +78,12 @@ export default function Post({
 	const link = `https://www.reddit.com${permalink}`;
 	const badThumbnails = ["", "self", "spoiler", "default"];
 	// const imageUrl = preview.images[0].resolutions[] // these urls dont work restricted BUT url will work here
-	const width = secure_media?.reddit_video?.width;
+	const videoWidth = secure_media?.reddit_video?.width;
+	const videoHeight = secure_media?.reddit_video?.height;
 	const is_gif = secure_media?.reddit_video?.is_gif;
 	// todo: oh there can be multiple photos
-	const imgWidth = preview?.images[0]?.source?.width;
+	// const imgWidth = preview?.images[0]?.source?.width;
+	const imgHeight = preview?.images[0]?.source?.height;
 	const timeCreated = +`${created_utc}000`;
 	// idk if we should really be using useMemo here or not.
 	const gallery = useMemo(() => gallery_data?.items, [gallery_data]);
@@ -202,10 +204,9 @@ export default function Post({
 					if (post_hint === "image") {
 						return (
 							<img
-								width={imgWidth}
+								height={imgHeight}
 								src={url}
 								alt="thumbnail"
-								style={{ objectFit: "contain" }}
 								className={
 									shouldBlur ? "blur post-img" : "post-img"
 								}
@@ -229,13 +230,14 @@ export default function Post({
 								poster={thumbnail}
 								blur={false}
 								loop={is_gif}
-								width={width}
+								width={videoWidth}
+								height={videoHeight}
 							/>
 						);
 					} else if (post_hint === "rich:video") {
 						return (
 							<ReactPlayer
-								width={width}
+								width={videoWidth}
 								url={url}
 								controls
 								pip
