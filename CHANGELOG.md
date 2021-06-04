@@ -1,3 +1,3 @@
 ## CHANGELOG
 
-1. fixed bad logic in elapsedTime function.
+1. added Notice warning for NSFW subs.

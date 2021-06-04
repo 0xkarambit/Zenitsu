@@ -9,18 +9,10 @@ import { Img } from "react-image";
 
 import RightNav from "./rightNav.js";
 
-import {
-	VscColorMode,
-	VscInfo,
-	VscGithubInverted,
-	VscAccount,
-	VscSettingsGear
-} from "react-icons/vsc";
-
 import { makeFriendly } from "./../utils/num.js";
-import "./header.css";
 
-const repoLink = "https://github.com/HarshitJoshi9152/showerthoughts";
+import "./header.css";
+import "./Notice.css";
 
 /*
 --primary: #edf6f9;
@@ -100,6 +92,7 @@ export default function Header() {
 	const [desc, setDesc] = useState();
 	const img = useRef();
 	const [loaded, setLoaded] = useState(false);
+	const [askPermissionToBrowse, setAskPermissionToBrowse] = useState(false);
 
 	// check localStorage or JWT for default value.
 	const [loggedIn, setLoggedIn] = useState(false);
@@ -129,6 +122,8 @@ export default function Header() {
 				setActiveCount(data?.active_user_count);
 				setDesc(data?.public_description);
 				setLoaded(true);
+				setAskPermissionToBrowse(data?.over18);
+				// handle over18 in such a way that the postsData doesnt have to be loaded
 				// todo: dont show the icon if we cant load it.
 			})
 			.catch((e) => {
@@ -143,6 +138,7 @@ export default function Header() {
 			setDesc("");
 			setSubCount(null);
 			setActiveCount(null);
+			setAskPermissionToBrowse(false);
 			// do i really need to do this ? not really tho
 			// setImgSrc("");
 		};
@@ -154,6 +150,10 @@ export default function Header() {
 	};
 
 	useHotkeys("t", toggleTheme);
+
+	if (askPermissionToBrowse) {
+		return <Notice {...{ setAskPermissionToBrowse, subreddit }} />;
+	}
 
 	return (
 		<header>
@@ -239,6 +239,26 @@ const SubredditSelect = ({ sel_subreddit, subreddit, closeSelectMenu }) => {
 				}}
 				placeholder={`r/${subreddit}`}
 			/>
+		</div>
+	);
+};
+
+const Notice = ({ subreddit, setAskPermissionToBrowse }) => {
+	const history = useHistory();
+
+	return (
+		<div className="notice">
+			<div className="cont">
+				<h1>
+					r/{subreddit} is marked as{" "}
+					<span title="not safe for work">NSFW</span>
+				</h1>
+				<h2>Are you sure you want to browse it ?</h2>
+				<button onClick={() => setAskPermissionToBrowse(false)}>
+					Yes
+				</button>
+				<button onClick={() => history.goBack()}>No</button>
+			</div>
 		</div>
 	);
 };

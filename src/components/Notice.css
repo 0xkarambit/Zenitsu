@@ -1,0 +1,29 @@
+.notice {
+	position: fixed;
+	z-index: 1000;
+	inset: 0px;
+	background-color: #282a2e;
+
+	display: flex;
+	align-items: center;
+	justify-content: center;
+
+	text-align: center;
+}
+
+.cont h1,
+.cont h2 {
+	font-family: Arial, Helvetica, sans-serif;
+	color: whitesmoke;
+	font-size: 1.5em;
+}
+
+.cont span {
+	color: #e63a3a;
+	text-decoration: dashed #e63a3a underline;
+}
+
+.cont button {
+	padding: 5px 10px;
+	border-radius: 5px;
+}
