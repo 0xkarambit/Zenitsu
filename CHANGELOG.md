@@ -1,3 +1,3 @@
 ## CHANGELOG
 
-1. images and videos display fixed
+1. fixed the bad history.goBack issue.

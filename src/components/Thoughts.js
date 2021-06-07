@@ -74,13 +74,15 @@ export default function Thoughts({ shouldBlurAll }) {
 					alert("cannot browse private community");
 				} else if (e.message === "Not Found") {
 					alert("no such community exists");
+				} else if (e.message === "The user aborted a request.") {
+					// pass
 				} else {
 					// Failed to fetch ? huhhh
 					// ok i get it when it doesnt find a sub that matches the one in url, it gets redirected to search.
 					console.log(e.message);
+					history.goBack();
 				}
 				// but now it makes a new request to get listings each time we enter the wrong sub
-				history.goBack();
 			});
 	};
 	React.useEffect(() => {
