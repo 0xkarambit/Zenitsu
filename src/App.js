@@ -4,7 +4,7 @@ import { useHotkeys } from "react-hotkeys-hook";
 import { Provider } from "jotai";
 
 import Header from "./components/Header.js";
-// import Sidebar from "./components/Sidebar.js";
+import Sidebar from "./components/Sidebar.js";
 import Thoughts from "./components/Thoughts.js";
 import NotFound from "./NotFound.js";
 

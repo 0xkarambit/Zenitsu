@@ -1,5 +1,3 @@
 ## CHANGELOG
 
-1. using display name in header now [5toubunnohanayome (before) vs 5ToubunNoHanayome (now)].
-2. [BugFixed] fixed multiple comment objects being created on sort selection.
-3. removed some unused code.
+1. imported Sidebar back in coz apparently there are some styles from sidebar.css that we need.
