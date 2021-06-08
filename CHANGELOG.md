@@ -1,3 +1,4 @@
 ## CHANGELOG
 
-1. imported Sidebar back in coz apparently there are some styles from sidebar.css that we need.
+1. fixed header sub name not showing on failed sub/about.json request.
+2. added view keymappings shortcut.

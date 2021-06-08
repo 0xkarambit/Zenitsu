@@ -11,7 +11,7 @@ import { Switch, Route, useHistory, useRouteMatch } from "react-router-dom";
 
 // styling
 import "./thoughts.css";
-
+import "./helpmenu.css";
 // components
 import FocusView from "./FocusView.js";
 import StackView from "./StackView.js";
@@ -46,7 +46,7 @@ export default function Thoughts({ shouldBlurAll }) {
 	const [loaded, setLoaded] = useState(false);
 	const initPostNo = useRef(0);
 
-	// useHotkeys("backspace", () => {history.goBack()});
+	const [showKeyboardShortcuts, setShowKeyboardShortcuts] = useState(false);
 
 	const loadListings = (sub, signal) => {
 		if (loaded) return null;
@@ -244,6 +244,10 @@ export default function Thoughts({ shouldBlurAll }) {
 		setDisplayMode("focus");
 	};
 	// hmmm is passing initPostNo instead of setInitPostNo gonna take more memry ?
+
+	// toggle the show key mappings.
+	useHotkeys("shift + /", () => setShowKeyboardShortcuts((show) => !show));
+
 	return (
 		<div
 			className="viewarea"
@@ -286,6 +290,57 @@ export default function Thoughts({ shouldBlurAll }) {
 					/>
 				</Route>
 			</Switch>
+			{showKeyboardShortcuts && (
+				<HelpMenu closePopup={() => setShowKeyboardShortcuts(false)} />
+			)}
 		</div>
 	);
 }
+
+const keyMappings = {
+	"ctrl + shift + b": "toggle blurring over18 content.",
+	backspace: "go back",
+	g: "scroll to top",
+	"shift + /": "show keymappings menu",
+	// FOCUS VIEW
+	v: "toggle vert-split view",
+	"n, p": "scroll to next, previous post",
+	"shift + n,p": "gallery next, previous",
+	"ctrl + b": "blur/unblur current img in focus mode",
+	t: "toggle light & dark themes",
+	"/": "search/select sub",
+	l: "login with reddit",
+	m: "load more listings"
+};
+
+const HelpMenu = ({ closePopup }) => {
+	useHotkeys("escape", closePopup);
+
+	return (
+		// <div className="blur-bg">
+		<div className="" id="#over">
+			<div className="overlay">
+				<h2>Keyboard Shortcuts</h2>
+				<table className="shortcuts center">
+					<tr>
+						<th>KeyMapping</th>
+						<th>Result</th>
+					</tr>
+					{Object.keys(keyMappings).map((key) => {
+						return (
+							<tr>
+								<td>{keyMappings[key]}</td>
+								<td>
+									<strong>
+										<code>{key}</code>
+									</strong>
+								</td>
+							</tr>
+						);
+					})}
+				</table>
+			</div>
+		</div>
+		// </div>
+	);
+};

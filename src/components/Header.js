@@ -53,7 +53,7 @@ export default function Header() {
 	const [subCount, setSubCount] = useState();
 	const [active, setActiveCount] = useState();
 	const [desc, setDesc] = useState();
-	const [displayName, setDisplayName] = useState();
+	const [displayName, setDisplayName] = useState(null);
 	const img = useRef();
 	const [loaded, setLoaded] = useState(false);
 	const [askPermissionToBrowse, setAskPermissionToBrowse] = useState(false);
@@ -123,6 +123,7 @@ export default function Header() {
 			setSubCount(null);
 			setActiveCount(null);
 			setAskPermissionToBrowse(false);
+			setDisplayName(null);
 			// do i really need to do this ? not really tho
 			// setImgSrc("");
 		};
@@ -148,7 +149,9 @@ export default function Header() {
 					title={desc}
 				>
 					{loaded && <Img className="sub-icon" src={imgSrc} />}
-					<p className="banner">{displayName}</p>
+					<p className="banner">
+						{displayName ? displayName : `r/${subreddit}`}
+					</p>
 				</span>
 				{![null, NaN, undefined].some((v) =>
 					Object.is(subCount, v)
@@ -181,7 +184,6 @@ export default function Header() {
 const SubredditSelect = ({ sel_subreddit, subreddit, closeSelectMenu }) => {
 	// todo: add auto complete and make it a full power menu.
 	const subSel = useRef();
-	const history = useHistory();
 	const [inputSub, setInputSub] = useState(`r/${subreddit}`);
 
 	// idk why but this doesnt work when the input field is focused.
