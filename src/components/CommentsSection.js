@@ -94,6 +94,7 @@ const SortByButton = ({
 				l = c.sort(({ data: data1 }, { data: data2 }) => {
 					return data2.ups - data1.ups;
 				});
+				// ! gets called twice, hmm
 				changeCommentObj(permalink, { link: permalink, comments: l });
 				return l;
 			});
@@ -145,10 +146,12 @@ const SortByButton = ({
 	};
 
 	const sort = (e) => {
-		let comms = sortingMethods[e.target.value]();
+		sortingMethods[e.target.value]();
 		// console.log("TESTSYT");
 		// console.log(comms);
 		// changeCommentObj(permalink, { link: permalink, comments: comms });
+
+		// maybe double alert/calling/selection is because of this ???
 		setSortBy({
 			[permalink]: e.target.value
 		});

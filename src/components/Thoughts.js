@@ -136,7 +136,7 @@ export default function Thoughts({ shouldBlurAll }) {
 			*/
 			// not working rightnow i guess..
 			// FUCK clear comments too
-			alert("CLEAREDDDDdasd");
+			// alert("CLEAREDDDDdasd");
 			clearComments();
 			initPostNo.current = 0; // to fix the weird initPostNo not being reset when opened with click
 			setPostsData([]);

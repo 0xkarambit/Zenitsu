@@ -53,6 +53,7 @@ export default function Header() {
 	const [subCount, setSubCount] = useState();
 	const [active, setActiveCount] = useState();
 	const [desc, setDesc] = useState();
+	const [displayName, setDisplayName] = useState();
 	const img = useRef();
 	const [loaded, setLoaded] = useState(false);
 	const [askPermissionToBrowse, setAskPermissionToBrowse] = useState(false);
@@ -105,6 +106,7 @@ export default function Header() {
 				setDesc(data?.public_description);
 				setLoaded(true);
 				setAskPermissionToBrowse(data?.over18);
+				setDisplayName(data?.display_name);
 				// handle over18 in such a way that the postsData doesnt have to be loaded
 				// todo: dont show the icon if we cant load it.
 			})
@@ -146,7 +148,7 @@ export default function Header() {
 					title={desc}
 				>
 					{loaded && <Img className="sub-icon" src={imgSrc} />}
-					<p className="banner">r/{subreddit}</p>
+					<p className="banner">{displayName}</p>
 				</span>
 				{![null, NaN, undefined].some((v) =>
 					Object.is(subCount, v)

@@ -35,13 +35,13 @@ export const useCommentsStore = create((set, get) => ({
 		);
 	},
 	getCommentIndex: (link) => {
-		return get().comments.findIndex(
-			(val) => `https://www.reddit.com${val.link}.json` === link
-		);
+		return get().comments.findIndex((val) => val.link === link);
 	},
 	changeCommentObj: (link, comment) => {
 		console.log({ comment });
 		const i = get().getCommentIndex(link);
+		// comment not found would/should not be reached logically. line added for dev purposes.
+		if (i === -1) return null;
 		set((state) => ({
 			comments: [
 				...state.comments.slice(0, i),
