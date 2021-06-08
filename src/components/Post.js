@@ -96,7 +96,6 @@ export default function Post({
 
 	const markdownList = useMemo(() => {
 		if (!selftext || displayMode === "focus") return null;
-		console.log({ selftext });
 		let c = displayMode === "focus" ? Infinity : 200;
 		// return convertHTMLEntityV2(selftext).map((v) => {
 		// 	return <ReactMarkdown className="post-body-p">{v}</ReactMarkdown>
@@ -119,7 +118,7 @@ export default function Post({
 	// https://www.reddit.com/r/Superstonk/comments/nlwqyv/house_of_cards_part_3/
 
 	if (post_hint?.includes("video")) {
-		console.log(data);
+		// console.log(data);
 	}
 
 	useEffect(() => {

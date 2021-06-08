@@ -1,40 +1,36 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, {
+	useCallback,
+	useEffect,
+	useMemo,
+	useRef,
+	useState
+} from "react";
 // import Speech from "react-speech";
 import { useHotkeys } from "react-hotkeys-hook";
-import StackGrid from "react-stack-grid";
-import {
-	Switch,
-	Route,
-	Link,
-	useParams,
-	useHistory,
-	useLocation,
-	useRouteMatch
-} from "react-router-dom";
+import { Switch, Route, useHistory, useRouteMatch } from "react-router-dom";
 
 // styling
 import "./thoughts.css";
 
 // components
-import Post from "./Post.js";
 import FocusView from "./FocusView.js";
 import StackView from "./StackView.js";
 
 // stores
 import { useViewStyleStore } from "./../stores/viewStyle.js";
+import { useCommentsStore } from "./../stores/commentsStore.js";
 
 export default function Thoughts({ shouldBlurAll }) {
 	// the displayMode gets set to $TESTINGMODE after every subreddit change.
 	const match = useRouteMatch("/r/:subreddit");
-	let { url } = match;
-	const { subreddit } = match.params;
+	// useMemo
+	const subreddit = useMemo(
+		() => match.params.subreddit,
+		[match.params.subreddit]
+	);
 	const history = useHistory();
-	const location = useLocation();
-	const isExact = match.isExact; // for when back button is press after reloading FocusView and the posts dont get loaded.
-
 	const viewStyle = useViewStyleStore((state) => state.viewStyle);
 
-	const TESTINGMODE = "stack";
 	const [afterCode, setAfterCode] = useState("");
 	const [dataReceived, setDataReceived] = useState(false);
 	// const validModes = ["focus", "stack"];
@@ -42,14 +38,18 @@ export default function Thoughts({ shouldBlurAll }) {
 	const [postsData, setPostsData] = React.useState([]);
 	const [permaLinks, setPermaLinks] = React.useState(new Set());
 	// comments will be loaded by children components.
-	const [comments, setComments] = React.useState([]);
+	// const [comments, setComments] = React.useState([]);
+	const { addComment, findComment, clearComments } = useCommentsStore();
 	// const [haveListing, setHaveListings] = useState(false);
 	const [postsSeen, setPostsSeen] = React.useState(new Set());
 	const [lastSeen, setLastSeen] = React.useState(0);
-	const [initPostNo, setInitPostNo] = useState(0);
+	const [loaded, setLoaded] = useState(false);
+	const initPostNo = useRef(0);
 
-	// useHotKeys("backspace", () => history.goBack());
+	// useHotkeys("backspace", () => {history.goBack()});
+
 	const loadListings = (sub, signal) => {
+		if (loaded) return null;
 		const url = `https://www.reddit.com/r/${sub}.json`;
 		fetch(url, { signal })
 			.then((res) => {
@@ -67,38 +67,67 @@ export default function Thoughts({ shouldBlurAll }) {
 				setDisplayMode("stack");
 				setDataReceived(true);
 				setAfterCode(json.data.after);
+				setLoaded(true);
 			})
 			.catch((e) => {
 				// todo: add msg for community doesnt exist 404
 				if (e.message === "private") {
 					alert("cannot browse private community");
+					history.goBack();
 				} else if (e.message === "Not Found") {
 					alert("no such community exists");
+					history.goBack();
+				} else if (e.message === "The user aborted a request.") {
+					// pass
 				} else {
 					// Failed to fetch ? huhhh
 					// ok i get it when it doesnt find a sub that matches the one in url, it gets redirected to search.
 					console.log(e.message);
+					history.goBack();
 				}
-				// but now it makes a new request to get listings each time we enter the wrong sub
-				history.goBack();
 			});
 	};
+
 	React.useEffect(() => {
+		console.log("SUB CHANGED", { subreddit });
 		// TODO: USE PERSISTENCE LIBRARY.
 		// to avoid fetching all listings of a subreddit when the user only intends to view one. SINGLE PAGE LOAD
-		if (!match.isExact) return null;
-		setInitPostNo(0); // to fix the weird initPostNo not being reset when opened with click
+		if (loaded) return null;
+		if (!match.isExact) return null; // might be useless now NO
 		// setup AbortController
 		const controller = new AbortController();
-		// signal to pass to fetch
 		const signal = controller.signal;
 		try {
 			// how do i load the top listings !!??
+			// console.log("tfsdhsdljsakj");
+			// console.log(postsData.length);
+			// console.log({ postsData });
+			console.log("called FROM HERE ?");
 			loadListings(subreddit, signal);
+			// loadListings(subreddit, signal);
 		} catch (e) {
 			alert("useEffect failed");
 			console.log(e);
 		}
+		return () => {
+			// why does the sub change when going from StackView to FocusView aond then back !!!???
+			/* ? this will have to wwait
+			// to avoid showing previous sub's listings until new listings load.
+			if (isExact) setPostsData([]);
+			*/
+			// not working rightnow i guess..
+			// make this state/ref ig..
+			controller.abort();
+			// FUCK clear comments too
+
+			// becuase permalinks are not cleared in `BACKSPACE`;
+		};
+		// ok so i got it putting isExact in the dependency array was the fix to listings not being loaded
+		// after single post load -> history.goBack(), but now it
+	}, [subreddit, loaded, match.isExact]);
+	// should i add isExact or use the button's load me thing ?
+
+	useEffect(() => {
 		return () => {
 			// why does the sub change when going from StackView to FocusView and then back !!!???
 			/* ? this will have to wwait
@@ -106,85 +135,92 @@ export default function Thoughts({ shouldBlurAll }) {
 			if (isExact) setPostsData([]);
 			*/
 			// not working rightnow i guess..
-			controller.abort();
+			// FUCK clear comments too
+			alert("CLEAREDDDDdasd");
+			clearComments();
+			initPostNo.current = 0; // to fix the weird initPostNo not being reset when opened with click
+			setPostsData([]);
+			setPermaLinks(new Set());
+			setLoaded(false);
+			setAfterCode("");
+			console.log("loaded: ", loaded);
 		};
-		// ok so i got it putting isExact in the dependency array was the fix to listings not being loaded
-		// after single post load -> history.goBack(), but now it
 	}, [subreddit]);
 
-	const findComment = (link) =>
-		comments.filter(
-			(val) => `https://www.reddit.com${val.link}.json` === link
-		);
+	const getComments = useCallback(
+		async (postUrl, cancelSignal) => {
+			postUrl = `${postUrl}.json`;
+			let foundCom = findComment(postUrl);
+			if (foundCom) return { comObj: foundCom, aborted: false };
+			console.info("comment not found in cache");
+			// if comments are not in comments fetch them;
+			try {
+				const res = await fetch(postUrl, {
+					signal: cancelSignal
+				});
+				const c = await res.json();
+				let link = c[0].data.children[0].data.permalink; // | id | subreddit_id | title | permalink | url;
+				// kind: "listing" | "t1" | "t3"
+				let comObj = {
+					link: link,
+					comments: c[1].data.children
+				};
+				// setComments((coms) => [...coms, comObj]);
+				addComment(comObj);
+				// check if postData is there for the post requested in postUrl.
+				// ya ok so the state doesnt get cleared right away.
+				console.info({ permaLinks });
+				console.info("CLAAEED adns ", postsData.length === 0);
+				console.info({ postsData });
+				console.info(postsData.length === 0);
+				// getComments is still not good enough.
+				// it works very weirdly ig in combination with the setTimeout
+				if (postsData.length === 0) {
+					// postData did not already exist for this meaning that its a SINGLE POST LOAD from the url.
+					console.log(
+						"postData did not already exist for this meaning that its a SINGLE POST LOAD from the url."
+					);
+					console.log({ permaLinks });
+					console.log(
+						postUrl
+							.slice("https://www.reddit.com".length)
+							.replace(".json", "")
+					);
 
-	const getComments = async (postUrl, cancelSignal) => {
-		postUrl = `${postUrl}.json`;
-		console.log("URL REQUESTED FOR COMMENTS");
-		console.log(postUrl);
-
-		// todo: FIX: find comment is not working
-		let foundCom = findComment(postUrl);
-		console.log({ foundCom });
-		if (foundCom.length !== 0)
-			return { comObj: foundCom[0], aborted: false };
-
-		// if comments are not in comments fetch them;
-		try {
-			const res = await fetch(postUrl, {
-				signal: cancelSignal
-			});
-			const c = await res.json();
-			let link = c[0].data.children[0].data.permalink; // | id | subreddit_id | title | permalink | url;
-			// kind: "listing" | "t1" | "t3"
-			let comObj = {
-				link: link,
-				comments: c[1].data.children
-			};
-			setComments((coms) => [...coms, comObj]);
-			// check if postData is there for the post requested in postUrl.
-			if (
-				!permaLinks.has(
-					postUrl
-						.slice("https://www.reddit.com".length)
-						.replace(".json", "")
+					setPostsData(c[0].data.children); // HERE IS THE ERROR.
+					setPermaLinks(new Set([link]));
+					// it doesnt load the posts coz of the 1st line in useEffect.
+					//? it will take it automatically from the url
+					// setSubreddit(c[0].data.children[0].data.subreddit);
+					// but if i back now it wont load the posts of the sub we were on.
+					// banner.current.setAttribute("dangerouslySetInnerHTML", {}); WONT WORK
+					// if subName is null use another state variable for subname set by the getComments def & set true sub on unmount.
+				}
+				return {
+					comObj: comObj,
+					data: c[0].data.children[0].data,
+					aborted: false
+				};
+			} catch (e) {
+				// ok try to know why it failed
+				// wait why did this url even appear here .....
+				// todo: inspect the listings obj
+				if (
+					e.message === "The user aborted a request." ||
+					e.message ===
+						"Failed to execute 'fetch' on 'Window': The user aborted a request."
 				)
-			) {
-				// postData did not already exist for this meaning that its a SINGLE POST LOAD from the url.
-				console.log(permaLinks);
-				console.log(
-					postUrl
-						.slice("https://www.reddit.com".length)
-						.replace(".json", "")
-				);
-
-				setPostsData(c[0].data.children); // HERE IS THE ERROR.
-				setPermaLinks(new Set([link]));
-				// it doesnt load the posts coz of the 1st line in useEffect.
-				//? it will take it automatically from the url
-				// setSubreddit(c[0].data.children[0].data.subreddit);
-				// but if i back now it wont load the posts of the sub we were on.
-				// banner.current.setAttribute("dangerouslySetInnerHTML", {}); WONT WORK
-				// if subName is null use another state variable for subname set by the getComments def & set true sub on unmount.
+					return { aborted: true };
+				console.log("got here");
+				console.log(e);
+				console.log(e.stack);
+				alert(postUrl);
+				debugger; // could be that there is no such post on subreddit? // http://localhost:3000/r/superstonks/http://reddit.com/r/Superstonk/comments/nlwqyv/house_of_cards_part_3/
+				return 1;
 			}
-			return {
-				comObj: comObj,
-				data: c[0].data.children[0].data,
-				aborted: false
-			};
-		} catch (e) {
-			// ok try to know why it failed
-			// wait why did this url even appear here .....
-			// todo: inspect the listings obj
-			if (e.message === "The user aborted a request.")
-				return { aborted: true };
-			console.log("got here");
-			console.log(e);
-			console.log(e.stack);
-			alert(postUrl);
-			debugger; // could be that there is no such post on subreddit? // http://localhost:3000/r/superstonks/http://reddit.com/r/Superstonk/comments/nlwqyv/house_of_cards_part_3/
-			return 1;
-		}
-	};
+		},
+		[postsData, permaLinks]
+	);
 
 	function loadMorePosts() {
 		if (["", null].includes(afterCode)) return null;
@@ -204,7 +240,7 @@ export default function Thoughts({ shouldBlurAll }) {
 	}
 
 	const expandView = (postNo) => {
-		setInitPostNo(+postNo);
+		initPostNo.current = +postNo;
 		setDisplayMode("focus");
 	};
 	// hmmm is passing initPostNo instead of setInitPostNo gonna take more memry ?
@@ -224,7 +260,12 @@ export default function Thoughts({ shouldBlurAll }) {
 								expandView,
 								shouldBlurAll,
 								postsSeen,
-								lastSeen
+								lastSeen,
+								loadListings,
+								clearComments,
+								setPostsData,
+								setPermaLinks,
+								loaded
 							}}
 						></StackView>
 					)}
@@ -239,6 +280,9 @@ export default function Thoughts({ shouldBlurAll }) {
 						shouldBlurAll={shouldBlurAll}
 						setPostsSeen={setPostsSeen}
 						setLastSeen={setLastSeen}
+						expandView={expandView}
+						loadListings={loadListings}
+						loaded={loaded}
 					/>
 				</Route>
 			</Switch>

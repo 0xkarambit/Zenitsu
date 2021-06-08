@@ -233,3 +233,6 @@ http://localhost:3000/r/godofwar/https://www.reddit.com/r/GodofWar/comments/nolz
 
 post layout in vert-split mode should be a bit different
 show upvotes on the top etc
+
+!!!!!!!!!!!!!!!!!!!!!!!!!!
+sync sorting default value with comments permalink

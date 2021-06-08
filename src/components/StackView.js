@@ -18,6 +18,8 @@ const StackView = ({
 	const history = useHistory();
 	const grid = useRef();
 
+	// loadListings on: sub change, mount !
+	// unload on unmount ? NO do that only in thought.js sub
 	useEffect(() => {
 		if (grid) {
 			// ok never use ref.current in an if condition.
@@ -33,12 +35,19 @@ const StackView = ({
 		"s",
 		() => {
 			// todo: set last seen
-			history.push(
-				`/r/${subreddit}/https://www.reddit.com${postsData[lastSeen].data.permalink}`
-			);
+			// get over here
+			// this was not working because of the
+			if (postsData[lastSeen]?.data?.permalink) {
+				history.push(
+					`/r/${subreddit}/https://www.reddit.com${postsData[lastSeen].data.permalink}`
+				);
+			} else {
+				alert("WHAT");
+				console.log(postsData[lastSeen]);
+			}
 		},
 		{},
-		[lastSeen]
+		[lastSeen, postsData]
 	);
 
 	useHotkeys("m", () => {
@@ -65,6 +74,7 @@ const StackView = ({
 						// to={`/${subreddit}/https://www.reddit.com${post.data.permalink}`}
 						to={`/r/${subreddit}/https://www.reddit.com${post.data.permalink}`}
 						style={{ textDecoration: "none" }}
+						// get over here
 						onClick={() => expandView(i)}
 					>
 						<Post
