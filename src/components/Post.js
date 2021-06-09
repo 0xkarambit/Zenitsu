@@ -61,6 +61,7 @@ export default function Post({
 	shouldBlurAll = true,
 	opened = false,
 	setPostsSeen,
+	dStyle,
 	setLastSeen,
 	data
 }) {
@@ -133,6 +134,97 @@ export default function Post({
 	// OH YES I GOT IT MOVE OPENED TO PROPS.
 	// wont work because it gets unmounted when we change view.
 	const c = displayMode === "focus" ? "post" : opened ? "seen post" : "post";
+
+	// ? dStyle means only images | the only img check if already performed in StackView.
+	// todo but still what about FocusMode ya return something else... for that time.
+	// console.table({
+	// 	1: dStyle,
+	// 	2: !badThumbnails.includes(thumbnail),
+	// 	3: post_hint === "image"
+	// });
+
+	// !! should be a new component ?? YES
+	if (
+		dStyle === "imgOnly" &&
+		["image", "hosted:video", "rich:video"].includes(post_hint)
+	) {
+		if (displayMode === "stack") {
+			return (
+				<div className={c}>
+					<img
+						src={thumbnail}
+						alt="thumbnail"
+						className={
+							shouldBlurAll && over_18 ? "blur" : ""
+						} /* bad solution well its not like
+						we could unblur the thumbnails before but we need a state management
+						sys to take care of this*/
+					></img>
+				</div>
+			);
+		}
+		if (displayMode === "focus") {
+			const imgOnly = {
+				maxWidth: "90vw",
+				maxHeight: "90vh",
+				objectFit: "contain",
+				margin: "auto",
+				width: preview.images[0].source.width,
+				height: preview.images[0].source.height
+			};
+			const center = {
+				display: "grid",
+				justifyContent: "center",
+				alignItems: "center"
+			};
+			if (post_hint === "image") {
+				return (
+					<div className="center-cont" style={center}>
+						<img
+							height={imgHeight}
+							src={url}
+							alt="thumbnail"
+							// className={shouldBlur ? "blur post-img" : "post-img"}
+							style={imgOnly}
+							onClick={() => {
+								setBlur(false); // we have to reset it on change, ok keep an array of this.
+							}}
+							// wait do i need to blur text too ? yes
+							// todo: better yet https://stackoverflow.com/questions/11977103/blur-effect-on-a-div-element
+						></img>
+					</div>
+				);
+			} else if (post_hint === "hosted:video") {
+				// else is_video?
+				return (
+					<div className="center-cont" style={center}>
+						<VideoPlayer
+							videoUrl={url + "/DASH_1080.mp4?source=fallback"}
+							audioUrl={url + "/DASH_audio.mp4?source=fallback"}
+							poster={thumbnail}
+							blur={false}
+							loop={is_gif}
+							width={videoWidth}
+							height={videoHeight}
+						/>
+					</div>
+				);
+			} else if (post_hint === "rich:video") {
+				return (
+					<div className="center-cont" style={center}>
+						<ReactPlayer
+							width={videoWidth}
+							url={url}
+							controls
+							pip
+							autoplay={is_gif}
+						/>
+					</div>
+				);
+			}
+		}
+	}
+
 	return (
 		<div
 			className={c}
@@ -192,6 +284,7 @@ export default function Post({
 					sys to take care of this*/
 				></img>
 			)}
+			{/*! displayMode focus stuff*/}
 			{(() => {
 				if (displayMode === "focus") {
 					{

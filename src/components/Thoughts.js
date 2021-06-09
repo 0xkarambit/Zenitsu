@@ -48,6 +48,12 @@ export default function Thoughts({ shouldBlurAll }) {
 
 	const [showKeyboardShortcuts, setShowKeyboardShortcuts] = useState(false);
 
+	const [dStyle, setDStyle] = useState("stack"); // stack, imgOnly.
+
+	useHotkeys("i", () =>
+		setDStyle((s) => (s === "imgOnly" ? "stack" : "imgOnly"))
+	);
+
 	const loadListings = (sub, signal) => {
 		if (loaded) return null;
 		const url = `https://www.reddit.com/r/${sub}.json`;
@@ -285,9 +291,10 @@ export default function Thoughts({ shouldBlurAll }) {
 								clearComments,
 								setPostsData,
 								setPermaLinks,
-								loaded
+								loaded,
+								dStyle
 							}}
-						></StackView>
+						/>
 					)}
 				</Route>
 				{/*alternatively use useRouteMatch.url or what idk rn */}
@@ -303,6 +310,7 @@ export default function Thoughts({ shouldBlurAll }) {
 						expandView={expandView}
 						loadListings={loadListings}
 						loaded={loaded}
+						dStyle={dStyle}
 					/>
 				</Route>
 			</Switch>
@@ -332,7 +340,8 @@ const keyMappings = {
 	"/": "search/select sub",
 	l: "login with reddit",
 	m: "load more listings",
-	h: "hide sub header"
+	h: "hide sub header",
+	i: "toggle imgOnly mode"
 };
 
 const HelpMenu = ({ closePopup }) => {

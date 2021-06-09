@@ -21,7 +21,8 @@ const FocusView = ({
 	setLastSeen,
 	expandView,
 	loadListings,
-	loaded
+	loaded,
+	dStyle
 }) => {
 	const history = useHistory();
 	const [currentPost, setCurrentPost] = useState(initPostNo.current);
@@ -184,15 +185,18 @@ const FocusView = ({
 				setPostsSeen={setPostsSeen}
 				setLastSeen={setLastSeen}
 				index={currentPost}
+				dStyle={dStyle}
 			/>
-			<CommentsSection
-				{...{
-					currentPostData,
-					currentComments,
-					setCurrentComments
-				}}
-				permalink={currentPostData.permalink}
-			></CommentsSection>
+			{dStyle !== "imgOnly" && (
+				<CommentsSection
+					{...{
+						currentPostData,
+						currentComments,
+						setCurrentComments
+					}}
+					permalink={currentPostData.permalink}
+				></CommentsSection>
+			)}
 		</>
 	);
 };

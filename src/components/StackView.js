@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from "react";
+import { useRef, useEffect } from "react";
 import { Link, useParams, useHistory } from "react-router-dom";
 import StackGrid from "react-stack-grid";
 import Post from "./Post.js";
@@ -12,7 +12,8 @@ const StackView = ({
 	expandView,
 	shouldBlurAll,
 	postsSeen,
-	lastSeen
+	lastSeen,
+	dStyle
 }) => {
 	const { subreddit } = useParams();
 	const history = useHistory();
@@ -62,31 +63,53 @@ const StackView = ({
 
 	// }, [])
 
+	// to update layout on dStyle switch
+	useEffect(() => {
+		grid.current?.updateLayout();
+	}, [dStyle]);
+
+	/*
+	! wait try to render the img/video/gif directly here only !!
+	post.data.thumbnail_height
+	post.data.thumbnail_width
+	*/
+	const imgOnlyProps = {
+		gutter: 100
+	};
+
 	return (
 		<>
 			<StackGrid
 				monitorImagesLoaded={true}
-				columnWidth={300}
+				// should be img width on imgOnly dStyle
+				columnWidth={dStyle === "imgOnly" ? 200 : 300}
+				// columnWidth={300}
 				gridRef={(r) => (grid.current = r)}
 			>
-				{postsData.map((post, i) => (
-					<Link
-						// to={`/${subreddit}/https://www.reddit.com${post.data.permalink}`}
-						to={`/r/${subreddit}/https://www.reddit.com${post.data.permalink}`}
-						style={{ textDecoration: "none" }}
-						// get over here
-						onClick={() => expandView(i)}
-					>
-						<Post
-							key={i}
-							index={i}
-							{...post.data}
-							expandView={expandView}
-							shouldBlurAll={shouldBlurAll}
-							opened={postsSeen.has(post.data.permalink)}
-						></Post>
-					</Link>
-				))}
+				{postsData.map((post, i) => {
+					// ! verify if it actually has an img !
+					if (dStyle === "imgOnly" && post.data.post_hint !== "image")
+						return null;
+					return (
+						<Link
+							// to={`/${subreddit}/https://www.reddit.com${post.data.permalink}`}
+							to={`/r/${subreddit}/https://www.reddit.com${post.data.permalink}`}
+							style={{ textDecoration: "none" }}
+							// get over here
+							onClick={() => expandView(i)}
+						>
+							<Post
+								key={i}
+								index={i}
+								{...post.data}
+								expandView={expandView}
+								shouldBlurAll={shouldBlurAll}
+								opened={postsSeen.has(post.data.permalink)}
+								dStyle={dStyle}
+							></Post>
+						</Link>
+					);
+				})}
 			</StackGrid>
 			<PostLoader loadMorePosts={loadMorePosts} />
 		</>
