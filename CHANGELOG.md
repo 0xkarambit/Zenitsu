@@ -1,4 +1,5 @@
 ## CHANGELOG
 
-1. fixed header sub name not showing on failed sub/about.json request.
-2. added view keymappings shortcut.
+1. better styles & z-index fix for `shift + /` popup.
+2. press h to hide sub header.
+3. moved SubredditSelect component to Thoughts component to enable selection even when header is hidden.

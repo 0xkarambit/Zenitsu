@@ -15,7 +15,7 @@ import "./helpmenu.css";
 // components
 import FocusView from "./FocusView.js";
 import StackView from "./StackView.js";
-
+import { SubredditSelect } from "./SubSel.js";
 // stores
 import { useViewStyleStore } from "./../stores/viewStyle.js";
 import { useCommentsStore } from "./../stores/commentsStore.js";
@@ -245,9 +245,25 @@ export default function Thoughts({ shouldBlurAll }) {
 	};
 	// hmmm is passing initPostNo instead of setInitPostNo gonna take more memry ?
 
-	// toggle the show key mappings.
+	//  toggle the show key mappings.
 	useHotkeys("shift + /", () => setShowKeyboardShortcuts((show) => !show));
 
+	// code for SubredditSelectior.
+	// #region
+	const [selectMenuOpen, setSelectMenuState] = useState(false);
+	const toggleSelectMenu = () => setSelectMenuState(!selectMenuOpen);
+	const closeSelectMenu = () => setSelectMenuState(false);
+
+	useHotkeys("/", toggleSelectMenu);
+
+	const sel_subreddit = (sub) => {
+		closeSelectMenu();
+		if (subreddit === sub.slice(2).toLowerCase()) return null;
+		// sub includes "r/"
+		history.push("/r/" + sub.slice(2).toLowerCase());
+		// todo: get rid of the slice use the input value margin left we saw on stackOverflow the other day.
+	};
+	// #endregion
 	return (
 		<div
 			className="viewarea"
@@ -293,6 +309,11 @@ export default function Thoughts({ shouldBlurAll }) {
 			{showKeyboardShortcuts && (
 				<HelpMenu closePopup={() => setShowKeyboardShortcuts(false)} />
 			)}
+			{selectMenuOpen && (
+				<SubredditSelect
+					{...{ sel_subreddit, subreddit, closeSelectMenu }}
+				/>
+			)}
 		</div>
 	);
 }
@@ -310,7 +331,8 @@ const keyMappings = {
 	t: "toggle light & dark themes",
 	"/": "search/select sub",
 	l: "login with reddit",
-	m: "load more listings"
+	m: "load more listings",
+	h: "hide sub header"
 };
 
 const HelpMenu = ({ closePopup }) => {
@@ -323,8 +345,8 @@ const HelpMenu = ({ closePopup }) => {
 				<h2>Keyboard Shortcuts</h2>
 				<table className="shortcuts center">
 					<tr>
-						<th>KeyMapping</th>
 						<th>Result</th>
+						<th>KeyMapping</th>
 					</tr>
 					{Object.keys(keyMappings).map((key) => {
 						return (

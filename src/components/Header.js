@@ -32,23 +32,6 @@ export default function Header() {
 	const { subreddit } = useParams();
 	const history = useHistory();
 	const match = useRouteMatch();
-	const [selectMenuOpen, setSelectMenuState] = useState(false);
-	const toggleSelectMenu = () => setSelectMenuState(!selectMenuOpen);
-	const closeSelectMenu = () => setSelectMenuState(false);
-
-	const sel_subreddit = (sub) => {
-		closeSelectMenu();
-
-		if (subreddit === sub.slice(2).toLowerCase()) {
-			// history.replace(`/${subreddit}`); // note: wont cause useEffect to run if param is in dependencies.
-			return null;
-		}
-
-		// sub includes "r/"
-		history.push("/r/" + sub.slice(2).toLowerCase());
-		// todo: get rid of the slice use the input value margin left we saw on stackOverflow the other day.
-	};
-
 	const [imgSrc, setImgSrc] = useState(null);
 	const [subCount, setSubCount] = useState();
 	const [active, setActiveCount] = useState();
@@ -58,6 +41,10 @@ export default function Header() {
 	const [loaded, setLoaded] = useState(false);
 	const [askPermissionToBrowse, setAskPermissionToBrowse] = useState(false);
 
+	const [hidden, setHidden] = useState(false);
+	useHotkeys("h", () => {
+		setHidden((h) => !h);
+	});
 	const [theme, setTheme] = useState(localStorage.getItem("theme") || "dark");
 	useEffect(() => {
 		if (theme === "dark") {
@@ -80,7 +67,6 @@ export default function Header() {
 	// check localStorage or JWT for default value.
 	const [loggedIn, setLoggedIn] = useState(false);
 
-	useHotkeys("/", toggleSelectMenu);
 	// why cant i use this here ?
 	// useHotKeys("ctrl + /", () => alert("show all keyboard shortcuts"))
 	// get the info about the subreddit. do when sub changes.
@@ -138,6 +124,8 @@ export default function Header() {
 		return <Notice {...{ setAskPermissionToBrowse, subreddit }} />;
 	}
 
+	if (hidden) return <></>;
+
 	return (
 		<header>
 			{/*welcome to The Open Source reddit client focused on browsing{" "}*/}
@@ -169,63 +157,11 @@ export default function Header() {
 					{desc}
 				</span>*/}
 				{/* yup nice now i just need to know a good way to make forms in react! THIS SHOULD BE ITS OWN COMPONENT TODO: ADD FOCUS ON USEFFECT*/}
-				{selectMenuOpen && (
-					// NICE  better way to pass props
-					<SubredditSelect
-						{...{ sel_subreddit, subreddit, closeSelectMenu }}
-					></SubredditSelect>
-				)}
 			</span>
 			<RightNav {...{ toggleTheme, toggleInfo, loggedIn, setLoggedIn }} />
 		</header>
 	);
 }
-
-const SubredditSelect = ({ sel_subreddit, subreddit, closeSelectMenu }) => {
-	// todo: add auto complete and make it a full power menu.
-	const subSel = useRef();
-	const [inputSub, setInputSub] = useState(`r/${subreddit}`);
-
-	// idk why but this doesnt work when the input field is focused.
-	// https://github.com/greena13/react-hotkeys/issues/100
-	// useHotkeys("escape", () => {
-	// 	alert("escape");
-	// 	closeSelectMenu();
-	// });
-
-	// focus on mount and auto close of out click.
-	useEffect(() => {
-		subSel.current.focus(); // we dont want the user to be scrolled to the top against his wishes.
-		const watch = (e) => e.target !== subSel.current && closeSelectMenu();
-		document.addEventListener("click", watch);
-
-		return () => {
-			document.removeEventListener("click", watch);
-		};
-	}, []);
-
-	return (
-		<div className="sub-sel">
-			<input
-				ref={subSel}
-				value={inputSub}
-				onKeyDown={(e) => {
-					e.key === "Enter" && sel_subreddit(inputSub);
-					if (e.key === "Escape") {
-						subSel.current.blur();
-						closeSelectMenu();
-					}
-				}}
-				onChange={(e) => {
-					let val = e.target.value;
-					if (["r", "/", ""].includes(val)) val = "r/";
-					setInputSub(val);
-				}}
-				placeholder={`r/${subreddit}`}
-			/>
-		</div>
-	);
-};
 
 const Notice = ({ subreddit, setAskPermissionToBrowse }) => {
 	const history = useHistory();

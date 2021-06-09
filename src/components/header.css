@@ -31,24 +31,6 @@ p {
 	margin-block-end: 0em;
 }
 
-.sub-sel {
-	position: fixed;
-	top: 17%;
-	left: 50%;
-	transform: translate(-50%);
-	/* float: left; */
-	font-size: 24px;
-	text-align: center;
-	width: auto;
-	z-index: 100;
-}
-
-.sub-sel > input {
-	background-color: #222;
-	color: whitesmoke;
-	width: 100%;
-}
-
 /*fix the input style*/
 input {
 	max-width: inherit;

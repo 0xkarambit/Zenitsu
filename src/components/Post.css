@@ -33,7 +33,7 @@
 	  maintaining its aspect ratio but often cropping the image in the process. */
 	object-fit: contain;
 	max-width: 100%;
-	max-height: 400px;
+	max-height: 500px;
 }
 
 .video-player {
