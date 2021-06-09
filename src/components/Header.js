@@ -145,11 +145,11 @@ export default function Header() {
 					Object.is(subCount, v)
 				) && (
 					<>
-						<p className="members" title={subCount}>
+						<p className="members" title={`${subCount} members`}>
 							{makeFriendly(subCount)} members
 						</p>
-						<p className="members" title={active}>
-							{makeFriendly(active)} active
+						<p className="members" title={`${active} online`}>
+							{makeFriendly(active)} online
 						</p>
 					</>
 				)}

@@ -38,8 +38,8 @@ function elapsedTime(time) {
 					prim = "month"; // day | days
 					sec = "day";
 					// for years
-					if (mag / 365 > 1) {
-						mag = mag / 365;
+					if (mag / 12 > 1) {
+						mag = mag / 12;
 						prim = "year"; // day | days
 						sec = "month";
 					}

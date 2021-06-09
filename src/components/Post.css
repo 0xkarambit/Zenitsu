@@ -33,6 +33,7 @@
 	  maintaining its aspect ratio but often cropping the image in the process. */
 	object-fit: contain;
 	max-width: 100%;
+	/* todo: should the user be able to set the  max-height ?*/
 	max-height: 500px;
 }
 
@@ -63,4 +64,8 @@ table {
 /* small icon , count fix */
 .fs-15 {
 	font-size: 1.5em;
+}
+
+ul {
+	list-style-position: inside;
 }

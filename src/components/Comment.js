@@ -80,8 +80,8 @@ const Comment = ({
 		</p>
 	);
 
-	const shouldCollapse =
-		data.collapsed_because_crowd_control === null ? true : false;
+	// ? what about data.collapsed_because_crowd_control ?
+	const shouldCollapse = data.collapsed === true ? true : false;
 
 	return (
 		// using key as [commentObj]data.id idk how the id is used in reddit tho.
@@ -94,7 +94,7 @@ const Comment = ({
 			<Collapsible
 				trigger={d}
 				transitionTime={100}
-				open={shouldCollapse} // user Preference NAH ? but do use data.collapsed_because_crowd_control
+				open={!shouldCollapse} // user Preference NAH ? but do use data.collapsed_because_crowd_control
 				lazyRender={true}
 			>
 				<div ref={com}>

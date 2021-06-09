@@ -65,9 +65,10 @@
 	/* 02475e */
 }
 
-li:hover {
+/* is it even being used anywhere ? */
+/* li:hover {
 	text-decoration: 2px solid underline #333;
-}
+} */
 
 .content {
 	margin-left: 20px;
