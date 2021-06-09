@@ -1,3 +1,3 @@
 ## CHANGELOG
 
-1. tried to add a imgOnly view mode.
+1. added fetch optimisation for imgOnly mode.

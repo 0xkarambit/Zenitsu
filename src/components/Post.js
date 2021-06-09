@@ -175,7 +175,8 @@ export default function Post({
 			const center = {
 				display: "grid",
 				justifyContent: "center",
-				alignItems: "center"
+				alignItems: "center",
+				height: "90vh"
 			};
 			if (post_hint === "image") {
 				return (

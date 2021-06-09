@@ -135,21 +135,31 @@ const FocusView = ({
 		// let curl = `${"https://www.reddit.com/r/Showerthoughts/comments/mw2amn/having_to_attend_a_wedding_you_dont_want_to_sucks/"}.json`;
 		// todo: change url to permalink in above line
 		let controller = new AbortController();
-		setTimeout(() => {
-			const result = getComments(permalink, controller.signal);
-			result.then(({ comObj, data, aborted }) => {
-				if (aborted) return null;
-				// todo we need better error handling lol.
-				if (comObj === 1) alert("likely fetch request went wrong");
-				if (comObj.comments) setCurrentComments(comObj.comments);
-				else debugger;
-				console.log({ comObj });
-				// for singel page loads
-				if (shouldBlur === undefined) {
-					setBlur(shouldBlurAll && data?.over_18);
-				}
-			});
-		}, 1);
+		if (dStyle === "imgOnly") {
+			if (currentPostData?.over_18)
+				setBlur(shouldBlurAll && currentPostData?.over_18);
+			// ! wait getComments give the data when its a single page load.
+			// ! but a user cant actually already be switched to imgOnly mode on load.
+			return null;
+			// why does it still make the request if i remove the else statment
+		} else {
+			setTimeout(() => {
+				const result = getComments(permalink, controller.signal);
+				result.then(({ comObj, data, aborted }) => {
+					if (aborted) return null;
+					// todo we need better error handling lol.
+					if (comObj === 1) alert("likely fetch request went wrong");
+					if (comObj.comments) setCurrentComments(comObj.comments);
+					else debugger;
+					console.log({ comObj });
+					// for singel page loads
+					// why do we check if shouldBlur === undefined ?
+					if (shouldBlur === undefined) {
+						setBlur(shouldBlurAll && data?.over_18);
+					}
+				});
+			}, 1);
+		}
 		return () => {
 			// abort here yes !
 			// ok nice !! do this in another effect with only currentPost as dependency.
@@ -161,7 +171,7 @@ const FocusView = ({
 		// BUT THEN HOW DO YOU KNOW IF YOY SHOULD USE LOCALSTATE OR REQUEST NEW ???
 		// ? WELL NOW I GUESS ITS A BAD IDEA, JUST USE ANOTHER USESTATE FOR THE SUBREDDIT NAME.
 		// ? AND SET IT WHEN THIS UNMOUNTS.
-	}, [postsData, currentPost, sortBy[currentPostData?.permalink]]);
+	}, [postsData, currentPost, sortBy[currentPostData?.permalink], dStyle]);
 	// }, [currentPost, sortBy[currentPostData?.permalink]]);
 	// we are on the right track
 	// }, [postsData, currentPost, sortBy[currentPostData?.permalink]]);
