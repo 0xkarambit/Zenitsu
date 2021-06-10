@@ -118,10 +118,6 @@ export default function Post({
 
 	// https://www.reddit.com/r/Superstonk/comments/nlwqyv/house_of_cards_part_3/
 
-	if (post_hint?.includes("video")) {
-		// console.log(data);
-	}
-
 	useEffect(() => {
 		if (displayMode === "focus") {
 			// maybe i shouldnt replace it with postsSeen
@@ -149,19 +145,58 @@ export default function Post({
 		["image", "hosted:video", "rich:video"].includes(post_hint)
 	) {
 		if (displayMode === "stack") {
-			return (
-				<div className={c}>
-					<img
-						src={thumbnail}
-						alt="thumbnail"
-						className={
-							shouldBlurAll && over_18 ? "blur" : ""
-						} /* bad solution well its not like
+			const imgOnly = {
+				maxWidth: "100%",
+				objectFit: "contain",
+				margin: "auto",
+				width: preview.images[0].source.width
+			};
+			if (post_hint === "image") {
+				return (
+					<div className={c}>
+						<img
+							style={imgOnly}
+							src={url}
+							alt="thumbnail"
+							className={
+								shouldBlurAll && over_18 ? "blur" : ""
+							} /* bad solution well its not like
 						we could unblur the thumbnails before but we need a state management
 						sys to take care of this*/
-					></img>
-				</div>
-			);
+						></img>
+					</div>
+				);
+			} else if (post_hint === "hosted:video") {
+				// else is_video?
+				return (
+					<div className="center-cont">
+						<VideoPlayer
+							videoUrl={url + "/DASH_1080.mp4?source=fallback"}
+							audioUrl={url + "/DASH_audio.mp4?source=fallback"}
+							poster={thumbnail}
+							blur={false}
+							loop={is_gif}
+							style={imgOnly}
+							// ! resposiveness wont work for this rn. cause src is not right
+							width={videoWidth}
+							// height={videoHeight}
+						/>
+					</div>
+				);
+			} else if (post_hint === "rich:video") {
+				return (
+					<div>
+						<ReactPlayer
+							style={imgOnly}
+							width={videoWidth}
+							url={url}
+							controls
+							pip
+							autoplay={is_gif}
+						/>
+					</div>
+				);
+			}
 		}
 		if (displayMode === "focus") {
 			const imgOnly = {

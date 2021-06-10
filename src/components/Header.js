@@ -138,7 +138,7 @@ export default function Header() {
 				>
 					{loaded && <Img className="sub-icon" src={imgSrc} />}
 					<p className="banner">
-						{displayName ? displayName : `r/${subreddit}`}
+						{`r/${displayName ? displayName : subreddit}`}
 					</p>
 				</span>
 				{![null, NaN, undefined].some((v) =>

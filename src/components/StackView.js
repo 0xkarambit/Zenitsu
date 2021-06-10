@@ -1,4 +1,4 @@
-import { useRef, useEffect } from "react";
+import { useRef, useEffect, useState } from "react";
 import { Link, useParams, useHistory } from "react-router-dom";
 import StackGrid from "react-stack-grid";
 import Post from "./Post.js";
@@ -51,6 +51,9 @@ const StackView = ({
 		[lastSeen, postsData]
 	);
 
+	// do we need this ???
+	useHotkeys("r", () => grid.current?.updateLayout());
+
 	useHotkeys("m", () => {
 		// onLayout prop on StackGrid
 		// i can calculate the ColCount using the width of each GridItem and gutter and total width available.
@@ -77,18 +80,40 @@ const StackView = ({
 		gutter: 100
 	};
 
+	// change columnWidth in imgOnly mode.
+	const [dStyleWidth, setDStyleWidth] = useState(300);
+	const delta = 50;
+	const maxVal = 1300; // but this is just for my pc lol.
+	const minVal = 150; // but this is just for my pc lol.
+	const limit = (val) =>
+		val > maxVal ? maxVal : val < minVal ? minVal : val;
+
+	useHotkeys("shift + =", () => {
+		setDStyleWidth((w) => limit(w + delta));
+		grid.current?.updateLayout();
+	});
+	useHotkeys("shift + -", () => {
+		setDStyleWidth((w) => limit(w - delta));
+		grid.current?.updateLayout();
+	});
+
 	return (
 		<>
 			<StackGrid
 				monitorImagesLoaded={true}
 				// should be img width on imgOnly dStyle
-				columnWidth={dStyle === "imgOnly" ? 200 : 300}
+				columnWidth={dStyle === "imgOnly" ? dStyleWidth : 300}
 				// columnWidth={300}
 				gridRef={(r) => (grid.current = r)}
 			>
 				{postsData.map((post, i) => {
 					// ! verify if it actually has an img !
-					if (dStyle === "imgOnly" && post.data.post_hint !== "image")
+					if (
+						dStyle === "imgOnly" &&
+						!["image", "hosted:video", "rich:video"].includes(
+							post.data.post_hint
+						)
+					)
 						return null;
 					return (
 						<Link
@@ -117,3 +142,15 @@ const StackView = ({
 };
 
 export default StackView;
+
+/*
+<img
+								src={post.data.url}
+								alt={post.data?.title}
+								stylee
+								width={post.data.preview.images[0].source.width}
+								height={
+									post.data.preview.images[0].source.height
+								}
+							/>
+*/
