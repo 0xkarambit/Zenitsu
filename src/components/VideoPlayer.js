@@ -39,7 +39,7 @@ const VideoPlayer = ({ videoUrl, audioUrl, poster, width, height, is_gif }) => {
 	return (
 		<>
 			<video
-				height={height}
+				// height={height}
 				// width={width}
 				ref={videoPlayer}
 				className="video-player"

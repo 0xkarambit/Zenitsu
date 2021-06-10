@@ -27,21 +27,32 @@
 
 /* images and videos display fixed */
 .post-img {
-	/* contain vs cover */
 	/* contain : increases or decreases the size of the image to fill the box whilst preserving its aspect-ratio.
 	 	cover : the image will fill the height and width of its box, once again
 	  maintaining its aspect ratio but often cropping the image in the process. */
 	object-fit: contain;
 	max-width: 100%;
-	/* todo: should the user be able to set the  max-height ?*/
-	max-height: 500px;
-	/* do something about the underflow thing bruh */
+	/* max-height: 98vh; */
+	max-height: 700px;
+	/* ? idk should i add a max-height */
+	/* ! http://localhost:3000/r/196/https://www.reddit.com/r/196/comments/nwg8km/not_a_joke_im_actually_in_thr_95th_percentile_of/ */
+	/* ! VS */
+	/* ! https://www.reddit.com/r/196/comments/nwg8km/not_a_joke_im_actually_in_thr_95th_percentile_of/ */
+	padding: 0.2em 0em;
+	/* FIXED: dont specify width or height just use with 100% & object-fit: contain
+	we are specifying the height and not the width becuase if we dont it get rendered in the center the focusView in nonvertmode
+	& but by using the height and not the width there is extra space on the top and bottom on the img in vert-split-mode */
+	transition: width 2s, height 2s, transform 0.5s;
+}
+
+.post-img:hover {
+	transform: scale(1.02);
 }
 
 .video-player {
 	object-fit: contain;
 	max-width: 100%;
-	max-height: 400px;
+	max-height: 98vh;
 }
 
 /* MARKDOWN STYLE */

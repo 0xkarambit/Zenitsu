@@ -126,16 +126,3 @@
 	position: relative;
 	top: 3px;
 }
-
-/*POST.JS*/
-
-.post-img {
-	max-width: 400px;
-	max-height: 400px;
-	padding: 0.5em 0em;
-	transition: width 2s, height 2s, transform 0.5s;
-}
-
-.post-img:hover {
-	transform: scale(1.02);
-}

@@ -1,4 +1,3 @@
 ## CHANGELOG
 
-1. added option to resize columnWidth for react-stack-grid in imgOnly mode.
-2. header display name fixed.
+1. better images and video styles (using object-fit & max-width,height), yes even the youtube ones.

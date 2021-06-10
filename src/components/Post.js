@@ -83,7 +83,7 @@ export default function Post({
 	const videoHeight = secure_media?.reddit_video?.height;
 	const is_gif = secure_media?.reddit_video?.is_gif;
 	// todo: oh there can be multiple photos
-	// const imgWidth = preview?.images[0]?.source?.width;
+	const imgWidth = preview?.images[0]?.source?.width;
 	const imgHeight = preview?.images[0]?.source?.height;
 	const timeCreated = +`${created_utc}000`;
 	// idk if we should really be using useMemo here or not.
@@ -332,9 +332,10 @@ export default function Post({
 					if (post_hint === "image") {
 						return (
 							<img
-								height={imgHeight}
+								// specify neither and we get rid of both extra height (in vert=split) & center align issues
+								// height={imgHeight} // width={imgWidth}
 								src={url}
-								alt="thumbnail"
+								alt="post-img"
 								className={
 									shouldBlur ? "blur post-img" : "post-img"
 								}
@@ -358,14 +359,14 @@ export default function Post({
 								poster={thumbnail}
 								blur={false}
 								loop={is_gif}
-								width={videoWidth}
-								height={videoHeight}
+								// width={videoWidth}
+								// height={videoHeight}
 							/>
 						);
 					} else if (post_hint === "rich:video") {
 						return (
 							<ReactPlayer
-								width={videoWidth}
+								width={viewStyle ? "100%" : videoWidth}
 								url={url}
 								controls
 								pip
