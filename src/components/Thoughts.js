@@ -344,7 +344,31 @@ const keyMappings = {
 	i: "toggle imgOnly mode"
 };
 
-const HelpMenu = ({ closePopup }) => {
+const keyMappingsByCategory = {
+	General: {
+		"ctrl + shift + b": "toggle blurring over18 content.",
+		backspace: "go back",
+		g: "scroll to top",
+		"shift + /": "show keymappings menu",
+		t: "toggle light & dark themes",
+		"/": "search/select sub",
+		l: "login with reddit",
+		h: "hide sub header",
+		i: "toggle imgOnly mode"
+	},
+	FocusView: {
+		v: "toggle vert-split view",
+		"n, p": "scroll to next, previous post",
+		"shift + n,p": "gallery next, previous",
+		"ctrl + b": "blur/unblur current img in focus mode"
+	},
+	StackView: {
+		m: "load more listings",
+		r: "Update grid Layout"
+	}
+};
+
+const HelpMenuOriginal = ({ closePopup }) => {
 	useHotkeys("escape", closePopup);
 
 	return (
@@ -370,6 +394,58 @@ const HelpMenu = ({ closePopup }) => {
 						);
 					})}
 				</table>
+			</div>
+		</div>
+		// </div>
+	);
+};
+
+const HelpMenu = ({ closePopup }) => {
+	useHotkeys("escape", closePopup);
+
+	return (
+		// <div className="blur-bg">
+		<div className="" id="#over">
+			<div className="overlay">
+				<h2>Keyboard Shortcuts</h2>
+				<div className="overlay-grid">
+					{Object.keys(keyMappingsByCategory).map((cat) => {
+						return (
+							<div
+								id={cat}
+								className={`overlay-grid-child ${cat} center`}
+							>
+								<h2>{cat}</h2>
+								<table className="shortcuts center">
+									<tr>
+										<th>Result</th>
+										<th>KeyMapping</th>
+									</tr>
+									{Object.keys(
+										keyMappingsByCategory[cat]
+									).map((key) => {
+										return (
+											<tr>
+												<td>
+													{
+														keyMappingsByCategory[
+															cat
+														][key]
+													}
+												</td>
+												<td>
+													<strong>
+														<code>{key}</code>
+													</strong>
+												</td>
+											</tr>
+										);
+									})}
+								</table>
+							</div>
+						);
+					})}
+				</div>
 			</div>
 		</div>
 		// </div>

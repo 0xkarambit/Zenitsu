@@ -37,6 +37,7 @@ export default function Header() {
 	const [active, setActiveCount] = useState();
 	const [desc, setDesc] = useState();
 	const [displayName, setDisplayName] = useState(null);
+	const [title, setTitle] = useState(null);
 	const img = useRef();
 	const [loaded, setLoaded] = useState(false);
 	const [askPermissionToBrowse, setAskPermissionToBrowse] = useState(false);
@@ -93,6 +94,7 @@ export default function Header() {
 				setLoaded(true);
 				setAskPermissionToBrowse(data?.over18);
 				setDisplayName(data?.display_name);
+				setTitle(data?.title);
 				// handle over18 in such a way that the postsData doesnt have to be loaded
 				// todo: dont show the icon if we cant load it.
 			})
@@ -110,6 +112,7 @@ export default function Header() {
 			setActiveCount(null);
 			setAskPermissionToBrowse(false);
 			setDisplayName(null);
+			setTitle(null);
 			// do i really need to do this ? not really tho
 			// setImgSrc("");
 		};
@@ -134,7 +137,7 @@ export default function Header() {
 					onClick={() => {
 						if (!match.isExact) history.push("/r/" + subreddit);
 					}}
-					title={desc}
+					title={`${title}\n${desc}`}
 				>
 					{loaded && <Img className="sub-icon" src={imgSrc} />}
 					<p className="banner">

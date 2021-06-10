@@ -8,9 +8,10 @@
 	position: fixed;
 	background-color: #fff;
 }
-
+/* ? should .overlay be grid or #over ?*/ /*OVERLAY*/
 .overlay {
-	width: auto;
+	/* ! will be bad for very wide monitors*/
+	width: 98vw;
 	z-index: 100;
 	left: 50%; /*IE*/
 	top: 8%;
@@ -25,6 +26,42 @@
 	border-radius: 10px;
 	/* to center the overlay */
 	transform: translateX(-50%);
+}
+
+.overlay-grid {
+	display: grid;
+	grid-template-columns: 1fr 1fr 1fr;
+}
+
+/* THIS LAYOUT IS DIFFICULT TO ACHIEVE AS I HAVE IN MY MIND WITH MY CURRENT KNOWLEDGE*/
+/* .overlay-grid {
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	grid-template-rows: 1fr 0.1fr 1.3fr;
+	gap: 0px 0px;
+	grid-template-areas:
+		"General  FocusView"
+		"General  ."
+		"General  StackView";
+
+	margin: auto;
+	text-align: center;
+}
+.FocusView {
+	grid-area: FocusView;
+}
+.StackView {
+	grid-area: StackView;
+}
+.General {
+	grid-area: General;
+} */
+
+.overlay-grid-child:nth-child(n + 1) {
+	border-right: 2px dashed var(--text);
+}
+.overlay-grid-child:last-child {
+	border-right: 0px;
 }
 
 .center {
@@ -42,7 +79,7 @@
 .shortcuts td,
 .shortcuts tr,
 .shortcuts th {
-	padding: 0.4rem 1rem 0.4rem 0.4rem;
+	padding: 0.4rem 0.5rem 0.4rem 0.4rem;
 	border: none;
 	/* font-family: Georgia, "Times New Roman", Times, serif; */
 	font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
@@ -52,9 +89,13 @@
 /* ? becuase we dont want to capitalize the key mappings*/
 .shortcuts td:nth-child(1) {
 	text-transform: capitalize;
+	font-weight: 500;
 }
 .shortcuts td {
 	border-top: 1px solid #5a5a5a;
+}
+.shortcuts td:nth-child(2) {
+	margin-right: 0px;
 }
 
 h2 {
