@@ -57,7 +57,7 @@ body::-webkit-scrollbar-thumb {
 	/*filter: opacity(0.5);*/
 	/*opacity: 0.5*/ /*doesnt work for us*/
 	/*background-color: transparent;*/ /*hides it completely*/
-	/*border-radius: 20px;*/ /* roundness of the scroll thumb */
+	border-radius: 1px; /*roundness of the scroll thumb*/
 	/*border: 3px solid orange;*/ /* creates padding around scroll thumb */
 }
 

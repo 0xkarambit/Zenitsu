@@ -59,10 +59,13 @@ const Comment = ({
 	// ? what about data.collapsed_because_crowd_control ?
 	const shouldCollapse = data.collapsed === true ? true : false;
 	const [collapsed, setCollapsed] = useState(shouldCollapse);
-	const d = (
+	const commentHead = (
 		<p
-			style={marginLeft}
-			className="comment-details"
+			style={{
+				...marginLeft,
+				...{ filter: collapsed ? "opacity(0.7)" : null }
+			}}
+			className={`comment-details ${collapsed ? "darker" : null}`}
 			onClick={() => setCollapsed((c) => !c)}
 		>
 			{/*<ProfilePic id={data.author}></ProfilePic>*/}
@@ -101,7 +104,7 @@ const Comment = ({
 		>
 			{/*todo: try combo of height: 0.4, transition, shadow to achieve this too */}
 			<Collapsible
-				trigger={d}
+				trigger={commentHead}
 				transitionTime={100}
 				open={!shouldCollapse} // user Preference NAH ? but do use data.collapsed_because_crowd_control
 				lazyRender={true}

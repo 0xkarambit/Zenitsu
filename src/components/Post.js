@@ -285,7 +285,7 @@ export default function Post({
 			)}
 
 			<h2 className="title">
-				{title || "title"}
+				{filterSelftext(convertHTMLEntityORG(title))}
 				{/*TODO: the message in thumbnail could be something else too right ya, browser reddit to know more*/}
 				{thumbnail === "spoiler" && (
 					<span className="spoiler">SPOILER</span>
