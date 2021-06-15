@@ -23,9 +23,19 @@
 	font-size: 0.5em;
 }
 
+.collapsed-preview {
+	font-size: 1rem;
+	color: grey;
+	margin-left: 2px;
+}
+
+.comment-awards {
+	position: relative;
+	top: 0.2rem;
+}
+
 /* Award component classes start*/
 .awards {
-	/* margin-left: 10px; */
 	display: inline-flex;
 	align-items: center;
 	justify-self: flex-start;
@@ -41,7 +51,7 @@
 	/* font-size: 1.5em; */
 	font-weight: 600;
 	/**/
-	margin: 4px;
+	margin: 0px 2px;
 	display: inline-flex;
 	align-items: center;
 	/* for the tooltip box */

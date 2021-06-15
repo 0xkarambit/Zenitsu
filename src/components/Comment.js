@@ -1,4 +1,4 @@
-import { useRef } from "react";
+import { useRef, useState } from "react";
 // import randomColor from "randomcolor";
 import palx from "palx";
 import Collapsible from "react-collapsible";
@@ -56,8 +56,15 @@ const Comment = ({
 	// 	ago: elapsedTime(+`${data.created_utc}000`)
 	// });
 	// onClick={() => com.current.setAttribute("style", "display:none")}
+	// ? what about data.collapsed_because_crowd_control ?
+	const shouldCollapse = data.collapsed === true ? true : false;
+	const [collapsed, setCollapsed] = useState(shouldCollapse);
 	const d = (
-		<p style={marginLeft} className="comment-details">
+		<p
+			style={marginLeft}
+			className="comment-details"
+			onClick={() => setCollapsed((c) => !c)}
+		>
 			{/*<ProfilePic id={data.author}></ProfilePic>*/}
 			<span className="userID">{`u/${data.author}`}</span>
 			<span className="score">
@@ -66,7 +73,7 @@ const Comment = ({
 				{data.score > 1 && makeFriendly(data.score)}
 			</span>
 			<span className="time-posted">{elapsedTime(timeCreated)}</span>
-			<span className="awards">
+			<span className="comment-awards">
 				{data.all_awardings.map(
 					({ name, description, icon_url, count }) => {
 						return (
@@ -77,11 +84,13 @@ const Comment = ({
 					}
 				)}
 			</span>
+			{collapsed && (
+				<span className="collapsed-preview">
+					{data.body.slice(0, 50)}.....
+				</span>
+			)}
 		</p>
 	);
-
-	// ? what about data.collapsed_because_crowd_control ?
-	const shouldCollapse = data.collapsed === true ? true : false;
 
 	return (
 		// using key as [commentObj]data.id idk how the id is used in reddit tho.

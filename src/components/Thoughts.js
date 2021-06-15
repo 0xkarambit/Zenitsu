@@ -490,7 +490,13 @@ const HelpMenu = ({ closePopup }) => {
 					Keyboard Shortcuts
 					<VscSettingsGear
 						style={icon}
-						onClick={toggleEditMode}
+						onClick={() => {
+							editMode
+								? toggleEditMode()
+								: alert(
+										"edit field and press Enter to configure"
+								  ) || toggleEditMode();
+						}}
 						title="change shorcuts"
 					/>
 				</h2>

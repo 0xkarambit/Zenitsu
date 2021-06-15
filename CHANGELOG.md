@@ -1,3 +1,3 @@
 ## CHANGELOG
 
-1. customise shortcuts !, localStorage supported ! (not perfect has known drawback and errors).
+1. added collapsed comments previews.
