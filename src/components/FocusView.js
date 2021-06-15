@@ -1,3 +1,6 @@
+// ! we cannot use useKeyMappings hook here to add customisable shortcuts. idk why
+// if i do try to use it all other shortcuts dont work.
+
 import { useHotkeys } from "react-hotkeys-hook";
 import { useEffect, useState } from "react";
 import { useHistory, useRouteMatch } from "react-router-dom";
@@ -9,6 +12,8 @@ import CommentsSection from "./CommentsSection.js";
 // stores
 import { useViewStyleStore } from "./../stores/viewStyle.js";
 import { useCommentsStore } from "./../stores/commentsStore.js";
+// ! but this shows its not a problem with the usehotKeys hook.
+// import { useKeyMappings } from "./../stores/keymappings.js";
 
 const FocusView = ({
 	postsData,
@@ -37,9 +42,21 @@ const FocusView = ({
 
 	const toggleViewStyle = useViewStyleStore((state) => state.toggleViewStyle);
 
-	// switch to vert split view style
+	// #region getting shortcuts mapping
+	// const toggleVertSplit = useKeyMappings(
+	// 	(s) => s.keyMappings.toggleVertSplit
+	// );
+	// const blurKeys = useKeyMappings((s) => s.keyMappings.blurkeys);
+	// const nextPostKeys = useKeyMappings((s) => s.keyMappings.nextPostKeys);
+	// const prevPostKeys = useKeyMappings((s) => s.keyMappings.prevPostKeys);
+	// #endregion
+
+	// #region keyboard shortcuts
+	// toggleVertSplit
+	// useHotkeys(toggleVertSplit, () => toggleViewStyle());
 	useHotkeys("v", () => toggleViewStyle());
 
+	// useHotkeys(blurKeys, () => {
 	useHotkeys("ctrl + b", () => {
 		setBlur((b) => !b);
 		setUnBlurred((b) => {
@@ -48,7 +65,7 @@ const FocusView = ({
 			return b;
 		});
 	});
-
+	// #endregion
 	// currentPostData to be "undefined" means that there is no data. this is the first visit on the page ie to load this specific post from the url pathname
 	// we will load the post and comments and until the post has been loaded the currentPostData will be "undefined".
 	const {
@@ -65,6 +82,8 @@ const FocusView = ({
 	// ! clear store data on sub change ?
 	// ! omg check comments ... ....
 	// https://github.com/jaywcjlove/hotkeys/#defining-shortcuts
+
+	// useHotkeys(nextPostKeys,
 	useHotkeys(
 		"n",
 		() => {
@@ -89,6 +108,8 @@ const FocusView = ({
 	);
 	// damn i should read the docs more often. // well the data doesnt change that often so it should be ok.
 	// https://johannesklauss.github.io/react-hotkeys-hook/docs-use-hotkeys#memoisation # good website btw.
+
+	// useHotkeys(prevPostKeys,
 	useHotkeys(
 		"p",
 		() => {

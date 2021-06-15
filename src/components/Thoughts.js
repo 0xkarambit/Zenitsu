@@ -19,6 +19,10 @@ import { SubredditSelect } from "./SubSel.js";
 // stores
 import { useViewStyleStore } from "./../stores/viewStyle.js";
 import { useCommentsStore } from "./../stores/commentsStore.js";
+import { useKeyMappings } from "./../stores/keymappings.js";
+
+// icons
+import { VscSettingsGear } from "react-icons/vsc";
 
 export default function Thoughts({ shouldBlurAll }) {
 	// the displayMode gets set to $TESTINGMODE after every subreddit change.
@@ -50,7 +54,13 @@ export default function Thoughts({ shouldBlurAll }) {
 
 	const [dStyle, setDStyle] = useState("stack"); // stack, imgOnly.
 
-	useHotkeys("i", () =>
+	// #region
+	const [showKeyMappingsKeys, imgOnlyModeKeys, subSelKeys] = useKeyMappings(
+		(s) => [s.showKeyMappingsKeys, s.imgOnlyModeKeys, s.subSelKeys]
+	);
+	// #endregion
+
+	useHotkeys(imgOnlyModeKeys, () =>
 		setDStyle((s) => (s === "imgOnly" ? "stack" : "imgOnly"))
 	);
 
@@ -252,7 +262,9 @@ export default function Thoughts({ shouldBlurAll }) {
 	// hmmm is passing initPostNo instead of setInitPostNo gonna take more memry ?
 
 	//  toggle the show key mappings.
-	useHotkeys("shift + /", () => setShowKeyboardShortcuts((show) => !show));
+	useHotkeys(showKeyMappingsKeys, () =>
+		setShowKeyboardShortcuts((show) => !show)
+	);
 
 	// code for SubredditSelectior.
 	// #region
@@ -260,7 +272,7 @@ export default function Thoughts({ shouldBlurAll }) {
 	const toggleSelectMenu = () => setSelectMenuState(!selectMenuOpen);
 	const closeSelectMenu = () => setSelectMenuState(false);
 
-	useHotkeys("/", toggleSelectMenu);
+	useHotkeys(subSelKeys, toggleSelectMenu);
 
 	const sel_subreddit = (sub) => {
 		closeSelectMenu();
@@ -326,88 +338,162 @@ export default function Thoughts({ shouldBlurAll }) {
 	);
 }
 
-const keyMappings = {
-	"ctrl + shift + b": "toggle blurring over18 content.",
-	backspace: "go back",
-	g: "scroll to top",
-	"shift + /": "show keymappings menu",
-	// FOCUS VIEW
-	v: "toggle vert-split view",
-	"n, p": "scroll to next, previous post",
-	"shift + n,p": "gallery next, previous",
-	"ctrl + b": "blur/unblur current img in focus mode",
-	t: "toggle light & dark themes",
-	"/": "search/select sub",
-	l: "login with reddit",
-	m: "load more listings",
-	h: "hide sub header",
-	i: "toggle imgOnly mode"
-};
+// const keyMappings = {
+// 	"ctrl + shift + b": "toggle blurring over18 content.",
+// 	backspace: "go back",
+// 	g: "scroll to top",
+// 	"shift + /": "show keymappings menu",
+// 	// FOCUS VIEW
+// 	v: "toggle vert-split view",
+// 	"n, p": "scroll to next, previous post",
+// 	"shift + n,p": "gallery next, previous",
+// 	"ctrl + b": "blur/unblur current img in focus mode",
+// 	t: "toggle light & dark themes",
+// 	"/": "search/select sub",
+// 	l: "login with reddit",
+// 	m: "load more listings",
+// 	h: "hide sub header",
+// 	i: "toggle imgOnly mode"
+// };
 
 const keyMappingsByCategory = {
 	General: {
-		"ctrl + shift + b": "toggle blurring over18 content.",
-		backspace: "go back",
-		g: "scroll to top",
-		"shift + /": "show keymappings menu",
-		t: "toggle light & dark themes",
-		"/": "search/select sub",
-		l: "login with reddit",
-		h: "hide sub header",
-		i: "toggle imgOnly mode"
+		"ctrl + shift + b": {
+			desc: "toggle blurring over18 content.",
+			code: "over18ContentBlurKeys"
+		},
+		backspace: {
+			desc: "go back",
+			code: "goBackKeys"
+		},
+		g: {
+			desc: "scroll to top",
+			code: "scrollToTopKeys"
+		},
+		"shift + /": {
+			desc: "show keymappings menu",
+			code: ""
+		},
+		t: {
+			desc: "toggle light & dark themes",
+			code: ""
+		},
+		"/": {
+			desc: "search/select sub",
+			code: ""
+		},
+		l: {
+			desc: "login with reddit",
+			code: ""
+		},
+		h: {
+			desc: "hide sub header",
+			code: "hideHeaderKeys"
+		},
+		i: {
+			desc: "toggle imgOnly mode",
+			code: ""
+		}
 	},
 	FocusView: {
-		v: "toggle vert-split view",
-		"n, p": "scroll to next, previous post",
-		"shift + n,p": "gallery next, previous",
-		"ctrl + b": "blur/unblur current img in focus mode"
+		v: {
+			desc: "toggle vert-split view",
+			code: ""
+		},
+		"n, p": {
+			desc: "scroll to next, previous post",
+			code: ""
+		},
+		"shift + n, shift + p": {
+			desc: "gallery next, previous",
+			code: ""
+		},
+		"ctrl + b": {
+			desc: "blur/unblur current img in focus mode",
+			code: ""
+		}
 	},
 	StackView: {
-		m: "load more listings",
-		r: "Update grid Layout"
+		m: {
+			desc: "load more listings",
+			code: ""
+		},
+		r: {
+			desc: "Update grid Layout",
+			code: ""
+		},
+		s: {
+			desc: "start slideshow",
+			code: ""
+		},
+		"shift + =": {
+			desc: "increase img sizes in imgOnly mode",
+			code: ""
+		},
+		"shift + -": {
+			desc: "decrease img sizes in imgOnly mode",
+			code: ""
+		}
 	}
 };
 
-const HelpMenuOriginal = ({ closePopup }) => {
-	useHotkeys("escape", closePopup);
+// const HelpMenuOriginal = ({ closePopup }) => {
+// 	useHotkeys("escape", closePopup);
 
-	return (
-		// <div className="blur-bg">
-		<div className="" id="#over">
-			<div className="overlay">
-				<h2>Keyboard Shortcuts</h2>
-				<table className="shortcuts center">
-					<tr>
-						<th>Result</th>
-						<th>KeyMapping</th>
-					</tr>
-					{Object.keys(keyMappings).map((key) => {
-						return (
-							<tr>
-								<td>{keyMappings[key]}</td>
-								<td>
-									<strong>
-										<code>{key}</code>
-									</strong>
-								</td>
-							</tr>
-						);
-					})}
-				</table>
-			</div>
-		</div>
-		// </div>
-	);
-};
+// 	return (
+// 		// <div className="blur-bg">
+// 		<div className="" id="#over">
+// 			<div className="overlay">
+// 				<h2>Keyboard Shortcuts</h2>
+// 				<table className="shortcuts center">
+// 					<tr>
+// 						<th>Result</th>
+// 						<th>KeyMapping</th>
+// 					</tr>
+// 					{Object.keys(keyMappings).map((key) => {
+// 						return (
+// 							<tr>
+// 								<td>{keyMappings[key]}</td>
+// 								<td>
+// 									<strong>
+// 										<code>{key}</code>
+// 									</strong>
+// 								</td>
+// 							</tr>
+// 						);
+// 					})}
+// 				</table>
+// 			</div>
+// 		</div>
+// 		// </div>
+// 	);
+// };
 
 const HelpMenu = ({ closePopup }) => {
+	const icon = {
+		float: "right",
+		cursor: "pointer",
+		margin: "0.2rem 1rem 0rem 0rem"
+	};
+
+	const [editMode, setEditMode] = useState(false);
+	const toggleEditMode = () => setEditMode((m) => !m);
+
 	useHotkeys("escape", closePopup);
+	useHotkeys("shift + s", toggleEditMode);
 
 	return (
 		// <div className="blur-bg">
 		<div className="" id="#over">
 			<div className="overlay">
-				<h2>Keyboard Shortcuts</h2>
+				<h2>
+					Keyboard Shortcuts
+					<VscSettingsGear
+						style={icon}
+						onClick={toggleEditMode}
+						title="change shorcuts"
+					/>
+				</h2>
 				<div className="overlay-grid">
 					{Object.keys(keyMappingsByCategory).map((cat) => {
 						return (
@@ -430,13 +516,30 @@ const HelpMenu = ({ closePopup }) => {
 													{
 														keyMappingsByCategory[
 															cat
-														][key]
+														][key].desc
 													}
 												</td>
 												<td>
-													<strong>
-														<code>{key}</code>
-													</strong>
+													{editMode &&
+													cat !== "FocusView" ? (
+														<KeyMapInput
+															keys={key}
+															desc={
+																keyMappingsByCategory[
+																	cat
+																][key].desc
+															}
+															code={
+																keyMappingsByCategory[
+																	cat
+																][key].code
+															}
+														/>
+													) : (
+														<strong>
+															<code>{key}</code>
+														</strong>
+													)}
 												</td>
 											</tr>
 										);
@@ -449,5 +552,35 @@ const HelpMenu = ({ closePopup }) => {
 			</div>
 		</div>
 		// </div>
+	);
+};
+
+const KeyMapInput = ({ keys, desc, code }) => {
+	const input = useRef();
+
+	const setKeyMapping = useKeyMappings((s) => s.setKeyMapping);
+	const [val, setVal] = useState(keys);
+
+	const setShortCut = () => {
+		setKeyMapping(code, val);
+		return true;
+	};
+
+	return (
+		<input
+			className="keys-input"
+			value={val}
+			ref={input}
+			// ! but we cant use Enter_key, Arrows like this.
+			onChange={(e) => {
+				setVal(e.target.value);
+			}}
+			onKeyDown={(e) => {
+				e.key === "Enter" &&
+					setShortCut() &&
+					alert(`${code} updated !`);
+				e.key === "Escape" && input.current.blur();
+			}}
+		/>
 	);
 };

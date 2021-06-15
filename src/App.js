@@ -10,24 +10,36 @@ import NotFound from "./NotFound.js";
 
 import Home from "./components/Home.js";
 
-// const renderAtom = atom(false);
+// stores
+import { useKeyMappings } from "./stores/keymappings.js";
 
 function App() {
 	const history = useHistory();
 	const [shouldBlurAll, setShouldBlurAll] = useState(true);
 
-	useHotkeys("ctrl + shift + b", (e) => {
+	// #region getting shortcuts mapping
+	const over18ContentBlurKeys = useKeyMappings(
+		(s) => s.over18ContentBlurKeys
+	);
+	const goBackKeys = useKeyMappings((s) => s.goBackKeys);
+	const scrollToTopKeys = useKeyMappings((s) => s.scrollToTopKeys);
+	// #endregion
+
+	// #region keyboard shortcuts
+	// toggle over18ContentBlur.
+	useHotkeys(over18ContentBlurKeys, (e) => {
 		// prevent hiding, opening bookmarks bar.
 		e.preventDefault();
 		setShouldBlurAll((b) => !b);
 	});
+	// goBack
+	useHotkeys(goBackKeys, () => history.goBack());
 
-	useHotkeys("backspace", () => history.goBack());
-
-	// scroll to top
-	useHotkeys("g", () => {
+	// scroll to top/ scrollToTop
+	useHotkeys(scrollToTopKeys, () => {
 		document.querySelector("#root").scrollIntoView();
 	});
+	// #endregion
 
 	return (
 		<Provider>

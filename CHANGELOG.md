@@ -1,3 +1,3 @@
 ## CHANGELOG
 
-1. new styles for `shift + /` keymapping help menu.
+1. customise shortcuts !, localStorage supported ! (not perfect has known drawback and errors).

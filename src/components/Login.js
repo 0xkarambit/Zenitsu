@@ -17,6 +17,7 @@ const LoginButton = ({ loggedIn, setLoggedIn }) => {
 	// if logged in show user profile pic instead.
 	const [hide, setHide] = useState(true);
 
+	// idthink this need a customisable shortcut ya ???
 	useHotkeys("l", (e) => setHide(false));
 
 	const clicked = () => {

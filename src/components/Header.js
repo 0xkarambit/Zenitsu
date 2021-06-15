@@ -1,16 +1,21 @@
 // https://avatars.githubusercontent.com/HarshitJoshi9152
 import React, { useEffect, useRef, useState } from "react";
+// hooks
 import { useHistory, useParams, Link, useRouteMatch } from "react-router-dom";
 import { useHotkeys } from "react-hotkeys-hook";
+
+// components
+import RightNav from "./rightNav.js";
 // import Loader from "react-loader";
 import { Img } from "react-image";
 
-// import { atom, useAtom } from "jotai";
+// stores
+import { useKeyMappings } from "./../stores/keymappings.js";
 
-import RightNav from "./rightNav.js";
-
+// util functions.
 import { makeFriendly } from "./../utils/num.js";
 
+// css
 import "./header.css";
 import "./Notice.css";
 
@@ -43,10 +48,9 @@ export default function Header() {
 	const [askPermissionToBrowse, setAskPermissionToBrowse] = useState(false);
 
 	const [hidden, setHidden] = useState(false);
-	useHotkeys("h", () => {
-		setHidden((h) => !h);
-	});
 	const [theme, setTheme] = useState(localStorage.getItem("theme") || "dark");
+	// back to the old ways !
+	// setting the css variables to change appearance on theme change.
 	useEffect(() => {
 		if (theme === "dark") {
 			r.style.setProperty("--primary", bgDark);
@@ -59,11 +63,22 @@ export default function Header() {
 		}
 		localStorage.setItem("theme", theme);
 	}, [theme]);
-	const toggleTheme = () => {
-		const nextTheme = theme === "dark" ? "light" : "dark";
-		setTheme(nextTheme);
-	};
-	useHotkeys("t", toggleTheme, [theme]);
+
+	const toggleTheme = () =>
+		setTheme((t) => (t === "dark" ? "light" : "dark"));
+
+	// #region getting shortcuts mapping
+	const hideHeaderKeys = useKeyMappings((s) => s.hideHeaderKeys);
+	const toggleThemeKeys = useKeyMappings(
+		(s) => s.toggleThemeKeys
+	);
+	// #endregion
+
+	useHotkeys(hideHeaderKeys, () => {
+	// useHotkeys("h", () => {
+		setHidden((h) => !h);
+	});
+	useHotkeys(toggleThemeKeys, toggleTheme);
 
 	// check localStorage or JWT for default value.
 	const [loggedIn, setLoggedIn] = useState(false);

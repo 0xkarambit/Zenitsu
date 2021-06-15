@@ -6,6 +6,9 @@ import PostLoader from "./PostLoader.js";
 
 import { useHotkeys } from "react-hotkeys-hook";
 
+// stores
+import { useKeyMappings } from "./../stores/keymappings.js";
+
 const StackView = ({
 	postsData,
 	loadMorePosts,
@@ -31,9 +34,17 @@ const StackView = ({
 			}, 2500); // 3000 ms is a guess lol.
 		}
 	}, [subreddit]); // todo: use in thought.js too
+	
+	// #region
+	const startSlideShowKeys = useKeyMappings(s => s.startSlideShowKeys);
+	const rerenderGridKeys = useKeyMappings(s => s.rerenderGridKeys);
+	const loadMorePostsKeys = useKeyMappings(s => s.loadMorePostsKeys);
+	const incImgSizeKeys = useKeyMappings(s => s.incImgSizeKeys);
+	const decImgSizeKeys = useKeyMappings(s => s.decImgSizeKeys);
+	// #endregion
 
 	useHotkeys(
-		"s",
+		startSlideShowKeys,
 		() => {
 			// todo: set last seen
 			// get over here
@@ -51,10 +62,9 @@ const StackView = ({
 		[lastSeen, postsData]
 	);
 
-	// do we need this ???
-	useHotkeys("r", () => grid.current?.updateLayout());
+	useHotkeys(rerenderGridKeys, () => grid.current?.updateLayout());
 
-	useHotkeys("m", () => {
+	useHotkeys(loadMorePostsKeys, () => {
 		// onLayout prop on StackGrid
 		// i can calculate the ColCount using the width of each GridItem and gutter and total width available.
 		console.log(grid.current);
@@ -88,11 +98,12 @@ const StackView = ({
 	const limit = (val) =>
 		val > maxVal ? maxVal : val < minVal ? minVal : val;
 
-	useHotkeys("shift + =", () => {
+	
+	useHotkeys(incImgSizeKeys, () => {
 		setDStyleWidth((w) => limit(w + delta));
 		grid.current?.updateLayout();
 	});
-	useHotkeys("shift + -", () => {
+	useHotkeys(decImgSizeKeys, () => {
 		setDStyleWidth((w) => limit(w - delta));
 		grid.current?.updateLayout();
 	});

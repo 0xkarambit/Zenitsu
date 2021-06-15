@@ -2,10 +2,13 @@ import { useState } from "react";
 import { FaArrowAltCircleRight, FaArrowAltCircleLeft } from "react-icons/fa";
 import { useHotkeys } from "react-hotkeys-hook";
 
+//hooks
+import { useKeyMappings } from "./../stores/keymappings.js";
+
 import "./ImageGallery.css";
 
 // ok this seems harder than i thought.
-const ImageGallery = ({ gallery, media_metadata}) => {
+const ImageGallery = ({ gallery, media_metadata }) => {
 	// would gallery being passed down each time cause a re render and re allocation of [sources] ?
 	// guess we will have to use useMemo.
 	const [n, setN] = useState(0);
@@ -14,10 +17,10 @@ const ImageGallery = ({ gallery, media_metadata}) => {
 		// todo: check "media_metadata"
 		/* -> media_metadata -> id -> status [valid], e , m*/
 		(img) => {
-			let format = media_metadata[img.media_id]?.m
+			let format = media_metadata[img.media_id]?.m;
 			format = format.slice(format.indexOf("/") + 1);
 			// alert(format);
-			// (img) => `https://i.redd.it/${img.media_id}.jpg` 
+			// (img) => `https://i.redd.it/${img.media_id}.jpg`
 			return `https://preview.redd.it/${img.media_id}.${format}`;
 		}
 	);
@@ -32,8 +35,16 @@ const ImageGallery = ({ gallery, media_metadata}) => {
 	const next = () => setN(n === sources.length - 1 ? n : n + 1);
 	const prev = () => setN(n === 0 ? 0 : n - 1);
 
-	useHotkeys("shift + n", next);
-	useHotkeys("shift + p", prev);
+	// #region getting shortcuts mapping
+	const nextImgKeys = useKeyMappings("nextImgKeys");
+	const prevImgKeys = useKeyMappings("prevImgKeys");
+	// #endregion
+
+	useHotkeys(nextImgKeys, next);
+	useHotkeys(prevImgKeys, prev);
+	// useHotkeys("shift + n", next);
+	// useHotkeys("shift + p", prev);
+
 	// should we have multiple img tags or same img tag;
 	// add blur ability too.
 	return (

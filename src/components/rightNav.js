@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 
 import LoginButton from "./Login.js";
+import Preferences from "./Preferences.js";
 
 import {
 	VscColorMode,
@@ -9,6 +10,7 @@ import {
 	// VscAccount,
 	VscSettingsGear
 } from "react-icons/vsc";
+import { useHotkeys } from "react-hotkeys-hook";
 
 const iconStyle = {
 	width: "32px",
@@ -22,7 +24,7 @@ const RightNav = ({ toggleTheme, toggleInfo, loggedIn, setLoggedIn }) => {
 	return (
 		<span className="right">
 			<LoginButton {...{ loggedIn, setLoggedIn }} />
-			<VscSettingsGear style={iconStyle} title="settings" />
+			<Settings></Settings>
 			<span className="theme-switch">
 				<VscColorMode style={iconStyle} onClick={toggleTheme} />
 			</span>
@@ -43,3 +45,22 @@ const RightNav = ({ toggleTheme, toggleInfo, loggedIn, setLoggedIn }) => {
 };
 
 export default RightNav;
+
+const Settings = () => {
+	const [show, setShow] = useState(false);
+
+	useHotkeys("f", () => setShow((s) => !s));
+
+	return (
+		<>
+			<VscSettingsGear
+				style={iconStyle}
+				title="settings"
+				onClick={() => setShow((s) => !s)}
+			/>
+			{show && <Preferences />}
+		</>
+	);
+};
+
+// export default Settings;
