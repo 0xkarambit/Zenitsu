@@ -112,6 +112,15 @@
 	margin-bottom: 20px;
 }
 
+/* ! should we use scroll snap for browsing comments
+ https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Scroll_Snap/Basic_concepts
+ */
+.toplevel-comment:nth-child(odd) {
+	/* maybe this hsould be a preference ? lets jsut make it subtle for now*/
+	/* ? we could try other filters too.. https://alligator.io/css/css-filter-examples/ */
+	backdrop-filter: contrast(95%);
+}
+
 /* ? this decides the horizontal text spread !! */
 /* to fix ugly horizontal scrollbar */
 [data-view-vert="false"] .comments {
@@ -130,7 +139,9 @@
 	height: 97vh;
 }
 
-/* style for scrollbar */
+/* #region styles for post scrollbar */
+/* wow use this https://grsmto.github.io/simplebar/examples/ */
+/* * what is :window-inactive ??? */
 /* ! SHOOULD I ADD `F` SIGN ON THE FOCUSED SECTION ?*/
 [data-view-vert="true"] .post::-webkit-scrollbar-track {
 	box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
@@ -151,6 +162,13 @@
 	border-radius: 3px;
 	/* border: 2px solid #555555; */
 }
+
+[data-view-vert="true"] .post::-webkit-scrollbar-corner {
+	background-color: var(--primary);
+	box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+	-webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+}
+/* #endregion */
 
 /* ? to use a gradient we need to style the x, y scrollbars differently */
 /* [data-view-vert="true"] .post::-webkit-scrollbar-thumb {
