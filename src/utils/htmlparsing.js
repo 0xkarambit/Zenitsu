@@ -156,8 +156,7 @@ function convertHTMLEntity(text) {
 
 	const out = parsed
 		.split("\n")
-		// i shouldnt assign the class here, it messes with the comments lol
-		.map((d) => `<p>${d}</p>`)
+		.filter((val) => val !== "")
 		.join("");
 
 	return { __html: out };

@@ -110,6 +110,7 @@
 .toplevel-comment {
 	margin-left: 0px !important;
 	margin-bottom: 20px;
+	border-radius: 8px;
 }
 
 /* ! should we use scroll snap for browsing comments
@@ -118,6 +119,7 @@
 .toplevel-comment:nth-child(odd) {
 	/* maybe this hsould be a preference ? lets jsut make it subtle for now*/
 	/* ? we could try other filters too.. https://alligator.io/css/css-filter-examples/ */
+	/* ! or just use a color ! there are performace costs for using filter*/
 	backdrop-filter: contrast(95%);
 }
 
@@ -233,7 +235,7 @@ blockquote::before {
 	position: absolute;
 	transform: translate(-250%);
 	width: 5px;
-	height: 1em; /*What do i do it should be equal to content height | nice 1 em helped out !*/
+	height: 100%; /*What do i do it should be equal to content height | nice 1 em helped out !*/
 	background-color: var(--text);
 	opacity: 0.5;
 	border-radius: 1px;
