@@ -20,6 +20,7 @@ import { BiLinkExternal } from "react-icons/bi";
 import { BiUpvote } from "react-icons/bi";
 
 import "./Post.css";
+import { useHotkeys } from "react-hotkeys-hook";
 
 /*todo: should i give option to user to switch markdown libraries */
 
@@ -51,6 +52,7 @@ export default function Post({
 	is_gallery,
 	gallery_data,
 	media_metadata,
+	removed_by_category,
 	secure_media,
 	displayMode = "stack",
 	shouldBlur,
@@ -94,6 +96,25 @@ export default function Post({
 	// todo: cleanup => set Last post to this index, and mark as seen on mount.
 	// ok wwait does the post even get unmounted ??? NO i guess it only gets re rendered with new props.
 	// so lets watch for props that may change.
+
+	const [isTitleCollapsed, setIsTitleCollapsed] = useState(false);
+
+	// to expand the collapsed title on post change
+	useEffect(() => {
+		setIsTitleCollapsed(false);
+	}, [permalink]);
+
+	useHotkeys(
+		"z",
+		() => {
+			console.log(filterSelftext(convertHTMLEntityORG(title)));
+			if (filterSelftext(convertHTMLEntityORG(title)).length > 100) {
+				setIsTitleCollapsed((t) => !t);
+			}
+		},
+		null,
+		[title]
+	);
 
 	const markdownList = useMemo(() => {
 		if (!selftext || displayMode === "focus") return null;
@@ -177,6 +198,7 @@ export default function Post({
 							blur={false}
 							loop={is_gif}
 							style={imgOnly}
+							muted={dStyle === "imgOnly"}
 							// ! resposiveness wont work for this rn. cause src is not right
 							width={videoWidth}
 							// height={videoHeight}
@@ -284,8 +306,24 @@ export default function Post({
 				<p className="author">{`u/${author}`}</p>
 			)}
 
-			<h2 className="title">
-				{filterSelftext(convertHTMLEntityORG(title))}
+			<h2
+				className="title"
+				style={{
+					opacity: isTitleCollapsed ? "75%" : "100%"
+				}}
+				onClick={() => setIsTitleCollapsed(false)}
+				title={
+					isTitleCollapsed
+						? "click to expand title"
+						: "collapse title with z"
+				}
+			>
+				{isTitleCollapsed
+					? `${filterSelftext(convertHTMLEntityORG(title)).slice(
+							0,
+							100
+					  )}...`
+					: filterSelftext(convertHTMLEntityORG(title))}
 				{/*TODO: the message in thumbnail could be something else too right ya, browser reddit to know more*/}
 				{thumbnail === "spoiler" && (
 					<span className="spoiler">SPOILER</span>
@@ -323,6 +361,13 @@ export default function Post({
 			{/*! displayMode focus stuff*/}
 			{(() => {
 				if (displayMode === "focus") {
+					if (removed_by_category === "moderator") {
+						return (
+							<span class="removed_notice">
+								post removed by mods.
+							</span>
+						);
+					}
 					{
 						/*todo: disabled for some time
 						if (is_gallery === true) {

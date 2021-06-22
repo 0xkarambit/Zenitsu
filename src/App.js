@@ -7,6 +7,7 @@ import Header from "./components/Header.js";
 import Sidebar from "./components/Sidebar.js";
 import Thoughts from "./components/Thoughts.js";
 import NotFound from "./NotFound.js";
+import AuthHandler from "./AuthHandler.js";
 
 import Home from "./components/Home.js";
 
@@ -58,6 +59,9 @@ function App() {
 								}}
 							/>
 						</div>
+					</Route>
+					<Route path="/auth_redirect">
+						<AuthHandler></AuthHandler>
 					</Route>
 					<Route>
 						<NotFound />

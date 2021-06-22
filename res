@@ -300,3 +300,22 @@ http://localhost:3000/r/WritingPrompts/https://www.reddit.com/r/WritingPrompts/c
 /* todo: what is {coin_symbol} in desc */
 /* ! what we cant hover over reply awards ?*/
  -->
+
+add archived logo.
+add removed_by_mods logo.
+
+removed / deleted:
+	removed_by, removed_by_category,
+	removal_reason
+	banned_by
+	hidden
+
+use raw_json=1 param
+
+confusing json terms:
+	locked:
+	send_replies: 
+	archived:
+
+
+	no_follow:

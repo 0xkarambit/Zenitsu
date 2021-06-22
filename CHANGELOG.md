@@ -1,5 +1,6 @@
 ## CHANGELOG
 
-1. better readability styled .md > p tags with padding !
-2. fixed useless multiple p tags in .md in comments !
-3. fixed blockquote block-margin and ::before height !
+1. better images in posts (more padding).
+2. collapse title for posts with long titles.
+3. better outline on comments :focus.
+4. added removed by mods button.

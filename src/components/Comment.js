@@ -1,3 +1,4 @@
+// ! give markdown data.body
 import { useRef, useState } from "react";
 // import randomColor from "randomcolor";
 import palx from "palx";
@@ -58,15 +59,15 @@ const Comment = ({
 	// onClick={() => com.current.setAttribute("style", "display:none")}
 	// ? what about data.collapsed_because_crowd_control ?
 	const shouldCollapse = data.collapsed === true ? true : false;
-	const [collapsed, setCollapsed] = useState(shouldCollapse);
+	const [isCollapsed, setIsCollapsed] = useState(shouldCollapse);
 	const commentHead = (
 		<p
 			style={{
 				...marginLeft,
-				...{ filter: collapsed ? "opacity(0.7)" : null }
+				...{ filter: isCollapsed ? "opacity(0.7)" : null }
 			}}
-			className={`comment-details ${collapsed ? "darker" : null}`}
-			onClick={() => setCollapsed((c) => !c)}
+			className={`comment-details ${isCollapsed ? "darker" : null}`}
+			onClick={() => setIsCollapsed((c) => !c)}
 		>
 			{/*<ProfilePic id={data.author}></ProfilePic>*/}
 			<span className="userID">{`u/${data.author}`}</span>
@@ -87,7 +88,7 @@ const Comment = ({
 					}
 				)}
 			</span>
-			{collapsed && (
+			{isCollapsed && (
 				<span className="collapsed-preview">
 					{data.body.slice(0, 50)}.....
 				</span>

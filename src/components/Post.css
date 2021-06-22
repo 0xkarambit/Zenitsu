@@ -31,9 +31,7 @@
 	 	cover : the image will fill the height and width of its box, once again
 	  maintaining its aspect ratio but often cropping the image in the process. */
 	object-fit: contain;
-	max-width: 100%;
-	/* max-height: 98vh; */
-	max-height: 700px;
+	max-height: 80vh;
 	/* ? idk should i add a max-height */
 	/* ! http://localhost:3000/r/196/https://www.reddit.com/r/196/comments/nwg8km/not_a_joke_im_actually_in_thr_95th_percentile_of/ */
 	/* ! VS */
@@ -45,6 +43,10 @@
 	transition: width 2s, height 2s, transform 0.5s;
 }
 
+.post[data-view-vert="true"] .post-img {
+	max-width: 100%;
+}
+
 .post-img:hover {
 	transform: scale(1.02);
 }
@@ -53,6 +55,20 @@
 	object-fit: contain;
 	max-width: 100%;
 	max-height: 98vh;
+}
+
+.removed_notice {
+	display: block;
+	padding: 10px;
+	margin: 1rem;
+	border-radius: 8px;
+	border: 4px solid var(--text);
+	font-family: Verdana, Geneva, Tahoma, sans-serif;
+	font-size: 1.2em;
+	font-weight: bold;
+	text-transform: capitalize;
+	color: var(--text);
+	text-align: center;
 }
 
 /* MARKDOWN STYLE */

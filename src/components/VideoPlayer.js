@@ -11,11 +11,21 @@ audio has a durationchange Event
 todo: find a way to figure out if its a direct load then mute the audio.
 */
 
-const VideoPlayer = ({ videoUrl, audioUrl, poster, width, height, is_gif }) => {
+const VideoPlayer = ({
+	videoUrl,
+	audioUrl,
+	poster,
+	width,
+	height,
+	is_gif,
+	muted
+}) => {
 	const [autoPlay, setAutoPlay] = useState(true);
 	const [shouldPreLoad, setShouldPreLoad] = useState(false);
 	const videoPlayer = useRef();
 	const audioPlayer = useRef();
+
+	const [clicked, setClicked] = useState(false);
 
 	const play = () => {
 		videoPlayer.current.play().catch(console.log);
@@ -52,13 +62,19 @@ const VideoPlayer = ({ videoUrl, audioUrl, poster, width, height, is_gif }) => {
 				onPause={pause}
 				onWaiting={pause}
 				onCanPlayThrough={play} // in response to onWaiting
-				onStalled={pause}
+				onStalled={pause} // ! maybe this is the one ? idk
 				onSeeked={changeTimeStamp}
 			>
 				<source src={videoUrl} type="" />
 				your browser does not support video
 			</video>
-			<audio src={audioUrl} ref={audioPlayer} loop></audio>
+			<audio
+				src={audioUrl}
+				ref={audioPlayer}
+				loop
+				// doesnt work as of now.
+			// autoPlay={!muted}
+			></audio>
 		</>
 	);
 };

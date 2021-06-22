@@ -16,8 +16,10 @@ import "./helpmenu.css";
 import FocusView from "./FocusView.js";
 import StackView from "./StackView.js";
 import { SubredditSelect } from "./SubSel.js";
+
 // stores
 import { useViewStyleStore } from "./../stores/viewStyle.js";
+import { useSnoo } from "./../stores/snoo.js";
 import { useCommentsStore } from "./../stores/commentsStore.js";
 import { useKeyMappings } from "./../stores/keymappings.js";
 
@@ -25,7 +27,8 @@ import { useKeyMappings } from "./../stores/keymappings.js";
 import { VscSettingsGear } from "react-icons/vsc";
 
 export default function Thoughts({ shouldBlurAll }) {
-	// the displayMode gets set to $TESTINGMODE after every subreddit change.
+	// const { snoo, setSnoo } = useSnoo();
+	// make snoowrap client on mount.
 	const match = useRouteMatch("/r/:subreddit");
 	// useMemo
 	const subreddit = useMemo(
@@ -105,7 +108,7 @@ export default function Thoughts({ shouldBlurAll }) {
 	};
 
 	React.useEffect(() => {
-		console.log("SUB CHANGED", { subreddit });
+		// console.log("SUB CHANGED", { subreddit });
 		// TODO: USE PERSISTENCE LIBRARY.
 		// to avoid fetching all listings of a subreddit when the user only intends to view one. SINGLE PAGE LOAD
 		if (loaded) return null;

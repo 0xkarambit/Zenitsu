@@ -1,4 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
+import { getAuthUrl } from "./../api/auth.js";
+
 import { useHotkeys } from "react-hotkeys-hook";
 
 import { VscAccount } from "react-icons/vsc";
@@ -15,25 +17,36 @@ const iconStyle = {
 
 const LoginButton = ({ loggedIn, setLoggedIn }) => {
 	// if logged in show user profile pic instead.
-	const [hide, setHide] = useState(true);
+	// const [hide, setHide] = useState(true);
 
 	// idthink this need a customisable shortcut ya ???
-	useHotkeys("l", (e) => setHide(false));
+	// useHotkeys("l", (e) => setHide(false));
+	useHotkeys("l", (e) => {
+		if (loggedIn) {
+			// log out ?
+		} else {
+			const url = getAuthUrl();
+			console.log(url);
+			window.location.href = url;
+			// https://www.reddit.com/api/v1/authorize?client_id=ERx7Yyvs9gIJUg&response_type=code&state=fe211bebc52eb3da9bef8db6e63104d3&redirect_uri=https%3A%2F%2Fzenitsu.onrender.com%2Fauth_redirect&duration=temporary&scope=identity%20wikiread%20wikiedit
+			// https://www.reddit.com/api/v1/authorize?client_id=ERx7Yyvs9gIJUg&response_type=token&state=fe211bebc52eb3da9bef8db6e63104d3&redirect_uri=https%3A%2F%2Fzenitsu.onrender.com%2Fauth_redirect&duration=temporary&scope=identity%20wikiread%20wikiedit
+		}
+	});
 
-	const clicked = () => {
-		setHide((show) => !show);
-	};
+	// const clicked = () => {
+	// 	setHide((show) => !show);
+	// };
 
 	return (
 		<span>
 			{!loggedIn && (
 				<VscAccount
-					onClick={clicked}
+					// onClick={clicked}
 					style={iconStyle}
 					title="Sign In"
 				/>
 			)}
-			{!hide && <LoginPopup setHide={setHide}></LoginPopup>}
+			{/*!hide && <LoginPopup setHide={setHide}></LoginPopup>*/}
 			{/*!hide && <LoginPopup setHide={setHide} />*/}
 		</span>
 	);
@@ -146,6 +159,7 @@ const LoginPopup = ({ setHide }) => {
 							type="checkbox"
 							name="remember_me"
 							checked={remember_me}
+							onChange={onChange}
 							onKeyDown={(e) =>
 								e.key === "Enter" && toggleChecked()
 							}
