@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
-import { getAuthUrl } from "./../api/auth.js";
+import { getAuthUrl } from "./../api/authMethods.js";
 
 import { useHotkeys } from "react-hotkeys-hook";
 
