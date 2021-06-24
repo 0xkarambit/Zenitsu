@@ -20,11 +20,37 @@ export const getAuthUrl = () => {
 };
 
 export const getCodeFromUrl = () => {
-	return new URL(window.location.href).searchParams.get("access_token");
+	// ok the attributes are not stored in searchParams but in hash.
+	// return new URL(window.location.href).searchParams.get("access_token");
+	const hash = window.location.hash.substr(1);
+
+	const result = hash.split("&").reduce(function (res, item) {
+		const parts = item.split("=");
+		res[parts[0]] = parts[1];
+		return res;
+	}, {});
+
+	// ? access_denied
+	if (result.error) {
+		// ! user denied access.
+		// error=access_denied
+	}
+
+	return result.access_token;
 };
 
 export const getFromUrl = (attr) => {
-	return new URL(window.location.href).searchParams.get(attr);
+	// ok the attributes are not stored in searchParams but in hash.
+	// return new URL(window.location.href).searchParams.get(attr);
+	const hash = window.location.hash.substr(1);
+
+	const result = hash.split("&").reduce(function (res, item) {
+		const parts = item.split("=");
+		res[parts[0]] = parts[1];
+		return res;
+	}, {});
+
+	return result[attr];
 };
 
 export const getSnooFromUrl = () => {
@@ -35,8 +61,11 @@ export const getSnooFromUrl = () => {
 	// * class: https://not-an-aardvark.github.io/snoowrap/snoowrap.html#snoowrap__anchor
 	// config: https://not-an-aardvark.github.io/snoowrap/snoowrap.html#config
 	return new Snoowrap({
-		accessToken: code
+		accessToken: code,
+		userAgent: "zenitsu web app" // ? lmao import from consts.
+		// ! add userAgent.
 	});
+
 	/*
 		*userAgent	string
 		A unique description of what your app does. This argument is not necessary when snoowrap is running in a browser.

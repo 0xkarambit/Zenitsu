@@ -1,7 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { useHotkeys } from "react-hotkeys-hook";
 
-import { getFromUrl, getSnooFromUrl, getCodeFromUrl } from "./api/auth.js";
+import {
+	getFromUrl,
+	getSnooFromUrl,
+	getCodeFromUrl
+} from "./api/authMethods.js";
 import { useSnoo } from "./stores/snoo.js";
 
 // to be used on "/auth_redirect"
@@ -30,9 +34,11 @@ const AuthHandler = () => {
 		const data = snoo.getHot().map((post) => post.title);
 		setData(data); // on success.
 		setLoaded(true); // on success.
+		console.log("DONE!");
+		console.log(snoo);
 	};
 
-	useHotkeys("ctrl + l", () => (authorised && !loaded ? load() : null));
+	useHotkeys("shift + l", () => (authorised && !loaded ? load() : null));
 
 	return (
 		<>

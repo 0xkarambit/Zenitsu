@@ -319,3 +319,9 @@ confusing json terms:
 
 
 	no_follow:
+
+
+better structre app knowledge and todo(s) lmao
+use typescript, ChakraUI, etc idk
+
+lmao fix >!SPOILERTEXT!< ; experiment with new way to render post body.
