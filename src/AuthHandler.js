@@ -32,7 +32,7 @@ const AuthHandler = () => {
 
 	const load = () => {
 		const data = snoo.getHot().map((post) => post.title);
-		setData(data); // on success.
+		data.then((titles) => setData(titles)); // on success.
 		setLoaded(true); // on success.
 		console.log("DONE!");
 		console.log(snoo);
