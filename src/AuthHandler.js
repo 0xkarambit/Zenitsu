@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { Redirect } from "react-router-dom";
 import { useHotkeys } from "react-hotkeys-hook";
 
 import {
@@ -6,23 +7,29 @@ import {
 	getSnooFromUrl,
 	getCodeFromUrl
 } from "./api/authMethods.js";
+
+// stores
 import { useSnoo } from "./stores/snoo.js";
+import { useLoggedIn } from "./stores/loggedIn.js";
 
 // to be used on "/auth_redirect"
 const AuthHandler = () => {
 	const { snoo, setSnoo } = useSnoo();
-	const [authorised, setAuthorised] = useState(false);
+	const { loggedIn, setLoggedIn } = useLoggedIn();
 	const [code, setCode] = useState(null);
-	// make snoowrap client on mount.
+
+	// ? make snoowrap client on mount.
 	useEffect(() => {
 		// find sotoed in localStorage first
 		const res = getSnooFromUrl();
 		console.log({ res });
 		if (res === "NO_LOGIN") {
 			// the user didnt allow auth.
+			return null;
 		}
 		setSnoo(res);
-		setAuthorised(true);
+		setLoggedIn(true);
+
 		const c = getCodeFromUrl();
 		setCode(c);
 	}, []);
@@ -41,15 +48,39 @@ const AuthHandler = () => {
 	// ! add read scope
 	// ! find a way to find required scopes for the methods
 	// ! test this <SHORTCUT>function in dev server.
-	useHotkeys("shift + l", (e) => (authorised && !loaded ? load() : null));
+
+	// !ok shift + l doesnt work i guess but the $snoo does.
+
+	useHotkeys("x", (e) => {
+		console.log("called");
+		console.log(e);
+		if (loggedIn && !loaded) {
+			load();
+		}
+	});
 
 	return (
 		<>
 			<h1>Logging in !</h1>
 			<h1>{code}</h1>
 			{loaded && data.map((title) => <p>{title}</p>)}
+			<h2>
+				{loggedIn
+					? "Authorised !" //+ user name
+					: "Authentication Request Rejected."}
+			</h2>
+			redirecting to /.{" "}
+			{/*HOME FEED ? idk maybe "/feed" or if not authorised to "/"*/}
+			<Redirect to="/"></Redirect>
 		</>
 	);
 };
 
 export default AuthHandler;
+// <Redirect
+// to={{
+// 	pathname: "/login",
+// 	search: "?utm=your+face",
+// 	state: { referrer: currentLocation }
+// }}
+// />

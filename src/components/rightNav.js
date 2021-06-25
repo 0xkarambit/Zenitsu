@@ -1,8 +1,14 @@
 import React, { useState, useEffect } from "react";
 
+// components
 import LoginButton from "./Login.js";
 import Preferences from "./Preferences.js";
+import ProfilePic from "./ProfilePic.js";
 
+// stores
+import { useLoggedIn } from "./../stores/loggedIn.js";
+
+// icons
 import {
 	VscColorMode,
 	VscInfo,
@@ -20,10 +26,17 @@ const iconStyle = {
 
 const repoLink = "https://github.com/HarshitJoshi9152/showerthoughts";
 
-const RightNav = ({ toggleTheme, toggleInfo, loggedIn, setLoggedIn }) => {
+const RightNav = ({ toggleTheme, toggleInfo, setLoggedIn }) => {
+	const loggedIn = useLoggedIn((s) => s.loggedIn);
+	// const loggedIn = true;
+
 	return (
 		<span className="right">
-			<LoginButton {...{ loggedIn, setLoggedIn }} />
+			{loggedIn ? (
+				<ProfilePic userName={"HarshitJoshi9152"} />
+			) : (
+				<LoginButton {...{ loggedIn, setLoggedIn }} />
+			)}
 			<Settings></Settings>
 			<span className="theme-switch">
 				<VscColorMode style={iconStyle} onClick={toggleTheme} />

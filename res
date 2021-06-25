@@ -363,3 +363,8 @@ Snoowrpa class
 			}
 		]
 	getMe() -> https://not-an-aardvark.github.io/snoowrap/snoowrap.html#getMe__anchor
+
+ok so it uses bluebird promises
+
+APP only Oauth ?
+https://github.com/not-an-aardvark/snoowrap/pull/207

@@ -11,7 +11,7 @@ import Award from "./Award.js";
 
 import { makeFriendly, elapsedTime } from "./../utils/num.js";
 import { convertHTMLEntity } from "./../utils/htmlparsing.js";
-// import ProfilePic from "./ProfilePic.js";
+import ProfilePic from "./ProfilePic.js";
 
 // returns  each with 10 colors
 const colors = palx("grey");
@@ -69,7 +69,7 @@ const Comment = ({
 			className={`comment-details ${isCollapsed ? "darker" : null}`}
 			onClick={() => setIsCollapsed((c) => !c)}
 		>
-			{/*<ProfilePic id={data.author}></ProfilePic>*/}
+			{/* <ProfilePic userName={data.author}></ProfilePic> */}
 			<span className="userID">{`u/${data.author}`}</span>
 			<span className="score">
 				<BiUpvote alt="arrow-up" style={icon} className="arrow" />

@@ -34,6 +34,7 @@ export const getCodeFromUrl = () => {
 	if (result.error) {
 		// ! user denied access.
 		// error=access_denied
+		return null;
 	}
 
 	return result.access_token;
@@ -55,7 +56,7 @@ export const getFromUrl = (attr) => {
 
 export const getSnooFromUrl = () => {
 	const code = getCodeFromUrl();
-	if (code === null) return "NO_LOGIN";
+	if (code === null || code === undefined) return "NO_LOGIN";
 	// Now we have a requester that can access reddit through the user's account
 
 	// * class: https://not-an-aardvark.github.io/snoowrap/snoowrap.html#snoowrap__anchor

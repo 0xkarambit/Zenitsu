@@ -79,3 +79,15 @@ export const useKeyMappings = create((set, get) => ({
 		localStorage.setItem(name, keyMapping);
 	}
 }));
+
+/*
+USAGE
+
+import { useKeyMappings } from "./../stores/keymappings.js";
+
+// #region
+	const [showKeyMappingsKeys, imgOnlyModeKeys, subSelKeys] = useKeyMappings(
+		(s) => [s.showKeyMappingsKeys, s.imgOnlyModeKeys, s.subSelKeys]
+	);
+	// #endregion
+*/
