@@ -325,3 +325,41 @@ better structre app knowledge and todo(s) lmao
 use typescript, ChakraUI, etc idk
 
 lmao fix >!SPOILERTEXT!< ; experiment with new way to render post body.
+
+img loading when switching in focusView mode
+resizable FocusView post view side
+
+ok 
+https://not-an-aardvark.github.io/snoowrap/snoowrap.html#getHot__anchor
+	returns listing but type is # promise. !
+	but if it returns a promise then how can we run a map method on it ?
+
+	// Printing a list of the titles on the front page
+	r.getHot().map(post => post.title).then(console.log);
+
+https://not-an-aardvark.github.io/snoowrap/Listing.html
+
+Snoowrpa class
+	getHot() -> ok required // READ SCOPE ! lmao
+	// res
+		Proxy [
+			[Function: targetFunc] {
+				_promise_chain_cache: [Object: null prototype] {}
+			},
+			{
+				get: [Function: get],
+				apply: [Function: apply],
+				construct: [Function: construct],
+				defineProperty: [Function],
+				deleteProperty: [Function],
+				getOwnPropertyDescriptor: [Function],
+				getPrototypeOf: [Function],
+				has: [Function],
+				isExtensible: [Function],
+				ownKeys: [Function],
+				preventExtensions: [Function],
+				set: [Function],
+				setPrototypeOf: [Function]
+			}
+		]
+	getMe() -> https://not-an-aardvark.github.io/snoowrap/snoowrap.html#getMe__anchor

@@ -38,7 +38,10 @@ const AuthHandler = () => {
 		console.log(snoo);
 	};
 
-	useHotkeys("shift + l", () => (authorised && !loaded ? load() : null));
+	// ! add read scope
+	// ! find a way to find required scopes for the methods
+	// ! test this <SHORTCUT>function in dev server.
+	useHotkeys("shift + l", (e) => (authorised && !loaded ? load() : null));
 
 	return (
 		<>

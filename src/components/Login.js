@@ -25,6 +25,7 @@ const LoginButton = ({ loggedIn, setLoggedIn }) => {
 		if (loggedIn) {
 			// log out ?
 		} else {
+			const scope = ["identity", "wikiread", "wikiedit", "read"];
 			const url = getAuthUrl();
 			console.log(url);
 			window.location.href = url;

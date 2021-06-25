@@ -1,10 +1,10 @@
 import Snoowrap from "snoowrap";
 
-export const getAuthUrl = () => {
+export const getAuthUrl = (scope) => {
 	// https://github.com/reddit-archive/reddit/wiki/OAuth2#authorization-implicit-grant-flow
 	const authenticationUrl = Snoowrap.getAuthUrl({
 		clientId: "ERx7Yyvs9gIJUg",
-		scope: ["identity", "wikiread", "wikiedit"],
+		scope: scope,
 		redirectUri: "https://zenitsu.onrender.com/auth_redirect",
 		permanent: false,
 		state: "fe211bebc52eb3da9bef8db6e63104d3", // a random string, this could be validated when the user is redirected back
