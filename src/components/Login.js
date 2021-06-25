@@ -26,7 +26,7 @@ const LoginButton = ({ loggedIn, setLoggedIn }) => {
 			// log out ?
 		} else {
 			const scope = ["identity", "wikiread", "wikiedit", "read"];
-			const url = getAuthUrl();
+			const url = getAuthUrl(scope);
 			console.log(url);
 			window.location.href = url;
 			// https://www.reddit.com/api/v1/authorize?client_id=ERx7Yyvs9gIJUg&response_type=code&state=fe211bebc52eb3da9bef8db6e63104d3&redirect_uri=https%3A%2F%2Fzenitsu.onrender.com%2Fauth_redirect&duration=temporary&scope=identity%20wikiread%20wikiedit
