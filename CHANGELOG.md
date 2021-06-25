@@ -1,5 +1,4 @@
 ## CHANGELOG
 
-1. Profile Pics are here (not enabled lamo) !
-2. snoo is working !.
-3. fixed error in `getSnooFromUrl` arising from change in `getCodeFromUrl`.
+1. scrolling to top, when header is made visible again !
+2. made dark mode --text brighter #eee.

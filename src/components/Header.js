@@ -30,7 +30,7 @@ const r = document.querySelector(":root");
 const bgLight = "#edf6f9";
 const fgLight = "#1c1412";
 const bgDark = "#1d1f21";
-const fgDark = "#C5C8C6";
+const fgDark = "#eee";
 const linkDark = "#c200c1";
 
 export default function Header() {
@@ -69,14 +69,16 @@ export default function Header() {
 
 	// #region getting shortcuts mapping
 	const hideHeaderKeys = useKeyMappings((s) => s.hideHeaderKeys);
-	const toggleThemeKeys = useKeyMappings(
-		(s) => s.toggleThemeKeys
-	);
+	const toggleThemeKeys = useKeyMappings((s) => s.toggleThemeKeys);
 	// #endregion
 
 	useHotkeys(hideHeaderKeys, () => {
-	// useHotkeys("h", () => {
-		setHidden((h) => !h);
+		// useHotkeys("h", () => {
+		setHidden((h) => {
+			// should this be a preference too ?
+			if (h === true) document.querySelector("#root").scrollIntoView();
+			return !h;
+		});
 	});
 	useHotkeys(toggleThemeKeys, toggleTheme);
 
