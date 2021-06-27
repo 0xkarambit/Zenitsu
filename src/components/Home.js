@@ -14,7 +14,6 @@ const Home = (props) => {
 	}, []);
 
 	const changed = (e) => {
-		console.log(e);
 		setSub(e.target.value);
 	};
 

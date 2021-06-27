@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { Redirect } from "react-router-dom";
 import { useHotkeys } from "react-hotkeys-hook";
 
@@ -17,9 +17,19 @@ const AuthHandler = () => {
 	const { snoo, setSnoo } = useSnoo();
 	const { loggedIn, setLoggedIn } = useLoggedIn();
 	const [code, setCode] = useState(null);
+	const timeleft = useRef(10);
 
 	// ? make snoowrap client on mount.
 	useEffect(() => {
+		setInterval(() => {
+			console.log("called");
+			if (
+				timeleft?.current &&
+				timeleft.current > 0 &&
+				timeleft.current !== "stop"
+			)
+				timeleft.current = timeleft.current - 1;
+		}, 1000);
 		// find sotoed in localStorage first
 		const res = getSnooFromUrl();
 		console.log({ res });
@@ -69,9 +79,12 @@ const AuthHandler = () => {
 					? "Authorised !" //+ user name
 					: "Authentication Request Rejected."}
 			</h2>
-			redirecting to /.{" "}
+			redirecting to /. in {timeleft.current}
+			<button onClick={() => (timeleft.current = "stop")}>
+				stop count
+			</button>
 			{/*HOME FEED ? idk maybe "/feed" or if not authorised to "/"*/}
-			<Redirect to="/"></Redirect>
+			{timeleft.current === 0 && <Redirect to="/"></Redirect>}
 		</>
 	);
 };

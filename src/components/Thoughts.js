@@ -184,7 +184,7 @@ export default function Thoughts({ shouldBlurAll }) {
 		};
 		// ok so i got it putting isExact in the dependency array was the fix to listings not being loaded
 		// after single post load -> history.goBack(), but now it
-	}, [subreddit, loaded, match.isExact]);
+	}, [subreddit, loaded, match.isExact, listingTime, listingType]);
 	// should i add isExact or use the button's load me thing ?
 
 	useEffect(() => {
