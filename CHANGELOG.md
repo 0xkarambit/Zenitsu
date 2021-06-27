@@ -1,4 +1,4 @@
 ## CHANGELOG
 
-1. scrolling to top, when header is made visible again !
-2. made dark mode --text brighter #eee.
+1. added buttons for listing type selection !
+2. trying to use snoowrap to get different types of listings.

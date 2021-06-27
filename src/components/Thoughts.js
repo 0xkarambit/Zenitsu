@@ -22,6 +22,8 @@ import { useViewStyleStore } from "./../stores/viewStyle.js";
 import { useSnoo } from "./../stores/snoo.js";
 import { useCommentsStore } from "./../stores/commentsStore.js";
 import { useKeyMappings } from "./../stores/keymappings.js";
+import { useLoggedIn } from "./../stores/loggedIn.js";
+import { useListingType } from "./../stores/listingType.js";
 
 // icons
 import { VscSettingsGear } from "react-icons/vsc";
@@ -57,6 +59,10 @@ export default function Thoughts({ shouldBlurAll }) {
 
 	const [dStyle, setDStyle] = useState("stack"); // stack, imgOnly.
 
+	const snoo = useSnoo((s) => s.snoo);
+	const loggedIn = useLoggedIn((s) => s.loggedIn);
+	const [listing, setListing] = useState();
+	const { listingType, listingTime } = useListingType();
 	// #region
 	const [showKeyMappingsKeys, imgOnlyModeKeys, subSelKeys] = useKeyMappings(
 		(s) => [s.showKeyMappingsKeys, s.imgOnlyModeKeys, s.subSelKeys]
@@ -69,6 +75,41 @@ export default function Thoughts({ shouldBlurAll }) {
 
 	const loadListings = (sub, signal) => {
 		if (loaded) return null;
+		// ! we will need to change the `m` behaviour too.
+		if (loggedIn) {
+			// *getHot, getTop, getRising, getNew, | getControversial, getBest | nan nanda?
+			const fetchMethod = {
+				hot: snoo.getHot,
+				new: snoo.getNew,
+				rising: snoo.getRising,
+				top: snoo.getTop
+			};
+			const options = {};
+			if (listingType === "top") options["time"] = listingTime;
+			fetchMethod[listingType](options)
+				.then((list) => {
+					// shit i will have to mutate it to support the rest of the code.
+					const l = [];
+					const newLinks = [];
+					for (const post of list) {
+						l.push({ data: post });
+						newLinks.push(post.permalink);
+					}
+					setListing(list);
+					setPostsData(l);
+					setPermaLinks(new Set(newLinks));
+					setAfterCode("");
+					setDisplayMode("stack");
+					setDataReceived(true);
+					setLoaded(true);
+				})
+				.catch((e) => {
+					console.log({ e });
+					// what if its aborted by user !! hmm can we still do that tho ?
+					history.goBack();
+				});
+			return null;
+		}
 		const url = `https://www.reddit.com/r/${sub}.json`;
 		fetch(url, { signal })
 			.then((res) => {
@@ -242,6 +283,20 @@ export default function Thoughts({ shouldBlurAll }) {
 	);
 
 	function loadMorePosts() {
+		if (loggedIn && !listing.isFinished) {
+			listing.fetchMore().then((extList) => {
+				// extended list:extList contains both previous and next posts.
+				const l = [];
+				const links = [];
+				for (const post of extList) {
+					l.push({ data: post });
+					links.push(post.permalink);
+				}
+				setListing(extList);
+				setPostsData(l);
+				setPermaLinks(new Set(links));
+			});
+		}
 		if (["", null].includes(afterCode)) return null;
 		const url = `https://www.reddit.com/r/${subreddit}.json?after=${afterCode}`;
 		fetch(url)

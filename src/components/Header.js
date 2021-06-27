@@ -6,6 +6,7 @@ import { useHotkeys } from "react-hotkeys-hook";
 
 // components
 import RightNav from "./rightNav.js";
+import ListingController from "./ListingController.js";
 // import Loader from "react-loader";
 import { Img } from "react-image";
 
@@ -178,6 +179,8 @@ export default function Header() {
 				</span>*/}
 				{/* yup nice now i just need to know a good way to make forms in react! THIS SHOULD BE ITS OWN COMPONENT TODO: ADD FOCUS ON USEFFECT*/}
 			</span>
+			{/*ONLY TO BE SHOWN WHEN USER IS LOGGED IN FOR NOW ! */}
+			<ListingController></ListingController>
 			<RightNav {...{ toggleTheme, toggleInfo, loggedIn, setLoggedIn }} />
 		</header>
 	);

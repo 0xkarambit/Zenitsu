@@ -1,0 +1,18 @@
+.ListingController {
+	/* border: 2px solid bisque; */
+	display: flex;
+	align-items: center;
+	margin: 0rem 1rem;
+}
+
+.ListingController > select {
+	/* !can i use roboto mono ? */
+	font-size: 1em;
+	font-weight: 200;
+	margin: 0px 2px;
+	border-radius: 5px;
+	/* colors */
+	color: var(--text);
+	background-color: var(--primary);
+	/* filter: brightness(110%); */
+}
