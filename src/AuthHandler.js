@@ -17,7 +17,7 @@ const AuthHandler = () => {
 	const { snoo, setSnoo } = useSnoo();
 	const { loggedIn, setLoggedIn } = useLoggedIn();
 	const [code, setCode] = useState(null);
-	const [timeleft, setTimeleft] = useState();
+	const [timeleft, setTimeleft] = useState(10);
 
 	// ? make snoowrap client on mount.
 	useEffect(() => {
