@@ -86,7 +86,11 @@ export default function Thoughts({ shouldBlurAll }) {
 			};
 			const options = {};
 			if (listingType === "top") options["time"] = listingTime;
-			fetchMethod[listingType](options)
+			/*
+			TypeError: this._getSortedFrontpage is not a function
+    	at Object.value [as new] (snoowrap.js:1045)
+			*/
+			fetchMethod[listingType](subreddit, options)
 				.then((list) => {
 					// shit i will have to mutate it to support the rest of the code.
 					const l = [];
@@ -184,7 +188,7 @@ export default function Thoughts({ shouldBlurAll }) {
 		};
 		// ok so i got it putting isExact in the dependency array was the fix to listings not being loaded
 		// after single post load -> history.goBack(), but now it
-	}, [subreddit, loaded, match.isExact, listingTime, listingType]);
+	}, [subreddit, loaded, match.isExact, listingType, listingTime]);
 	// should i add isExact or use the button's load me thing ?
 
 	useEffect(() => {
