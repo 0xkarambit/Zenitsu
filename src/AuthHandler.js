@@ -17,9 +17,15 @@ const AuthHandler = () => {
 	const { snoo, setSnoo } = useSnoo();
 	const { loggedIn, setLoggedIn } = useLoggedIn();
 	const [code, setCode] = useState(null);
+	const [timeleft, setTimeleft] = useState();
 
 	// ? make snoowrap client on mount.
 	useEffect(() => {
+		setInterval(() => {
+			console.log("called");
+			if (timeleft && timeleft > 0 && timeleft !== "stop")
+				setTimeleft((t) => t - 1);
+		}, 1000);
 		// find sotoed in localStorage first
 		const res = getSnooFromUrl();
 		console.log({ res });
@@ -69,9 +75,10 @@ const AuthHandler = () => {
 					? "Authorised !" //+ user name
 					: "Authentication Request Rejected."}
 			</h2>
-			redirecting to /.
+			redirecting to /. in {timeleft}
+			<button onClick={() => setTimeleft("stop")}>stop count</button>
 			{/*HOME FEED ? idk maybe "/feed" or if not authorised to "/"*/}
-			<Redirect to="/"></Redirect>
+			{timeleft === 0 && <Redirect to="/"></Redirect>}
 		</>
 	);
 };
