@@ -113,9 +113,6 @@ const LoginPopup = ({ setHide }) => {
 
 	const { username, password, remember_me } = formData;
 
-	const authUrl = `https://www.reddit.com/api/v1/authorize?client_id=CLIENT_ID&response_type=TYPE&
-	state=RANDOM_STRING&redirect_uri=URI&scope=SCOPE_STRING`;
-
 	const submit = () => {
 		// save state ????
 		// should i hide it ?

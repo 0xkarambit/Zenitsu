@@ -51,6 +51,8 @@
 	transform: scale(1.02);
 }
 
+/* http://localhost:3000/r/memes/https://www.reddit.com/r/memes/comments/o9j2gl/dont_get_me_wrong_friendship_is_still_far_more/ */
+/* ! ABNORMAL */
 .video-player {
 	object-fit: contain;
 	max-width: 100%;

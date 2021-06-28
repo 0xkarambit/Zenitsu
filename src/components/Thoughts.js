@@ -114,7 +114,7 @@ export default function Thoughts({ shouldBlurAll }) {
 				});
 			return null;
 		}
-		const url = `https://www.reddit.com/r/${sub}.json`;
+		const url = `https://www.reddit.com/r/${sub}.json?raw_json=1`;
 		fetch(url, { signal })
 			.then((res) => {
 				if (res.status === 200) return res.json();
@@ -302,7 +302,7 @@ export default function Thoughts({ shouldBlurAll }) {
 			});
 		}
 		if (["", null].includes(afterCode)) return null;
-		const url = `https://www.reddit.com/r/${subreddit}.json?after=${afterCode}`;
+		const url = `https://www.reddit.com/r/${subreddit}.json?after=${afterCode}&raw_json=1`;
 		fetch(url)
 			.then((res) => res.json())
 			.then((body) => {

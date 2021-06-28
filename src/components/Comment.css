@@ -80,6 +80,7 @@
 	display: none;
 	/* styles */
 	width: 300px;
+	/* color: #1c1412; */
 	text-align: center;
 	background-color: #eee;
 	font-size: 0.6em;
@@ -96,10 +97,19 @@
 	/* ! what we cant hover over reply awards ?*/
 }
 .text {
-	padding: 20px;
+	padding: 0.25rem;
+	width: 80%;
+	margin: auto;
 }
+
+.text > * {
+	color: #1c1412;
+}
+
 .tooltip-box-img {
-	padding-top: 20px;
+	padding-top: 0.25rem;
+	width: 4rem;
+	height: 4rem;
 }
 
 .award:hover .tooltip-box {
@@ -220,8 +230,8 @@
 }
 
 .profilepic {
-	width: 3rem;
-	height: 3rem;
+	width: 1rem;
+	height: 1rem;
 	border-radius: 10px;
 }
 

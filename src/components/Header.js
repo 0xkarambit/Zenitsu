@@ -44,8 +44,9 @@ export default function Header() {
 	const [desc, setDesc] = useState();
 	const [displayName, setDisplayName] = useState(null);
 	const [title, setTitle] = useState(null);
-	const img = useRef();
-	const [loaded, setLoaded] = useState(false);
+	// we need this because when the sub > imgSrc changes <Img> doesnt
+	// display automatically if the previous url was broken.
+	// const [loaded, setLoaded] = useState(false);
 	const [askPermissionToBrowse, setAskPermissionToBrowse] = useState(false);
 
 	const [hidden, setHidden] = useState(false);
@@ -93,7 +94,7 @@ export default function Header() {
 		// sub_info: https://www.reddit.com/dev/api/#GET_r_{subreddit}_about
 		// data.public_description, header_img, allow_galleries, wiki_enabled, active_user_count, icon_img
 		// allow_videos, submission_type, created, spoilers_enabled, over18
-		fetch(`https://www.reddit.com/r/${subreddit}/about.json`)
+		fetch(`https://www.reddit.com/r/${subreddit}/about.json?raw_json=1`)
 			.then((res) => {
 				if (!res.ok) {
 					// {data} is undefined in this case.
@@ -109,7 +110,7 @@ export default function Header() {
 				setSubCount(data?.subscribers);
 				setActiveCount(data?.active_user_count);
 				setDesc(data?.public_description);
-				setLoaded(true);
+				// setLoaded(true);
 				setAskPermissionToBrowse(data?.over18);
 				setDisplayName(data?.display_name);
 				setTitle(data?.title);
@@ -124,7 +125,8 @@ export default function Header() {
 			});
 		return () => {
 			// reset on sub change
-			setLoaded(false);
+			// setLoaded(false);
+			// ! key solution is working !
 			setDesc("");
 			setSubCount(null);
 			setActiveCount(null);
@@ -157,7 +159,8 @@ export default function Header() {
 					}}
 					title={`${title}\n${desc}`}
 				>
-					{loaded && <Img className="sub-icon" src={imgSrc} />}
+					{/* key={imgSrc} works well for the bad url Img not changing again thing! */}
+					<Img className="sub-icon" src={imgSrc} key={imgSrc} />
 					<p className="banner">
 						{`r/${displayName ? displayName : subreddit}`}
 					</p>

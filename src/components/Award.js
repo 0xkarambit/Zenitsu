@@ -5,11 +5,7 @@ const Award = ({ name, description, icon_url, count }) => {
 		<div className="award">
 			<img src={icon_url} alt={name} className="tooltip" title={name} />
 			<div className="tooltip-box">
-				<img
-					src={icon_url}
-					alt={name}
-					className="tooltip-box-img tooltip"
-				/>
+				<img src={icon_url} alt={name} className="tooltip-box-img" />
 				<div className="text">
 					<p className="name">{name}</p>
 					<p className="tooltip-desc">{description}</p>

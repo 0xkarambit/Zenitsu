@@ -10,7 +10,7 @@ import "./ListingController.css";
 const POSSIBLE_LISTING_TYPES = ["hot", "new", "rising", "top"];
 const POSSIBLE_LISTING_TIMES = ["hour", "day", "week", "month", "year", "all"];
 
-const ListingController = (props) => {
+const ListingController = () => {
 	const { listingType, listingTime, setListingType, setListingTime } =
 		useListingType();
 

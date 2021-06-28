@@ -69,7 +69,8 @@ const Comment = ({
 			className={`comment-details ${isCollapsed ? "darker" : null}`}
 			onClick={() => setIsCollapsed((c) => !c)}
 		>
-			{/* <ProfilePic userName={data.author}></ProfilePic> */}
+			{/*shouldnt we only load the img if its in view ?*/}
+			<ProfilePic userName={data.author}></ProfilePic>
 			<span className="userID">{`u/${data.author}`}</span>
 			<span className="score">
 				<BiUpvote alt="arrow-up" style={icon} className="arrow" />
