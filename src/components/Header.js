@@ -78,7 +78,10 @@ export default function Header() {
 		// useHotkeys("h", () => {
 		setHidden((h) => {
 			// should this be a preference too ?
-			if (h === true) document.querySelector("#root").scrollIntoView();
+			if (h === true)
+				document
+					.querySelector("#root")
+					.scrollIntoView({ behavior: "smooth" });
 			return !h;
 		});
 	});

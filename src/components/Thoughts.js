@@ -24,6 +24,7 @@ import { useCommentsStore } from "./../stores/commentsStore.js";
 import { useKeyMappings } from "./../stores/keymappings.js";
 import { useLoggedIn } from "./../stores/loggedIn.js";
 import { useListingType } from "./../stores/listingType.js";
+import { useLoaded } from "./../stores/listingLoaded.js";
 
 // icons
 import { VscSettingsGear } from "react-icons/vsc";
@@ -52,7 +53,8 @@ export default function Thoughts({ shouldBlurAll }) {
 	// const [haveListing, setHaveListings] = useState(false);
 	const [postsSeen, setPostsSeen] = React.useState(new Set());
 	const [lastSeen, setLastSeen] = React.useState(0);
-	const [loaded, setLoaded] = useState(false);
+	const { loaded, setLoaded } = useLoaded();
+	// const [loaded, setLoaded] = useState(false);
 	const initPostNo = useRef(0);
 
 	const [showKeyboardShortcuts, setShowKeyboardShortcuts] = useState(false);
@@ -78,19 +80,31 @@ export default function Thoughts({ shouldBlurAll }) {
 		// ! we will need to change the `m` behaviour too.
 		if (loggedIn) {
 			// *getHot, getTop, getRising, getNew, | getControversial, getBest | nan nanda?
-			const fetchMethod = {
-				hot: snoo.getHot,
-				new: snoo.getNew,
-				rising: snoo.getRising,
-				top: snoo.getTop
-			};
-			const options = {};
-			if (listingType === "top") options["time"] = listingTime;
-			/*
-			TypeError: this._getSortedFrontpage is not a function
-    	at Object.value [as new] (snoowrap.js:1045)
-			*/
-			fetchMethod[listingType](subreddit, options)
+
+			// const fetchMethod = {
+			// 	hot: snoo.getHot,
+			// 	new: snoo.getNew,
+			// 	rising: snoo.getRising,
+			// 	top: snoo.getTop
+			// };
+			// const options = {};
+			// if (listingType === "top") options["time"] = listingTime;
+
+			// ! the earlier method didnt work because of oop stuff !
+
+			let promise = null;
+
+			if (listingType === "hot") {
+				promise = snoo.getHot(subreddit);
+			} else if (listingType === "new") {
+				promise = snoo.getNew(subreddit);
+			} else if (listingType === "rising") {
+				promise = snoo.getRising(subreddit);
+			} else if (listingType === "top") {
+				promise = snoo.getTop(subreddit, { time: listingTime });
+			}
+
+			promise
 				.then((list) => {
 					// shit i will have to mutate it to support the rest of the code.
 					const l = [];
@@ -152,6 +166,7 @@ export default function Thoughts({ shouldBlurAll }) {
 			});
 	};
 
+	// now we also need to call stackView. rearrange method.
 	React.useEffect(() => {
 		// console.log("SUB CHANGED", { subreddit });
 		// TODO: USE PERSISTENCE LIBRARY.

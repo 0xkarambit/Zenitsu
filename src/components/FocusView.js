@@ -94,7 +94,9 @@ const FocusView = ({
 					setCurrentComments([]);
 					if (!unBlurred[c] && postsData[c]?.data?.over_18)
 						shouldBlurAll && setBlur(true);
-					document.querySelector("#root").scrollIntoView();
+					document
+						.querySelector("#root")
+						.scrollIntoView({ behavior: "smooth" });
 					history.replace(
 						`/r/${subreddit}/https://www.reddit.com${postsData[c].data.permalink}`
 					);
@@ -125,7 +127,9 @@ const FocusView = ({
 					console.log({ b: !unBlurred[c] });
 					if (!unBlurred[c] && postsData[c]?.data?.over_18)
 						shouldBlurAll && setBlur(true);
-					document.querySelector("#root").scrollIntoView();
+					document
+						.querySelector("#root")
+						.scrollIntoView({ behavior: "smooth" });
 					history.replace(
 						`/r/${subreddit}/https://www.reddit.com${postsData[c].data.permalink}`
 					);

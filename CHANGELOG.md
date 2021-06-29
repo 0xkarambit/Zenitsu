@@ -1,6 +1,5 @@
 ## CHANGELOG
 
-1. added raw_json to request urls to avoid &lt;, &gt;, and &amp;
-2. fixed awards description not being shown.
-3. better styling for awards, centered desc, bigger icon.
-4. added profile pics to comments !
+1. added scrolling with 'j' and 'k', had to remove overall scroll-behavior: smooth !
+2. added profile pics to posts !
+3. fixed the snoo bug ! now logged in users can view different listings !

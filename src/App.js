@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useHistory, Route, Switch } from "react-router-dom";
 import { useHotkeys } from "react-hotkeys-hook";
 import { Provider } from "jotai";
@@ -13,6 +13,10 @@ import Home from "./components/Home.js";
 
 // stores
 import { useKeyMappings } from "./stores/keymappings.js";
+
+// consts
+
+import { scrollHeight } from "./utils/consts.js";
 
 function App() {
 	const history = useHistory();
@@ -40,6 +44,46 @@ function App() {
 	useHotkeys(scrollToTopKeys, () => {
 		document.querySelector("#root").scrollIntoView();
 	});
+
+	useEffect(() => {
+		document.addEventListener("keypress", (e) => {
+			// ? ok so smooth-scrolling here causes problems !
+			// the page doesnt get scrolled immediately so when the user keeps on pressing the j,k buttons the
+			// window.scrollBy keeps getting called and coz window.scrollBy takes in a relative height, the scroll
+			// gets kinda reset
+			// and i see no way to set scroll-behavior to `not smooth` only {"auto", "smooth"} allowed,
+			// so i will have to remove scroll-behavior: smooth
+			// and use $node.scrollIntoView({behavior:"smooth"}) everywhere !
+			// ? wait lets try to time the scroll ! :better but not good enough!
+			// use time: 500ms, 800ms
+			switch (e.key) {
+				case "j":
+					window.scrollBy({
+						left: 0,
+						top: scrollHeight
+					});
+					break;
+
+				case "k":
+					window.scrollBy({
+						left: 0,
+						top: -1 * scrollHeight
+					});
+					break;
+
+				default:
+					break;
+			}
+		});
+	}, []);
+
+	// useHotkeys("j", () => {
+	// 	window.scrollBy(0, 40);
+	// });
+
+	// useHotkeys("k", () => {
+	// 	window.scrollBy(0, -40);
+	// });
 	// #endregion
 
 	return (

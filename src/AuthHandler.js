@@ -21,7 +21,7 @@ const AuthHandler = () => {
 
 	// ? make snoowrap client on mount.
 	useEffect(() => {
-		setInterval(() => {
+		const timer = setInterval(() => {
 			console.log("called");
 			if (timeleft && timeleft > 0 && timeleft !== "stop")
 				setTimeleft((t) => t - 1);
@@ -38,6 +38,9 @@ const AuthHandler = () => {
 
 		const c = getCodeFromUrl();
 		setCode(c);
+		return () => {
+			clearInterval(timer);
+		};
 	}, []);
 
 	const [loaded, setLoaded] = useState(false);

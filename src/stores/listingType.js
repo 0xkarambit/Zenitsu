@@ -15,7 +15,7 @@ import create from "zustand";
 */
 export const useListingType = create((set) => ({
 	listingType: "hot",
-	listingTime: "",
+	listingTime: "month",
 	setListingType: (t) =>
 		set({
 			listingType: t

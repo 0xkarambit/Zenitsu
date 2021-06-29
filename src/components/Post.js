@@ -9,6 +9,7 @@ import ReactPlayer from "react-player";
 import VideoPlayer from "./VideoPlayer.js";
 import ImageGallery from "./ImageGallery.js";
 import Award from "./Award.js";
+import ProfilePic from "./ProfilePic.js";
 
 import { makeFriendly, elapsedTime } from "./../utils/num.js";
 import {
@@ -75,6 +76,9 @@ export default function Post({
 	// 		</div>
 	// 	);
 	// }
+	// author is a proxy if we are logged in ! coz of snoowrap !.
+	// console.log({ author });
+
 	const {
 		params: { sub }
 	} = useRouteMatch("/r/:sub");
@@ -289,13 +293,18 @@ export default function Post({
 			onClick={() => {
 				// yes this must be responsible for the opening on click
 				expandView(index);
-				// document.querySelector("#root").scrollIntoView();
+				document.querySelector("#root").scrollIntoView();
 			}}
 			data-view-vert={displayMode === "stack" ? null : viewStyle}
 			ref={p}
 		>
 			{sub === "all" ? (
 				<p className="author" style={{ fontWeight: 560 }}>
+					<ProfilePic
+						userName={
+							typeof author === "string" ? author : author.name
+						}
+					></ProfilePic>
 					<Link to={`/r/${subreddit}`}>{`r/${subreddit}`}</Link>
 					<span style={{ fontWeight: 400 }}>
 						{" "}
@@ -303,7 +312,14 @@ export default function Post({
 					</span>
 				</p>
 			) : (
-				<p className="author">{`u/${author}`}</p>
+				<p className="author">
+					<ProfilePic
+						userName={
+							typeof author === "string" ? author : author.name
+						}
+					></ProfilePic>
+					{`u/${typeof author === "string" ? author : author.name}`}
+				</p>
 			)}
 
 			<h2

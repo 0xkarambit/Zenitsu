@@ -35,7 +35,8 @@ body {
 	font: Ariel;
 	margin: none;
 	padding: 0px 0px;
-	scroll-behavior: smooth;
+	/* * i have to disable it because then j,k scrolling wont Work `F` */
+	/* scroll-behavior: smooth; */
 }
 
 body ::selection {

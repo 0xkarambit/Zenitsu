@@ -14,7 +14,6 @@ async function getProfilePic(userName) {
 		`https://www.reddit.com/user/${userName}/about.json?raw_json=1`
 	);
 	const json = await res.json();
-	console.log({ profileData: json });
 	return json?.data?.icon_img;
 }
 

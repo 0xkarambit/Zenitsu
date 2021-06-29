@@ -4,6 +4,8 @@ import React, { useState, useEffect } from "react";
 
 // stores
 import { useListingType } from "./../stores/listingType.js";
+import { useLoaded } from "./../stores/listingLoaded.js";
+import { useLoggedIn } from "./../stores/loggedIn.js";
 
 import "./ListingController.css";
 
@@ -11,12 +13,26 @@ const POSSIBLE_LISTING_TYPES = ["hot", "new", "rising", "top"];
 const POSSIBLE_LISTING_TIMES = ["hour", "day", "week", "month", "year", "all"];
 
 const ListingController = () => {
+	const loggedIn = useLoggedIn((s) => s.loggedIn);
+
 	const { listingType, listingTime, setListingType, setListingTime } =
 		useListingType();
 
+	const setLoaded = useLoaded((s) => s.setLoaded);
+
 	// should i change displayMode to stack on value change ????
-	const onListingTypeChange = (e) => setListingType(e.target.value);
-	const onListingTimeChange = (e) => setListingTime(e.target.value);
+	const onListingTypeChange = (e) => {
+		if (e.target.value === listingType) return null;
+		setLoaded(false);
+		setListingType(e.target.value);
+	};
+	const onListingTimeChange = (e) => {
+		if (e.target.value === listingTime) return null;
+		setLoaded(false);
+		setListingTime(e.target.value);
+	};
+
+	if (!loggedIn) return <></>;
 
 	return (
 		<div className="ListingController">
