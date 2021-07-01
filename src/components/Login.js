@@ -5,6 +5,9 @@ import { useHotkeys } from "react-hotkeys-hook";
 
 import { VscAccount } from "react-icons/vsc";
 
+import { useLoggedIn } from "./../stores/loggedIn.js";
+import { useSnoo } from "./../stores/snoo.js";
+
 import "./login.css";
 
 // move style def to specialised file
@@ -15,15 +18,22 @@ const iconStyle = {
 	cursor: "pointer"
 };
 
-const LoginButton = ({ loggedIn, setLoggedIn }) => {
+const LoginButton = () => {
 	// if logged in show user profile pic instead.
 	// const [hide, setHide] = useState(true);
 
 	// idthink this need a customisable shortcut ya ???
 	// useHotkeys("l", (e) => setHide(false));
+	const { loggedIn, setLoggedIn } = useLoggedIn();
+	const { snoo } = useSnoo();
+
 	useHotkeys("l", (e) => {
 		if (loggedIn) {
-			// log out ?
+			// doesnt work !
+			// oh because it is no longed mounted once we are logged in !.
+			snoo.revokeAccessToken();
+			setLoggedIn(false);
+			alert("LOgged Out !");
 		} else {
 			const scope = [
 				"identity",

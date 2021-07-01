@@ -78,7 +78,6 @@ export default function Post({
 	// }
 	// author is a proxy if we are logged in ! coz of snoowrap !.
 	// console.log({ author });
-
 	const {
 		params: { sub }
 	} = useRouteMatch("/r/:sub");
@@ -300,15 +299,11 @@ export default function Post({
 		>
 			{sub === "all" ? (
 				<p className="author" style={{ fontWeight: 560 }}>
-					<ProfilePic
-						userName={
-							typeof author === "string" ? author : author.name
-						}
-					></ProfilePic>
-					<Link to={`/r/${subreddit}`}>{`r/${subreddit}`}</Link>
+					<ProfilePic userName={author?.name || author}></ProfilePic>
+					<Link to={`/r/${subreddit?.display_name || subreddit}`}>{`r/${subreddit?.display_name || subreddit}`}</Link>
 					<span style={{ fontWeight: 400 }}>
 						{" "}
-						posted by {`u/${author}`}
+						posted by {`u/${author?.name || author}`}
 					</span>
 				</p>
 			) : (

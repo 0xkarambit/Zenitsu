@@ -15,3 +15,24 @@
 	color: whitesmoke;
 	width: 100%;
 }
+
+.sub-sel > ul {
+	display: block;
+	background-color: #222;
+	color: whitesmoke;
+	width: 100%;
+	list-style-type: none;
+	margin-block-start: 0rem;
+	margin-block-end: 0em;
+	cursor: pointer;
+	/* ! add some start space ! */
+	/* text-align: start; */
+}
+
+.sub-sel li:hover {
+	backdrop-filter: brightness(120%);
+}
+
+.sub-sel li {
+	padding: 0.5rem;
+}

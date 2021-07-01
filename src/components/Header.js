@@ -88,7 +88,6 @@ export default function Header() {
 	useHotkeys(toggleThemeKeys, toggleTheme);
 
 	// check localStorage or JWT for default value.
-	const [loggedIn, setLoggedIn] = useState(false);
 
 	// why cant i use this here ?
 	// useHotKeys("ctrl + /", () => alert("show all keyboard shortcuts"))
@@ -187,7 +186,7 @@ export default function Header() {
 			</span>
 			{/*ONLY TO BE SHOWN WHEN USER IS LOGGED IN FOR NOW ! */}
 			<ListingController></ListingController>
-			<RightNav {...{ toggleTheme, toggleInfo, loggedIn, setLoggedIn }} />
+			<RightNav {...{ toggleTheme, toggleInfo }} />
 		</header>
 	);
 }

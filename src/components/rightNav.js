@@ -26,16 +26,15 @@ const iconStyle = {
 
 const repoLink = "https://github.com/HarshitJoshi9152/showerthoughts";
 
-const RightNav = ({ toggleTheme, toggleInfo, setLoggedIn }) => {
+const RightNav = ({ toggleTheme, toggleInfo }) => {
 	const loggedIn = useLoggedIn((s) => s.loggedIn);
-	// const loggedIn = true;
 
 	return (
 		<span className="right">
 			{loggedIn ? (
 				<ProfilePic userName={"HarshitJoshi9152"} />
 			) : (
-				<LoginButton {...{ loggedIn, setLoggedIn }} />
+				<LoginButton />
 			)}
 			<Settings></Settings>
 			<span className="theme-switch">

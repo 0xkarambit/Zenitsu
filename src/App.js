@@ -13,6 +13,7 @@ import Home from "./components/Home.js";
 
 // stores
 import { useKeyMappings } from "./stores/keymappings.js";
+import { useLoggedIn } from "./stores/loggedIn.js";
 
 // consts
 
@@ -21,7 +22,7 @@ import { scrollHeight } from "./utils/consts.js";
 function App() {
 	const history = useHistory();
 	const [shouldBlurAll, setShouldBlurAll] = useState(true);
-
+	const { loggedIn } = useLoggedIn();
 	// #region getting shortcuts mapping
 	const over18ContentBlurKeys = useKeyMappings(
 		(s) => s.over18ContentBlurKeys
@@ -31,59 +32,45 @@ function App() {
 	// #endregion
 
 	// #region keyboard shortcuts
-	// toggle over18ContentBlur.
+
+	// ? toggle over18ContentBlur.
 	useHotkeys(over18ContentBlurKeys, (e) => {
 		// prevent hiding, opening bookmarks bar.
 		e.preventDefault();
 		setShouldBlurAll((b) => !b);
 	});
-	// goBack
+	// ? goBack
 	useHotkeys(goBackKeys, () => history.goBack());
 
-	// scroll to top/ scrollToTop
+	// ? scroll to top/ scrollToTop
 	useHotkeys(scrollToTopKeys, () => {
 		document.querySelector("#root").scrollIntoView();
 	});
 
-	useEffect(() => {
-		document.addEventListener("keypress", (e) => {
-			// ? ok so smooth-scrolling here causes problems !
-			// the page doesnt get scrolled immediately so when the user keeps on pressing the j,k buttons the
-			// window.scrollBy keeps getting called and coz window.scrollBy takes in a relative height, the scroll
-			// gets kinda reset
-			// and i see no way to set scroll-behavior to `not smooth` only {"auto", "smooth"} allowed,
-			// so i will have to remove scroll-behavior: smooth
-			// and use $node.scrollIntoView({behavior:"smooth"}) everywhere !
-			// ? wait lets try to time the scroll ! :better but not good enough!
-			// use time: 500ms, 800ms
-			switch (e.key) {
-				case "j":
-					window.scrollBy({
-						left: 0,
-						top: scrollHeight
-					});
-					break;
-
-				case "k":
-					window.scrollBy({
-						left: 0,
-						top: -1 * scrollHeight
-					});
-					break;
-
-				default:
-					break;
-			}
+	// ? JK to scroll
+	/* ? ok so smooth-scrolling here causes problems !
+		 the page doesnt get scrolled immediately so when the user keeps on pressing the j,k buttons the
+		 window.scrollBy keeps getting called and coz window.scrollBy takes in a relative height, the scroll
+		 gets kinda reset
+		 and i see no way to set scroll-behavior to `not smooth` only {"auto", "smooth"} allowed,
+		 so i will have to remove scroll-behavior: smooth
+		 and use $node.scrollIntoView({behavior:"smooth"}) everywhere !
+		 ? wait lets try to time the scroll ! :better but not good enough!
+		 use time: 500ms, 800ms
+	*/
+	useHotkeys("j", () => {
+		window.scrollBy({
+			left: 0,
+			top: scrollHeight
 		});
-	}, []);
+	});
 
-	// useHotkeys("j", () => {
-	// 	window.scrollBy(0, 40);
-	// });
-
-	// useHotkeys("k", () => {
-	// 	window.scrollBy(0, -40);
-	// });
+	useHotkeys("k", () => {
+		window.scrollBy({
+			left: 0,
+			top: -1 * scrollHeight
+		});
+	});
 	// #endregion
 
 	return (
@@ -91,6 +78,7 @@ function App() {
 			<div className="App">
 				<Switch>
 					<Route exact path="/">
+						{/*if logged in show feed ! */}
 						<Home />
 					</Route>
 					<Route path="/r/:subreddit">
@@ -104,6 +92,7 @@ function App() {
 							/>
 						</div>
 					</Route>
+
 					<Route path="/auth_redirect">
 						<AuthHandler></AuthHandler>
 					</Route>
