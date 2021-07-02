@@ -102,11 +102,6 @@ export default function Post({
 
 	const [isTitleCollapsed, setIsTitleCollapsed] = useState(false);
 
-	// to expand the collapsed title on post change
-	useEffect(() => {
-		setIsTitleCollapsed(false);
-	}, [permalink]);
-
 	useHotkeys(
 		"z",
 		() => {
@@ -143,6 +138,8 @@ export default function Post({
 	// https://www.reddit.com/r/Superstonk/comments/nlwqyv/house_of_cards_part_3/
 
 	useEffect(() => {
+		// to expand the collapsed title on post change
+		setIsTitleCollapsed(false);
 		if (displayMode === "focus") {
 			// maybe i shouldnt replace it with postsSeen
 			if (!opened) {
@@ -300,7 +297,9 @@ export default function Post({
 			{sub === "all" ? (
 				<p className="author" style={{ fontWeight: 560 }}>
 					<ProfilePic userName={author?.name || author}></ProfilePic>
-					<Link to={`/r/${subreddit?.display_name || subreddit}`}>{`r/${subreddit?.display_name || subreddit}`}</Link>
+					<Link
+						to={`/r/${subreddit?.display_name || subreddit}`}
+					>{`r/${subreddit?.display_name || subreddit}`}</Link>
 					<span style={{ fontWeight: 400 }}>
 						{" "}
 						posted by {`u/${author?.name || author}`}

@@ -29,10 +29,18 @@
 	/* text-align: start; */
 }
 
-.sub-sel li:hover {
-	backdrop-filter: brightness(120%);
-}
-
 .sub-sel li {
 	padding: 0.5rem;
+}
+
+.sub-sel li[data-selected="true"] {
+	color: red;
+}
+
+.sub-sel li[data-focused="true"] {
+	color: green;
+}
+
+.sub-sel li:hover {
+	backdrop-filter: brightness(120%);
 }

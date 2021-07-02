@@ -5,7 +5,6 @@ import { useHotkeys } from "react-hotkeys-hook";
 
 import { VscAccount } from "react-icons/vsc";
 
-import { useLoggedIn } from "./../stores/loggedIn.js";
 import { useSnoo } from "./../stores/snoo.js";
 
 import "./login.css";
@@ -24,30 +23,15 @@ const LoginButton = () => {
 
 	// idthink this need a customisable shortcut ya ???
 	// useHotkeys("l", (e) => setHide(false));
-	const { loggedIn, setLoggedIn } = useLoggedIn();
 	const { snoo } = useSnoo();
 
 	useHotkeys("l", (e) => {
-		if (loggedIn) {
-			// doesnt work !
-			// oh because it is no longed mounted once we are logged in !.
-			snoo.revokeAccessToken();
-			setLoggedIn(false);
-			alert("LOgged Out !");
-		} else {
-			const scope = [
-				"identity",
-				"wikiread",
-				"wikiedit",
-				"read",
-				"identity"
-			];
-			const url = getAuthUrl(scope);
-			console.log(url);
-			window.location.href = url;
-			// https://www.reddit.com/api/v1/authorize?client_id=ERx7Yyvs9gIJUg&response_type=code&state=fe211bebc52eb3da9bef8db6e63104d3&redirect_uri=https%3A%2F%2Fzenitsu.onrender.com%2Fauth_redirect&duration=temporary&scope=identity%20wikiread%20wikiedit
-			// https://www.reddit.com/api/v1/authorize?client_id=ERx7Yyvs9gIJUg&response_type=token&state=fe211bebc52eb3da9bef8db6e63104d3&redirect_uri=https%3A%2F%2Fzenitsu.onrender.com%2Fauth_redirect&duration=temporary&scope=identity%20wikiread%20wikiedit
-		}
+		const scope = ["identity", "wikiread", "wikiedit", "read", "identity"];
+		const url = getAuthUrl(scope);
+		console.log(url);
+		window.location.href = url;
+		// https://www.reddit.com/api/v1/authorize?client_id=ERx7Yyvs9gIJUg&response_type=code&state=fe211bebc52eb3da9bef8db6e63104d3&redirect_uri=https%3A%2F%2Fzenitsu.onrender.com%2Fauth_redirect&duration=temporary&scope=identity%20wikiread%20wikiedit
+		// https://www.reddit.com/api/v1/authorize?client_id=ERx7Yyvs9gIJUg&response_type=token&state=fe211bebc52eb3da9bef8db6e63104d3&redirect_uri=https%3A%2F%2Fzenitsu.onrender.com%2Fauth_redirect&duration=temporary&scope=identity%20wikiread%20wikiedit
 	});
 
 	// const clicked = () => {
@@ -56,13 +40,11 @@ const LoginButton = () => {
 
 	return (
 		<span>
-			{!loggedIn && (
-				<VscAccount
-					// onClick={clicked}
-					style={iconStyle}
-					title="Sign In"
-				/>
-			)}
+			<VscAccount
+				// onClick={clicked}
+				style={iconStyle}
+				title="Sign In"
+			/>
 			{/*!hide && <LoginPopup setHide={setHide}></LoginPopup>*/}
 			{/*!hide && <LoginPopup setHide={setHide} />*/}
 		</span>

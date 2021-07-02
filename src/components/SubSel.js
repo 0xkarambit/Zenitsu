@@ -1,4 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
+import { useHotkeys } from "react-hotkeys-hook";
+import { useRouteMatch } from "react-router-dom";
 import { useLoggedIn } from "../stores/loggedIn.js";
 
 // stores
@@ -43,8 +45,17 @@ export const SubredditSelect = ({
 				ref={subSel}
 				value={inputSub}
 				onKeyDown={(e) => {
-					// this is imp because on pressing `j`,`k` scroll handlers might get triggered.
-					e.stopPropagation();
+					// ok i wrote all this new code to support a supposedly simple component that i could have used a lib for fml
+					if (
+						e.key === "ArrowUp" ||
+						e.key === "ArrowDown" ||
+						e.key === " "
+					) {
+						e.preventDefault();
+					} else {
+						// this is imp because on pressing `j`,`k` scroll handlers might get triggered.
+						e.stopPropagation();
+					}
 					e.key === "Enter" && sel_subreddit(inputSub);
 					if (e.key === "Escape") {
 						subSel.current.blur();
@@ -70,25 +81,79 @@ export const SubredditSelect = ({
 
 const SuggestionsList = ({ query, sel_subreddit }) => {
 	const snoo = useSnoo((s) => s.snoo);
-	// stores suggested sub names, should i store results to avoid fetching again & again ?
+	// stores suggested sub names, should i store results in session storage to avoid fetching again & again ?
+	const {
+		params: { sub }
+	} = useRouteMatch("/r/:sub");
 	const [suggestions, setSuggestions] = useState([]);
-	const time = 500;
+	const [focusedSuggIndex, setFocusedSuggIndex] = useState(null);
+
+	const time = 230;
 	// ok so this has to be a debounce thing
 	useEffect(() => {
 		if (query === "r/") return null;
 		const timer = setTimeout(() => {
-			snoo.searchSubredditNames({ query }).then(setSuggestions);
+			snoo.searchSubredditNames({ query })
+				.then(setSuggestions)
+				.catch(console.log);
 		}, time);
 		return () => {
 			clearTimeout(timer);
+			setSuggestions([]);
 		};
-		//http://localhost:3000/auth_redirect#access_token=-iAbSbIsOBvoTE5llVYXnx09Khv5XZg
 	}, [query]);
+
+	// #region keyboardShortcuts
+	useHotkeys(
+		"down",
+		() => {
+			if (focusedSuggIndex === null) {
+				setFocusedSuggIndex(0);
+			} else {
+				setFocusedSuggIndex((f) =>
+					f + 1 >= suggestions.length ? 0 : f + 1
+				);
+			}
+		},
+		// important !
+		{ enableOnTags: ["INPUT"] },
+		[focusedSuggIndex]
+	);
+	useHotkeys(
+		"up",
+		() => {
+			if (focusedSuggIndex === null) {
+				setFocusedSuggIndex(suggestions.length - 1);
+			} else {
+				setFocusedSuggIndex((f) =>
+					f - 1 < 0 ? suggestions.length - 1 : f - 1
+				);
+			}
+		},
+		{ enableOnTags: ["INPUT"] },
+		[focusedSuggIndex]
+	);
+
+	useHotkeys(
+		"space",
+		() => {
+			sel_subreddit("r/" + suggestions[focusedSuggIndex]);
+		},
+		{ enableOnTags: ["INPUT"] },
+		[focusedSuggIndex]
+	);
+	// #endregion keyboardShortcuts
 
 	return (
 		<ul>
 			{suggestions.map((i) => (
-				<li onClick={() => sel_subreddit("r/" + i)}>{i}</li>
+				<li
+					onClick={() => sel_subreddit("r/" + i)}
+					data-focused={i === suggestions[focusedSuggIndex]}
+					data-selected={i === sub}
+				>
+					{i}
+				</li>
 			))}
 		</ul>
 	);

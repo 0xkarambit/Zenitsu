@@ -129,6 +129,7 @@ export default function Header() {
 			// reset on sub change
 			// setLoaded(false);
 			// ! key solution is working !
+			setImgSrc(null);
 			setDesc("");
 			setSubCount(null);
 			setActiveCount(null);
