@@ -14,6 +14,12 @@
 	font-size: 0.5em;
 }
 
+.OP {
+	color: rgb(79, 193, 238);
+	font-size: 0.5em;
+	margin-left: 0.4rem;
+}
+
 .arrow {
 	/* do this like the header to align points Number with the upvote icon*/
 	position: relative;

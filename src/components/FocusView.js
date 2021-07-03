@@ -205,6 +205,7 @@ const FocusView = ({
 	if (currentPostData === undefined) {
 		return <h1 style={{ textAlign: "center" }}>Loading Post</h1>;
 	}
+	// http://r/pixelart/https://www.reddit.com/r/PixelArt/comments/ie20x3/4_years_ago_i_was_depressed_stuck_in_a_job_i/
 	return (
 		<>
 			<Post
@@ -230,6 +231,7 @@ const FocusView = ({
 						setCurrentComments
 					}}
 					permalink={currentPostData.permalink}
+					OP={currentPostData.author?.name ?? currentPostData.author}
 				></CommentsSection>
 			)}
 		</>

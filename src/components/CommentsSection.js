@@ -6,7 +6,13 @@ import Comment from "./Comment.js";
 import { useCommentsStore } from "./../stores/commentsStore.js";
 
 const CommentsSection = React.memo(
-	({ currentPostData, currentComments, setCurrentComments, permalink }) => {
+	({
+		currentPostData,
+		currentComments,
+		setCurrentComments,
+		permalink,
+		OP
+	}) => {
 		const [comments, setComments] = useState(currentComments);
 
 		useEffect(() => {
@@ -36,6 +42,7 @@ const CommentsSection = React.memo(
 						if (commentObj.kind === "more") return null;
 						return (
 							<Comment
+								OP={OP}
 								data={commentObj.data}
 								topLevel={true}
 								key={commentObj.data.id}

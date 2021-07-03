@@ -25,7 +25,8 @@ const Comment = ({
 	getComments,
 	perma_link,
 	setCurrentComments,
-	level = 0
+	level = 0,
+	OP
 }) => {
 	const icon = {
 		width: "16px",
@@ -72,6 +73,7 @@ const Comment = ({
 			{/*shouldnt we only load the img if its in view ?*/}
 			<ProfilePic userName={data.author}></ProfilePic>
 			<span className="userID">{`u/${data.author}`}</span>
+			{OP === data.author ? <span className="OP">OP</span> : null}
 			<span className="score">
 				<BiUpvote alt="arrow-up" style={icon} className="arrow" />
 				{/*data.score == 1 means that its hidden*/}
@@ -142,6 +144,7 @@ const Comment = ({
 									key={replyData.data.id}
 									getComments={getComments}
 									level={level + 1}
+									OP={OP}
 									{...{
 										id: replyData.id,
 										perma_link,
