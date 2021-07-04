@@ -56,6 +56,7 @@ export const getFromUrl = (attr) => {
 
 export const getSnooFromUrl = () => {
 	const code = getCodeFromUrl();
+	console.log({ code });
 	if (code === null || code === undefined) return "NO_LOGIN";
 	// Now we have a requester that can access reddit through the user's account
 

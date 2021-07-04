@@ -30,13 +30,26 @@ const RightNav = ({ toggleTheme, toggleInfo }) => {
 	const loggedIn = useLoggedIn((s) => s.loggedIn);
 
 	return (
-		<span className="right">
+		<span>
+			{/*ProfilePic is just a bit more 1111 left */}
 			{loggedIn ? (
-				<ProfilePic userName={"HarshitJoshi9152"} />
+				<div
+					// we have to do this to maintain symmetry because all other icons have such dimensions.
+					style={{
+						margin: "0px 8px",
+						textAlign: "center",
+						display: "grid",
+						placeItems: "center"
+					}}
+				>
+					<ProfilePic userName={"HarshitJoshi9152"} />
+				</div>
 			) : (
 				<LoginButton />
 			)}
-			<Settings></Settings>
+			<span>
+				<Settings></Settings>
+			</span>
 			<span className="theme-switch">
 				<VscColorMode style={iconStyle} onClick={toggleTheme} />
 			</span>
@@ -49,6 +62,8 @@ const RightNav = ({ toggleTheme, toggleInfo }) => {
 				rel="noreferrer"
 				className="repo-link"
 				tabIndex="-1"
+				// display: flex fixed the slightly up issue.
+				style={{ display: "inherit" }}
 			>
 				<VscGithubInverted style={iconStyle} title={repoLink} />
 			</a>

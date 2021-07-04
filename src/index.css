@@ -33,7 +33,8 @@ body {
 	/* background-color: var(--primary); */
 	background-color: var(--primary);
 	font: Ariel;
-	margin: none;
+	/* margin: none doesnt work! */
+	/* margin: 0px 0px; */
 	padding: 0px 0px;
 	/* * i have to disable it because then j,k scrolling wont Work `F` */
 	/* scroll-behavior: smooth; */

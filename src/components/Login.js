@@ -26,7 +26,16 @@ const LoginButton = () => {
 	const { snoo } = useSnoo();
 
 	useHotkeys("l", (e) => {
-		const scope = ["identity", "wikiread", "wikiedit", "read", "identity"];
+		const scope = [
+			"identity",
+			"wikiread",
+			"wikiedit",
+			"read",
+			"history",
+			"flair",
+			"vote",
+			"save"
+		];
 		const url = getAuthUrl(scope);
 		console.log(url);
 		window.location.href = url;

@@ -6,6 +6,7 @@ import { Provider } from "jotai";
 import Header from "./components/Header.js";
 import Sidebar from "./components/Sidebar.js";
 import Thoughts from "./components/Thoughts.js";
+import UserProfile from "./components/UserProfile.js";
 import NotFound from "./NotFound.js";
 import AuthHandler from "./AuthHandler.js";
 
@@ -80,6 +81,9 @@ function App() {
 					<Route exact path="/">
 						{/*if logged in show feed ! */}
 						<Home />
+					</Route>
+					<Route path="/u/:user">
+						<UserProfile></UserProfile>
 					</Route>
 					<Route path="/r/:subreddit">
 						<Header />

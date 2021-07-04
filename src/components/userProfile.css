@@ -1,0 +1,31 @@
+/* to avoid adding margin-left to .right and first span */
+.userHeader > span:not(:last-child) > span:not(:first-child) {
+	/* margin-left: 0.5rem; */
+	margin-left: 0.5em;
+}
+/* .userHeader > span > span:first-child,
+.userHeader > span > span:last-child {
+	margin-left: 0;
+} */
+header {
+	font-family: Arial, Helvetica, sans-serif;
+	/* font-weight: 500; */
+}
+
+header span {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.karma,
+.cakeday {
+	font-size: 0.8em;
+}
+
+.cake-icon {
+	font-size: 1.8rem;
+	position: relative;
+	top: -1px;
+	margin-right: 3px;
+}
