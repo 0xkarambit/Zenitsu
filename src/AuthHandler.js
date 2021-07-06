@@ -2,15 +2,12 @@ import React, { useState, useEffect, useRef } from "react";
 import { Redirect } from "react-router-dom";
 import { useHotkeys } from "react-hotkeys-hook";
 
-import {
-	getFromUrl,
-	getSnooFromUrl,
-	getCodeFromUrl
-} from "./api/authMethods.js";
+import { getSnooFromUrl, getCodeFromUrl } from "./api/authMethods.js";
 
 // stores
 import { useSnoo } from "./stores/snoo.js";
 import { useLoggedIn } from "./stores/loggedIn.js";
+import { storeToken } from "./utils/tokenMethods.js";
 
 // to be used on "/auth_redirect"
 const AuthHandler = () => {
@@ -38,6 +35,7 @@ const AuthHandler = () => {
 
 		const c = getCodeFromUrl();
 		setCode(c);
+		storeToken(c);
 		return () => {
 			clearInterval(timer);
 		};

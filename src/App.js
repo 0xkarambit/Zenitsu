@@ -15,15 +15,42 @@ import Home from "./components/Home.js";
 // stores
 import { useKeyMappings } from "./stores/keymappings.js";
 import { useLoggedIn } from "./stores/loggedIn.js";
+import { useSnoo } from "./stores/snoo.js";
 
 // consts
+import { getStoredToken } from "./utils/tokenMethods.js";
 
 import { scrollHeight } from "./utils/consts.js";
+import Snoowrap from "snoowrap";
 
 function App() {
 	const history = useHistory();
 	const [shouldBlurAll, setShouldBlurAll] = useState(true);
-	const { loggedIn } = useLoggedIn();
+	const { loggedIn, setLoggedIn } = useLoggedIn();
+	const { setSnoo } = useSnoo();
+
+	// * LOGGING IN WITH TOKEN STORED IN SESSION STORAGE.
+	useEffect(() => {
+		if (loggedIn) return null;
+
+		// i have chosen not to redirect the user so i have to write more code !
+		// set snoo and loggedIn
+		const token = getStoredToken();
+		const badValues = ["NOT_STORED", "EXPIRED"];
+		// should i prompt the user for re login if its expired ? idk
+		// probably not the exact correct place to write code for that functionality.
+		if (badValues.includes(token)) {
+			return "NO_LOGIN";
+		}
+		setSnoo(
+			new Snoowrap({
+				accessToken: token,
+				userAgent: "zenitsu web app"
+			})
+		);
+		setLoggedIn(true);
+	}, []);
+
 	// #region getting shortcuts mapping
 	const over18ContentBlurKeys = useKeyMappings(
 		(s) => s.over18ContentBlurKeys
