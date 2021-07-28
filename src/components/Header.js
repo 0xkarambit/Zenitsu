@@ -58,10 +58,14 @@ export default function Header() {
 			r.style.setProperty("--primary", bgDark);
 			r.style.setProperty("--text", fgDark);
 			r.style.setProperty("--link", linkDark);
+			r.style.setProperty("--code-bg", "#272729");
+			r.style.setProperty("--code-fg", "#5291f8");
 		} else if (theme === "light") {
 			r.style.setProperty("--primary", bgLight);
 			r.style.setProperty("--text", fgLight);
 			r.style.setProperty("--link", "blue");
+			r.style.setProperty("--code-bg", "#e7e7ec");
+			r.style.setProperty("--code-fg", "#9c27b0");
 		}
 		localStorage.setItem("theme", theme);
 	}, [theme]);

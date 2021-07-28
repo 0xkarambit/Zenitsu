@@ -1,3 +1,6 @@
+@import url("https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@600&display=swap");
+/* try reducing the weight */
+
 .comment-details {
 	font-weight: 600;
 }
@@ -287,6 +290,18 @@ blockquote::before {
 
 #sortby * {
 	color: #1c1412;
+}
+
+.comment-text ul {
+	list-style-position: outside;
+	margin-left: 0.8em;
+}
+
+code {
+	background: var(--code-bg);
+	color: var(--code-fg);
+	font-size: 0.9em;
+	font-family: "Roboto Mono", monospace;
 }
 
 /* dimming down the outlines a bit */

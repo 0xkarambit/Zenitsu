@@ -96,9 +96,19 @@ table {
 	font-size: 1.5em;
 }
 
+/* yup its required to avoid the list sticking to the left side of the body. */
 ul {
 	list-style-position: inside;
 }
+
+li {
+	margin: 0.4rem 0;
+}
+
+li > ul {
+	margin-left: 4%;
+}
+/*list styles*/
 
 .md blockquote {
 	margin-block-start: 0.23em;
