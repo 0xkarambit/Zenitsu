@@ -1,35 +1,38 @@
-
 const getToken = async () => {
 	let url = "https://www.reddit.com/api/v1/access_token";
-	const REDDIT_CLIENT_ID = "HarshitJoshi9152"
-	const REDDIT_CLIENT_SECRET = "0xhars16149152"
+	const REDDIT_CLIENT_ID = "HarshitJoshi9152";
+	const REDDIT_CLIENT_SECRET = "0xhars16149152";
 	let headers = {};
 	let body = {
 		grant_type: "https://oauth.reddit.com/grants/installed_client",
 		device_id: "ok this seems random but",
 		duration: "permanent"
-	}
+	};
 	fetch(url, {
-		method: 'POST',
+		method: "POST",
 		body,
 		headers: {
-          // 'Content-Type': 'application/x-www-form-urlencoded',
-          // authorization is imp ig basic NXNDNkROa0RtcHdYZXc6
-          'Authorization': `Basic ` +btoa(`${REDDIT_CLIENT_ID}:${REDDIT_CLIENT_SECRET}`) // Not sure about this
-          'user-agent': "Kujo Jotaro"
-        }
-	}).then(res => {console.log(res.ok); return res.json();})
-	.then(console.log)
-	.catch(console.log)
-}
+			// 'Content-Type': 'application/x-www-form-urlencoded',
+			// authorization is imp ig basic NXNDNkROa0RtcHdYZXc6
+			Authorization:
+				`Basic ` + btoa(`${REDDIT_CLIENT_ID}:${REDDIT_CLIENT_SECRET}`), // Not sure about this
+			"user-agent": "Kujo Jotaro"
+		}
+	})
+		.then((res) => {
+			console.log(res.ok);
+			return res.json();
+		})
+		.then(console.log)
+		.catch(console.log);
+};
 
 module.exports = {
-	getToken,
-}
+	getToken
+};
 /* do i need to send it in url ?
 https://www.reddit.com/api/v1/access_token?grant_type=https%3A%2F%2Foauth.reddit.com%2Fgrants%2Finstalled_client&device_id=DO_Njadsjhksjahdkjasdkjsah&duration=permanent
 */
-
 
 /*
 Example Response
@@ -42,7 +45,6 @@ scope: "*"
 token_type: "bearer"
 
 */
-
 
 /*
 async function getRedditToken() {

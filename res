@@ -368,3 +368,10 @@ ok so it uses bluebird promises
 
 APP only Oauth ?
 https://github.com/not-an-aardvark/snoowrap/pull/207
+
+
+# 17-01-2024
+
+- Okay so i just need to set the login option on home page
+- redirect to / from other urls if the user is not loggedIn
+- Change Request Urls to use snoowrap instead.

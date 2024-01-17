@@ -19,6 +19,8 @@ import { makeFriendly } from "./../utils/num.js";
 // css
 import "./header.css";
 import "./Notice.css";
+import { useLoggedIn } from "../stores/loggedIn.js";
+import { useSnoo } from "../stores/snoo.js";
 
 /*
 --primary: #edf6f9;
@@ -35,6 +37,8 @@ const fgDark = "#eee";
 const linkDark = "#c200c1";
 
 export default function Header() {
+	const { snoo } = useSnoo();
+	const { loggedIn } = useLoggedIn();
 	const { subreddit } = useParams();
 	const history = useHistory();
 	const match = useRouteMatch();
@@ -100,7 +104,16 @@ export default function Header() {
 		// sub_info: https://www.reddit.com/dev/api/#GET_r_{subreddit}_about
 		// data.public_description, header_img, allow_galleries, wiki_enabled, active_user_count, icon_img
 		// allow_videos, submission_type, created, spoilers_enabled, over18
-		fetch(`https://www.reddit.com/r/${subreddit}/about.json?raw_json=1`)
+
+		// TODO: change it to only make requests when its not blocked...
+		// can i use https://oauth.reddit.com/r/pics/about.json?raw_json=1 ?
+		if (!loggedIn) return;
+		const at = localStorage.getItem("accessToken");
+		fetch(`https://oauth.reddit.com/r/${subreddit}/about.json?raw_json=1`, {
+			headers: {
+				Authorization: `Bearer ${at}`
+			}
+		})
 			.then((res) => {
 				if (!res.ok) {
 					// {data} is undefined in this case.

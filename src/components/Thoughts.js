@@ -128,42 +128,42 @@ export default function Thoughts({ shouldBlurAll }) {
 				});
 			return null;
 		}
-		const url = `https://www.reddit.com/r/${sub}.json?raw_json=1`;
-		fetch(url, { signal })
-			.then((res) => {
-				if (res.status === 200) return res.json();
-				// ok so the try-catch cant catch errors thrown in these callbacks hmmm.
-				else if (res.status === 403) throw Error("private");
-				else if (res.status === 404) throw Error("Not Found");
-			})
-			.then((json) => {
-				let children = json.data.children;
-				setPostsData(children);
-				let newLinks = children.map((child) => child.data.permalink);
-				setPermaLinks(new Set(newLinks));
-				// if we set the data before we have the data the other components try to render using the data which results in errors.
-				setDisplayMode("stack");
-				setDataReceived(true);
-				setAfterCode(json.data.after);
-				setLoaded(true);
-			})
-			.catch((e) => {
-				// todo: add msg for community doesnt exist 404
-				if (e.message === "private") {
-					alert("cannot browse private community");
-					history.goBack();
-				} else if (e.message === "Not Found") {
-					alert("no such community exists");
-					history.goBack();
-				} else if (e.message === "The user aborted a request.") {
-					// pass
-				} else {
-					// Failed to fetch ? huhhh
-					// ok i get it when it doesnt find a sub that matches the one in url, it gets redirected to search.
-					console.log(e.message);
-					history.goBack();
-				}
-			});
+		// const url = `https://www.reddit.com/r/${sub}.json?raw_json=1`;
+		// fetch(url, { signal })
+		// 	.then((res) => {
+		// 		if (res.status === 200) return res.json();
+		// 		// ok so the try-catch cant catch errors thrown in these callbacks hmmm.
+		// 		else if (res.status === 403) throw Error("private");
+		// 		else if (res.status === 404) throw Error("Not Found");
+		// 	})
+		// 	.then((json) => {
+		// 		let children = json.data.children;
+		// 		setPostsData(children);
+		// 		let newLinks = children.map((child) => child.data.permalink);
+		// 		setPermaLinks(new Set(newLinks));
+		// 		// if we set the data before we have the data the other components try to render using the data which results in errors.
+		// 		setDisplayMode("stack");
+		// 		setDataReceived(true);
+		// 		setAfterCode(json.data.after);
+		// 		setLoaded(true);
+		// 	})
+		// 	.catch((e) => {
+		// 		// todo: add msg for community doesnt exist 404
+		// 		if (e.message === "private") {
+		// 			alert("cannot browse private community");
+		// 			history.goBack();
+		// 		} else if (e.message === "Not Found") {
+		// 			alert("no such community exists");
+		// 			history.goBack();
+		// 		} else if (e.message === "The user aborted a request.") {
+		// 			// pass
+		// 		} else {
+		// 			// Failed to fetch ? huhhh
+		// 			// ok i get it when it doesnt find a sub that matches the one in url, it gets redirected to search.
+		// 			console.log(e.message);
+		// 			// history.goBack();
+		// 		}
+		// 	});
 	};
 
 	// now we also need to call stackView. rearrange method.
@@ -316,20 +316,20 @@ export default function Thoughts({ shouldBlurAll }) {
 				setPermaLinks(new Set(links));
 			});
 		}
-		if (["", null].includes(afterCode)) return null;
-		const url = `https://www.reddit.com/r/${subreddit}.json?after=${afterCode}&raw_json=1`;
-		fetch(url)
-			.then((res) => res.json())
-			.then((body) => {
-				setPostsData((posts) => [...posts, ...body.data.children]);
-				let newLinks = body.data.children.map(
-					(child) => child.data.permalink
-				);
+		// if (["", null].includes(afterCode)) return null;
+		// const url = `https://www.reddit.com/r/${subreddit}.json?after=${afterCode}&raw_json=1`;
+		// fetch(url)
+		// 	.then((res) => res.json())
+		// 	.then((body) => {
+		// 		setPostsData((posts) => [...posts, ...body.data.children]);
+		// 		let newLinks = body.data.children.map(
+		// 			(child) => child.data.permalink
+		// 		);
 
-				let links = [...permaLinks, ...newLinks];
-				setPermaLinks(new Set(links));
-				setAfterCode(body.data.after);
-			});
+		// 		let links = [...permaLinks, ...newLinks];
+		// 		setPermaLinks(new Set(links));
+		// 		setAfterCode(body.data.after);
+		// 	});
 	}
 
 	const expandView = (postNo) => {

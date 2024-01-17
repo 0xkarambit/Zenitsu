@@ -60,8 +60,12 @@ export const getSnooFromUrl = () => {
 	if (code === null || code === undefined) return "NO_LOGIN";
 	// Now we have a requester that can access reddit through the user's account
 
+	// I am lazy... lets just write the accessToken to the localStorage
+	localStorage.setItem("accessToken", code);
+
 	// * class: https://not-an-aardvark.github.io/snoowrap/snoowrap.html#snoowrap__anchor
 	// config: https://not-an-aardvark.github.io/snoowrap/snoowrap.html#config
+
 	return new Snoowrap({
 		accessToken: code,
 		userAgent: "zenitsu web app" // ? lmao import from consts.
